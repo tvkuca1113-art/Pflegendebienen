@@ -1,0 +1,71 @@
+---
+import { SERVICE_AREA } from '../data/business';
+import OfficeCards from './OfficeCards.astro';
+---
+
+{/* A legible list, not a drawn catchment map: no verified polygon or
+    coordinate data exists, and a clear list is more honest. */}
+<section class="section area" id="einsatzgebiet" aria-labelledby="area-title">
+  <div class="shell">
+    <div class="area__head">
+      <span class="eyebrow">Einsatzgebiet</span>
+      <h2 id="area-title">In München-West und rund um Germering für Sie unterwegs.</h2>
+      <p class="lead">
+        Diese Orte sind auf unserer Website als Einsatzgebiet genannt. Ob und wann ein Einsatz
+        möglich ist, hängt vom Bedarf und von unseren aktuellen Möglichkeiten ab – das klären wir
+        persönlich.
+      </p>
+    </div>
+
+    <div class="area__grid">
+      <div class="area__lists">
+        <div class="area__block reveal">
+          <h3 class="area__block-title">Stadtteile in München</h3>
+          <ul class="tag-list">
+            {SERVICE_AREA.munichDistricts.map((d) => <li>{d}</li>)}
+          </ul>
+        </div>
+        <div class="area__block reveal">
+          <h3 class="area__block-title">Orte im Umland</h3>
+          <ul class="tag-list">
+            {SERVICE_AREA.surroundingPlaces.map((d) => <li>{d}</li>)}
+          </ul>
+        </div>
+        <p class="area__note">
+          Ihr Ort ist nicht dabei? Fragen Sie ihn bitte direkt bei uns an – wir schauen uns Ihre
+          Situation individuell an.
+        </p>
+      </div>
+
+      <div class="area__offices">
+        <h3 class="area__block-title">Unsere Büros für Besuche</h3>
+        <OfficeCards compact={true} />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .area__head { max-width: 58ch; margin-bottom: clamp(2rem, 4vw, 3rem); }
+  .area__grid { display: grid; gap: clamp(2rem, 4vw, 3rem); align-items: start; }
+  .area__lists { display: grid; gap: 1.75rem; }
+  .area__block-title {
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 0.9rem;
+  }
+  .area__note {
+    margin: 0;
+    padding-left: 1.1rem;
+    border-left: 3px solid var(--brand);
+    color: var(--ink-soft);
+    font-size: var(--step--1);
+  }
+  .area__offices :global(.offices--compact) { grid-template-columns: minmax(0, 1fr); }
+
+  @media (min-width: 980px) {
+    .area__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr); gap: 4rem; }
+  }
+</style>

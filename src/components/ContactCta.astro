@@ -1,0 +1,77 @@
+---
+import { CONTACT, OFFICES, fullAddress } from '../data/business';
+import Icon from './Icon.astro';
+
+interface Props {
+  title?: string;
+  text?: string;
+  id?: string;
+}
+const {
+  title = 'Sie müssen die Pflege nicht allein organisieren.',
+  text = 'Erzählen Sie uns, welche Unterstützung Sie suchen. Gemeinsam besprechen wir den nächsten möglichen Schritt.',
+  id = 'kontakt-cta',
+} = Astro.props;
+---
+
+<section class="cta on-dark" id={id} aria-labelledby={`${id}-title`}>
+  <div class="shell cta__inner">
+    <div class="cta__text">
+      <h2 id={`${id}-title`}>{title}</h2>
+      <p class="lead">{text}</p>
+      <div class="btn-row cta__actions">
+        <a class="btn" href={CONTACT.phoneHref}>
+          <Icon name="phone" size={20} />
+          {CONTACT.phoneDisplay} anrufen
+        </a>
+        <a class="btn btn--ghost-dark" href={CONTACT.whatsappHref} target="_blank" rel="noopener noreferrer">
+          <Icon name="whatsapp" size={20} />
+          Kontakt per WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <div class="cta__details">
+      <div class="cta__detail">
+        <h3 class="cta__detail-title">E-Mail</h3>
+        <p><a href={CONTACT.emailHref}>{CONTACT.email}</a></p>
+      </div>
+      {OFFICES.map((o) => (
+        <div class="cta__detail">
+          <h3 class="cta__detail-title">{o.label}</h3>
+          <address>{fullAddress(o)}</address>
+          <p>
+            <a href={o.directionsUrl} target="_blank" rel="noopener noreferrer">Route planen</a>
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta { background: var(--night); padding-block: clamp(3rem, 6.5vw, 5.5rem); }
+  .cta__inner { display: grid; gap: clamp(2rem, 4vw, 3.5rem); align-items: start; }
+  .cta__text { max-width: 46ch; }
+  .cta__actions { margin-top: 1.8rem; }
+
+  .cta__details { display: grid; gap: 1.6rem; }
+  .cta__detail { padding-left: 1.1rem; border-left: 2px solid rgba(248, 155, 28, 0.45); }
+  .cta__detail-title {
+    font-size: 0.76rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brand);
+    margin-bottom: 0.5em;
+  }
+  .cta__detail p { margin: 0; }
+  .cta__detail address { font-style: normal; color: #e4dbcd; margin-bottom: 0.3em; }
+  .cta__detail a { color: #f7f1e7; font-weight: 600; }
+  .cta__detail a:hover { color: var(--brand); }
+
+  @media (min-width: 880px) {
+    .cta__inner { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 4rem; }
+    .cta__details { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.8rem 2rem; }
+    .cta__details > :first-child { grid-column: 1 / -1; }
+  }
+</style>

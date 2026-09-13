@@ -1,0 +1,123 @@
+---
+import '@fontsource-variable/manrope';
+import '@fontsource/lora/latin-600.css';
+import '../styles/global.css';
+// Preloaded so the first paint of the headline does not wait on CSS discovery.
+import manropeLatin from '@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url';
+import loraLatin from '@fontsource/lora/files/lora-latin-600-normal.woff2?url';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import MobileContactBar from '../components/MobileContactBar.astro';
+import { SITE, IS_DEMO } from '../config/site.mjs';
+import { BRAND } from '../data/business';
+import {
+  buildGraph,
+  organizationGraph,
+  officeGraph,
+  webPageGraph,
+  breadcrumbGraph,
+  type Crumb,
+} from '../lib/schema';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Path of this page, always with leading and trailing slash. */
+  path: string;
+  crumbs?: Crumb[];
+  /** Extra JSON-LD nodes merged into the page graph. */
+  schema?: unknown[];
+  ogImage?: string;
+  bodyClass?: string;
+}
+
+const { title, description, path, crumbs = [], schema = [], ogImage, bodyClass = '' } = Astro.props;
+
+const canonical = new URL(path, SITE.origin + '/').toString();
+const socialImage = new URL(ogImage ?? '/social-preview.jpg', SITE.origin + '/').toString();
+
+const graph = buildGraph([
+  organizationGraph(),
+  ...officeGraph(),
+  webPageGraph({ path, title, description }),
+  ...(crumbs.length > 1 ? [breadcrumbGraph(crumbs)] : []),
+  ...schema,
+]);
+---
+
+<!doctype html>
+<html lang="de" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    {/* Demo mode: keep the page crawlable so the noindex directive is actually read. */}
+    {IS_DEMO && <meta name="robots" content="noindex, nofollow" />}
+
+    <link rel="preload" href={manropeLatin} as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href={loraLatin} as="font" type="font/woff2" crossorigin="anonymous" />
+
+    <meta name="theme-color" content="#fff9f0" />
+    <link rel="icon" href="/favicon.png" type="image/png" sizes="64x64" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={BRAND.name} />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Pflegende Bienen – zwei Frauen und ein Kind gemeinsam im Garten" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script is:inline>
+      document.documentElement.classList.replace('no-js', 'js');
+    </script>
+
+    <script is:inline type="application/ld+json" set:html={graph} />
+  </head>
+  <body class={bodyClass}>
+    <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+    <Header path={path} />
+    <main id="inhalt" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+    <MobileContactBar />
+
+    <script>
+      // Gentle section reveals. The page is fully usable before this runs and
+      // a safety net guarantees content can never stay hidden.
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const targets = document.querySelectorAll<HTMLElement>('.reveal');
+      const revealAll = () => targets.forEach((el) => el.classList.add('is-visible'));
+
+      if (reduce.matches || !('IntersectionObserver' in window)) {
+        revealAll();
+      } else {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                io.unobserve(entry.target);
+              }
+            }
+          },
+          { rootMargin: '200px 0px 0px 0px', threshold: 0.01 },
+        );
+        targets.forEach((el) => io.observe(el));
+        // If anything never intersects (print, screenshot, unusual viewport),
+        // show it anyway rather than leave content invisible.
+        window.setTimeout(revealAll, 1500);
+        window.addEventListener('beforeprint', revealAll);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+---
+import Breadcrumbs from './Breadcrumbs.astro';
+import type { Crumb } from '../lib/schema';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  intro?: string;
+  crumbs: Crumb[];
+}
+const { eyebrow, title, intro, crumbs } = Astro.props;
+---
+
+<div class="page-header">
+  <div class="page-header__ribbon" aria-hidden="true"></div>
+  <div class="shell">
+    <Breadcrumbs crumbs={crumbs} />
+    <div class="page-header__body">
+      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+      <h1>{title}</h1>
+      {intro && <p class="lead page-header__intro">{intro}</p>}
+    </div>
+  </div>
+</div>
+
+<style>
+  .page-header {
+    position: relative;
+    background: linear-gradient(180deg, #fffdf8 0%, var(--paper) 100%);
+    border-bottom: 1px solid var(--stone);
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+    overflow: hidden;
+  }
+  .page-header__ribbon {
+    position: absolute;
+    top: -180px;
+    right: -140px;
+    width: 520px;
+    height: 420px;
+    background: radial-gradient(
+      60% 60% at 50% 50%,
+      rgba(248, 155, 28, 0.2) 0%,
+      rgba(248, 155, 28, 0.06) 55%,
+      transparent 72%
+    );
+    pointer-events: none;
+  }
+  .page-header__body { max-width: 62ch; padding-top: clamp(1.5rem, 3vw, 2.4rem); }
+  .page-header h1 { font-size: var(--step-4); }
+  .page-header__intro { margin-top: 0.4em; }
+</style>

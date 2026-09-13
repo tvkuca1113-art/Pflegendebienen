@@ -1,0 +1,160 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import ContactCta from '../../components/ContactCta.astro';
+import Photo from '../../components/Photo.astro';
+import { SERVICES, ADDITIONAL_OFFERS } from '../../data/services';
+import { serviceGraph } from '../../lib/schema';
+
+const crumbs = [
+  { name: 'Startseite', path: '/' },
+  { name: 'Leistungen', path: '/leistungen/' },
+];
+---
+
+<Base
+  title="Leistungen der Pflegenden Bienen | Ambulante Pflege München-West"
+  description="Grundpflege, Behandlungspflege, Hauswirtschaft und Betreuung sowie Verhinderungspflege: die Leistungen der Pflegenden Bienen in München-West und Germering im Überblick."
+  path="/leistungen/"
+  crumbs={crumbs}
+  schema={serviceGraph()}
+>
+  <PageHeader
+    eyebrow="Unser Angebot"
+    title="Leistungen im Überblick"
+    intro="Vier Bereiche, in denen wir Sie zu Hause unterstützen. Welche Leistung passt, hängt von Ihrer Situation ab – und lässt sich am besten im Gespräch klären."
+    crumbs={crumbs}
+  />
+
+  <div class="section">
+    <div class="shell">
+      <ul class="overview">
+        {SERVICES.map((s, i) => (
+          <li class="overview__item reveal">
+            <div class="overview__meta">
+              <span class="overview__index" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              {s.legalBasis && <span class="overview__basis">{s.legalBasis}</span>}
+            </div>
+            <div class="overview__body">
+              <h2 class="overview__title"><a href={s.path}>{s.navLabel}</a></h2>
+              <p class="overview__text">{s.cardText}</p>
+              <ul class="overview__scope">
+                {s.scope.items.slice(0, 4).map((item) => <li>{item}</li>)}
+              </ul>
+              <span class="arrow-link overview__link" aria-hidden="true">Details ansehen</span>
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      <section class="extra" aria-labelledby="extra-title">
+        <div class="extra__text">
+          <h2 id="extra-title">{ADDITIONAL_OFFERS.heading}</h2>
+          {ADDITIONAL_OFFERS.items.map((item) => (
+            <div class="extra__item">
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </div>
+          ))}
+          <p class="extra__link">
+            <a class="arrow-link" href="/pflegeberatung/">Pflegeberatung und Unterstützung bei Anträgen</a>
+          </p>
+        </div>
+        <figure class="extra__figure">
+          <Photo
+            src="team-garten-facebook.jpg"
+            alt="Gruppenfoto im Garten, veröffentlicht von Pflegende Bienen"
+            width={620}
+            height={465}
+            sizes="(min-width: 980px) 42vw, 100vw"
+            class="extra__image"
+            position="50% 40%"
+          />
+          <figcaption>
+            Ein von Pflegende Bienen veröffentlichtes Gruppenfoto. Nicht alle abgebildeten Personen
+            sind zwingend Mitarbeitende.
+          </figcaption>
+        </figure>
+      </section>
+    </div>
+  </div>
+
+  <ContactCta
+    title="Nicht sicher, welche Leistung passt?"
+    text="Das müssen Sie auch nicht sein. Schildern Sie uns Ihre Situation – wir ordnen sie gemeinsam ein."
+  />
+</Base>
+
+<style>
+  .overview { list-style: none; margin: 0 0 clamp(3rem, 6vw, 5rem); padding: 0; display: grid; gap: 0; }
+
+  .overview__item {
+    position: relative;
+    margin: 0;
+    display: grid;
+    gap: 0.9rem;
+    padding-block: clamp(1.75rem, 3.5vw, 2.5rem);
+    border-top: 1px solid var(--stone);
+  }
+  .overview__item:last-child { border-bottom: 1px solid var(--stone); }
+
+  .overview__meta { display: flex; flex-direction: column; gap: 0.5rem; }
+  .overview__index {
+    font-family: var(--font-serif);
+    font-size: var(--step-2);
+    font-weight: 600;
+    line-height: 1;
+    color: var(--brand);
+  }
+  .overview__basis { font-size: 0.85rem; color: var(--ink-faint); max-width: 26ch; line-height: 1.45; }
+
+  .overview__title { margin: 0 0 0.4em; font-size: var(--step-2); }
+  .overview__title a { color: var(--ink); text-decoration: none; }
+  .overview__title a::after { content: ''; position: absolute; inset: 0; }
+  .overview__item:hover .overview__title a { color: var(--brand-deep); }
+
+  .overview__text { color: var(--ink-soft); max-width: 62ch; margin-bottom: 1.1em; }
+
+  .overview__scope {
+    list-style: none;
+    margin: 0 0 1.1em;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem 0.5rem;
+  }
+  .overview__scope li {
+    margin: 0;
+    padding: 0.35rem 0.8rem;
+    background: var(--brand-wash);
+    border-radius: 999px;
+    font-size: 0.85rem;
+    color: var(--brand-deep);
+  }
+  .overview__link { font-size: var(--step--1); }
+
+  .extra { display: grid; gap: clamp(2rem, 4vw, 3.5rem); align-items: start; }
+  .extra__item { margin-top: 1.8rem; max-width: 64ch; }
+  .extra__item h3 { margin-bottom: 0.4em; font-size: var(--step-1); }
+  .extra__item p { color: var(--ink-soft); font-size: var(--step--1); margin: 0; }
+  .extra__link { margin-top: 2rem; }
+
+  .extra__figure { margin: 0; }
+  .extra__image { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius-lg); }
+  .extra__figure figcaption {
+    margin-top: 0.85rem;
+    padding-left: 0.9rem;
+    border-left: 3px solid var(--brand);
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  @media (min-width: 820px) {
+    .overview__item { grid-template-columns: 210px minmax(0, 1fr); gap: 2.5rem; }
+    .overview__meta { flex-direction: column; }
+  }
+  @media (min-width: 980px) {
+    .extra { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 4rem; }
+  }
+</style>

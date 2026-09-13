@@ -1,0 +1,218 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import ContactPanel from '../components/ContactPanel.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import ContactCta from '../components/ContactCta.astro';
+import Faq from '../components/Faq.astro';
+import { PILLARS, FIGURES, INFORMATIONSSTAND, SOURCES } from '../data/funding';
+import { faqGraph } from '../lib/schema';
+
+const crumbs = [
+  { name: 'Startseite', path: '/' },
+  { name: 'Kosten & Finanzierung', path: '/kosten-finanzierung/' },
+];
+
+const costFaq = [
+  {
+    q: 'Nennen Sie Preise auf dieser Website?',
+    a: 'Nein. Was eine Versorgung kostet, hängt vom vereinbarten Leistungsumfang, von der Häufigkeit und von der Abrechnungsgrundlage ab. Wir besprechen die Kosten deshalb persönlich und nennen über die Website keine Pauschalpreise.',
+  },
+  {
+    q: 'Übernimmt die Kasse alles?',
+    a: 'Das lässt sich pauschal nicht sagen. Pflegekasse und Krankenkasse übernehmen unterschiedliche Leistungen und jeweils nur unter bestimmten Voraussetzungen. Ein Eigenanteil kann entstehen. Verbindliche Auskünfte erteilt Ihre Kasse.',
+  },
+  {
+    q: 'Brauche ich zuerst einen Pflegegrad?',
+    a: 'Für Leistungen der Pflegeversicherung ist ein anerkannter Pflegegrad maßgeblich. Ärztlich verordnete Behandlungspflege folgt dagegen anderen Voraussetzungen und ist nicht an einen Pflegegrad gebunden. Melden können Sie sich in beiden Fällen.',
+  },
+  {
+    q: 'Können wir Entlastungsbetrag und Verhinderungspflege kombinieren?',
+    a: 'Ob und wie sich Leistungen kombinieren lassen, hängt vom konkreten Anspruch und von den geltenden Voraussetzungen ab. Diese Frage klären Sie am besten direkt mit Ihrer Pflegekasse; wir sagen Ihnen gern, was wir davon umsetzen könnten.',
+  },
+];
+---
+
+<Base
+  title="Kosten & Finanzierung der Pflege | Pflegende Bienen"
+  description="Pflegekasse, Krankenkasse und Eigenanteil verständlich erklärt. Orientierungswerte zu Entlastungsbetrag und Verhinderungspflege mit Stand und offiziellen Quellen."
+  path="/kosten-finanzierung/"
+  crumbs={crumbs}
+  schema={[faqGraph(costFaq)]}
+>
+  <PageHeader
+    eyebrow="Finanzierung"
+    title="Welche Kosten übernimmt die Kasse?"
+    intro="Das hängt von der Leistung, Ihrem Pflegegrad und gegebenenfalls einer ärztlichen Verordnung ab. Pflegekasse und Krankenkasse übernehmen unterschiedliche Aufgaben. Auch ein Eigenanteil kann entstehen."
+    crumbs={crumbs}
+  />
+
+  <div class="section">
+    <div class="shell cost__layout">
+      <div class="cost__main">
+        <section aria-labelledby="traeger">
+          <h2 id="traeger">Wer zahlt wofür?</h2>
+          <div class="cost__pillars">
+            {PILLARS.map((p) => (
+              <article class="pillar reveal">
+                <h3 class="pillar__title">{p.title}</h3>
+                <p class="pillar__short">{p.short}</p>
+                {p.detail.map((d) => <p class="pillar__detail">{d}</p>)}
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section class="cost__block" aria-labelledby="werte">
+          <h2 id="werte">Orientierungswerte</h2>
+          <p class="cost__intro">
+            Die folgenden Beträge stammen aus offiziellen Quellen und dienen der Orientierung. Sie
+            sind keine Zusage, dass eine bestimmte Leistung in Ihrem Fall erstattet wird, und keine
+            Preisangabe für unser Angebot.
+          </p>
+          <p class="cost__stand">
+            <strong>Informationsstand: {INFORMATIONSSTAND}</strong> – bitte vor einer Entscheidung
+            bei der genannten Quelle oder Ihrer Kasse prüfen.
+          </p>
+
+          <div class="cost__figures">
+            {FIGURES.map((f) => (
+              <article class="figure reveal">
+                <p class="figure__amount">{f.amount}</p>
+                <h3 class="figure__title">{f.title}</h3>
+                <p class="figure__body">{f.body}</p>
+                <p class="figure__caveat">{f.caveat}</p>
+                <p class="figure__sources">
+                  Quelle:
+                  <a href={f.source.url} target="_blank" rel="noopener noreferrer">{f.source.label}</a>
+                  {f.secondSource && (
+                    <>
+                      {' · '}
+                      <a href={f.secondSource.url} target="_blank" rel="noopener noreferrer">
+                        {f.secondSource.label}
+                      </a>
+                    </>
+                  )}
+                </p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section class="cost__block prose" aria-labelledby="ablauf">
+          <h2 id="ablauf">Wie wir Kosten mit Ihnen besprechen</h2>
+          <p>
+            Wir klären zuerst, welche Unterstützung Sie brauchen. Daraus ergibt sich, welche
+            Leistung überhaupt infrage kommt und über welchen Kostenträger sie laufen könnte. Erst
+            dann lässt sich sagen, was voraussichtlich übernommen wird und was privat zu tragen
+            wäre.
+          </p>
+          <p>
+            Einen Kostenrechner bieten wir bewusst nicht an: Er würde eine Genauigkeit vortäuschen,
+            die es an dieser Stelle nicht gibt. Was Ihre Kasse übernimmt, entscheidet sie im
+            Einzelfall.
+          </p>
+        </section>
+
+        <section class="cost__block" aria-labelledby="quellen">
+          <h2 id="quellen">Offizielle Quellen</h2>
+          <ul class="cost__sources">
+            {Object.values(SOURCES).map((s) => (
+              <li>
+                <a href={s.url} target="_blank" rel="noopener noreferrer">{s.label}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <RelatedLinks
+          links={[
+            { label: 'Verhinderungspflege', href: '/leistungen/verhinderungspflege/' },
+            { label: 'Behandlungspflege', href: '/leistungen/behandlungspflege/' },
+            { label: 'Pflegeberatung', href: '/pflegeberatung/' },
+            { label: 'Kontakt', href: '/kontakt/' },
+          ]}
+        />
+      </div>
+
+      <div class="cost__aside">
+        <ContactPanel
+          title="Kosten persönlich klären"
+          text="Sagen Sie uns, welche Unterstützung Sie suchen. Dann besprechen wir, was dafür zu klären ist."
+        />
+      </div>
+    </div>
+  </div>
+
+  <Faq items={costFaq} title="Häufige Fragen zu den Kosten" id="kosten-faq" />
+
+  <ContactCta
+    title="Unklar, was Ihre Kasse übernimmt?"
+    text="Rufen Sie uns an. Wir sagen Ihnen, welche Fragen Sie mit Ihrer Kasse klären sollten und was wir dafür brauchen."
+  />
+</Base>
+
+<style>
+  .cost__layout { display: grid; gap: clamp(2rem, 4vw, 3.5rem); align-items: start; }
+  .cost__main { min-width: 0; }
+  .cost__block { margin-top: clamp(2.5rem, 5vw, 3.5rem); }
+
+  .cost__pillars { display: grid; gap: 1.1rem; margin-top: 1.5rem; }
+  .pillar {
+    padding: clamp(1.25rem, 2.6vw, 1.7rem);
+    background: var(--surface);
+    border: 1px solid var(--stone);
+    border-radius: var(--radius-lg);
+  }
+  .pillar__title { color: var(--brand-deep); margin-bottom: 0.4em; }
+  .pillar__short { font-weight: 600; margin-bottom: 0.9em; }
+  .pillar__detail { color: var(--ink-soft); font-size: var(--step--1); }
+
+  .cost__intro { max-width: 68ch; color: var(--ink-soft); }
+  .cost__stand {
+    padding: 0.9rem 1.15rem;
+    background: var(--brand-wash);
+    border: 1px solid var(--brand-wash-2);
+    border-radius: var(--radius);
+    font-size: var(--step--1);
+    color: var(--brand-deep);
+    max-width: 68ch;
+  }
+
+  .cost__figures { display: grid; gap: 1.25rem; margin-top: 1.75rem; }
+  .figure {
+    padding: clamp(1.3rem, 2.8vw, 1.9rem);
+    background: linear-gradient(180deg, #fffdf8 0%, #fdf4e6 100%);
+    border: 1px solid var(--brand-wash-2);
+    border-radius: var(--radius-lg);
+  }
+  .figure__amount {
+    font-family: var(--font-serif);
+    font-size: var(--step-3);
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--brand-deep);
+    margin-bottom: 0.25em;
+  }
+  .figure__title { margin-bottom: 0.5em; }
+  .figure__body { color: var(--ink-soft); }
+  .figure__caveat {
+    padding-left: 0.95rem;
+    border-left: 3px solid var(--brand);
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+  }
+  .figure__sources { margin: 1.1em 0 0; font-size: 0.85rem; color: var(--ink-faint); }
+  .figure__sources a { margin-left: 0.35rem; }
+
+  .cost__sources { list-style: none; padding: 0; margin: 1.2rem 0 0; display: grid; gap: 0.65rem; }
+  .cost__sources li { margin: 0; }
+  .cost__sources a { font-weight: 600; font-size: var(--step--1); }
+
+  @media (min-width: 760px) {
+    .cost__figures { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (min-width: 980px) {
+    .cost__layout { grid-template-columns: minmax(0, 1fr) 330px; gap: 4rem; }
+  }
+</style>

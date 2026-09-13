@@ -1,0 +1,163 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import ContactPanel from '../../components/ContactPanel.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import ContactCta from '../../components/ContactCta.astro';
+import { SERVICES } from '../../data/services';
+import { SERVICE_AREA } from '../../data/business';
+import { abs, ORGANIZATION_ID } from '../../lib/schema';
+
+export function getStaticPaths() {
+  return SERVICES.map((service) => ({ params: { slug: service.slug }, props: { service } }));
+}
+
+const { service } = Astro.props;
+
+const crumbs = [
+  { name: 'Startseite', path: '/' },
+  { name: 'Leistungen', path: '/leistungen/' },
+  { name: service.navLabel, path: service.path },
+];
+
+const serviceSchema = {
+  '@type': 'Service',
+  '@id': abs(`${service.path}#leistung`),
+  name: service.h1.split(':')[0]!.trim(),
+  serviceType: service.navLabel,
+  description: service.metaDescription,
+  url: abs(service.path),
+  provider: { '@id': ORGANIZATION_ID },
+  areaServed: [
+    ...SERVICE_AREA.munichDistricts.map((n) => ({ '@type': 'Place', name: `${n}, München` })),
+    ...SERVICE_AREA.surroundingPlaces.map((n) => ({ '@type': 'Place', name: n })),
+  ],
+};
+---
+
+<Base
+  title={service.metaTitle}
+  description={service.metaDescription}
+  path={service.path}
+  crumbs={crumbs}
+  schema={[serviceSchema]}
+>
+  <PageHeader
+    eyebrow={service.eyebrow}
+    title={service.h1}
+    intro={service.intro}
+    crumbs={crumbs}
+  />
+
+  <div class="section">
+    <div class="shell service__layout">
+      <div class="service__main">
+        {service.legalBasis && (
+          <p class="service__basis">
+            <strong>Einordnung:</strong> {service.legalBasis}
+          </p>
+        )}
+
+        <section class="prose" aria-labelledby="was">
+          <h2 id="was">{service.whatItMeans.heading}</h2>
+          {service.whatItMeans.paragraphs.map((p) => <p>{p}</p>)}
+        </section>
+
+        <section class="service__block" aria-labelledby="umfang">
+          <h2 id="umfang">{service.scope.heading}</h2>
+          {service.scope.note && <p class="service__note">{service.scope.note}</p>}
+          <ul class="check-list service__scope">
+            {service.scope.items.map((i) => <li>{i}</li>)}
+          </ul>
+        </section>
+
+        <section class="service__block" aria-labelledby="wann">
+          <h2 id="wann">{service.whenRelevant.heading}</h2>
+          <ul class="service__cases">
+            {service.whenRelevant.items.map((i) => <li>{i}</li>)}
+          </ul>
+        </section>
+
+        <section class="prose service__block" aria-labelledby="kosten">
+          <h2 id="kosten">{service.funding.heading}</h2>
+          {service.funding.paragraphs.map((p) => <p>{p}</p>)}
+          <p>
+            <a class="arrow-link" href="/kosten-finanzierung/">Kosten &amp; Finanzierung im Überblick</a>
+          </p>
+        </section>
+
+        <section class="service__block service__ask" aria-labelledby="fragen">
+          <h2 id="fragen">So läuft die Anfrage</h2>
+          <p class="service__note">
+            Rufen Sie uns an und schildern Sie Ihre Situation. Wir besprechen, welche Unterstützung
+            infrage kommt, was dafür geklärt werden muss und ob ein Einsatz möglich ist. Einen
+            festen Starttermin oder eine Zusage können wir über die Website nicht geben.
+          </p>
+          <h3 class="service__ask-title">Diese Fragen helfen beim ersten Gespräch</h3>
+          <ul class="check-list">
+            {service.questionsToPrepare.map((q) => <li>{q}</li>)}
+          </ul>
+        </section>
+
+        <RelatedLinks links={[...service.related]} />
+      </div>
+
+      <div class="service__aside">
+        <ContactPanel />
+      </div>
+    </div>
+  </div>
+
+  <ContactCta
+    title="Passt diese Leistung zu Ihrer Situation?"
+    text="Rufen Sie uns an. Wir ordnen gemeinsam ein, welche Unterstützung sinnvoll ist und was dafür geklärt werden muss."
+  />
+</Base>
+
+<style>
+  .service__layout { display: grid; gap: clamp(2rem, 4vw, 3.5rem); align-items: start; }
+  .service__main { min-width: 0; }
+
+  .service__basis {
+    margin-bottom: 2.25rem;
+    padding: 0.95rem 1.2rem;
+    background: var(--brand-wash);
+    border: 1px solid var(--brand-wash-2);
+    border-radius: var(--radius);
+    font-size: var(--step--1);
+    color: var(--brand-deep);
+  }
+
+  .service__block { margin-top: clamp(2.25rem, 4vw, 3rem); max-width: var(--shell-narrow); }
+  .service__note { color: var(--ink-soft); font-size: var(--step--1); max-width: 68ch; }
+
+  .service__cases { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.7rem; }
+  .service__cases li {
+    margin: 0;
+    padding: 0.9rem 1.1rem;
+    background: var(--surface);
+    border: 1px solid var(--stone);
+    border-radius: var(--radius);
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+  }
+
+  .service__ask {
+    padding: clamp(1.4rem, 3vw, 2rem);
+    background: var(--paper-2);
+    border: 1px solid var(--stone);
+    border-radius: var(--radius-lg);
+  }
+  .service__ask h2 { margin-top: 0; }
+  .service__ask-title {
+    margin: 1.6em 0 0.8em;
+    font-size: 0.8rem;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  @media (min-width: 980px) {
+    .service__layout { grid-template-columns: minmax(0, 1fr) 330px; gap: 4rem; }
+  }
+</style>

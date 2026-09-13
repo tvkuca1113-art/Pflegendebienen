@@ -1,0 +1,311 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import ContactCta from '../components/ContactCta.astro';
+import Photo from '../components/Photo.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import Icon from '../components/Icon.astro';
+import { OWNERS, BRAND, OFFICES } from '../data/business';
+import { TEAM } from '../data/team';
+import { ARCHIVE_INSIGHT } from '../data/insights';
+
+const crumbs = [
+  { name: 'Startseite', path: '/' },
+  { name: 'Über uns', path: '/ueber-uns/' },
+];
+---
+
+<Base
+  title="Über uns – das Team der Pflegenden Bienen | München & Germering"
+  description="Marija Jelačić Bjelovuk und Duško Bjelovuk führen die Pflegenden Bienen. Lernen Sie die Inhaber und das Team des ambulanten Pflegedienstes kennen."
+  path="/ueber-uns/"
+  crumbs={crumbs}
+>
+  <PageHeader
+    eyebrow="Über uns"
+    title="Die Menschen hinter den Pflegenden Bienen"
+    intro="Ein inhabergeführter ambulanter Pflegedienst mit Büros in München und Germering. Hier stellen wir vor, wer die Pflegenden Bienen führt und wie das Team zusammenarbeitet."
+    crumbs={crumbs}
+  />
+
+  <div class="section">
+    <div class="shell">
+      <section class="owner" aria-labelledby="marija">
+        <div class="owner__media reveal">
+          <Photo
+            src="marija-jelacic-bjelovuk.jpeg"
+            alt="Marija Jelačić Bjelovuk, Inhaberin und Pflegedienstleitung der Pflegenden Bienen"
+            width={560}
+            height={560}
+            sizes="(min-width: 900px) 40vw, 100vw"
+            class="owner__image"
+          />
+        </div>
+        <div class="owner__text">
+          <span class="eyebrow">Inhaberin &amp; Pflegedienstleitung</span>
+          <h2 id="marija">{OWNERS.marija.name}</h2>
+          <p class="lead">{OWNERS.marija.experience}</p>
+          <p class="muted">
+            Als Pflegedienstleitung verantwortet sie das pflegerische Angebot. Fragen zur Versorgung
+            klären Sie am besten über die Bürorufnummer – so ist sichergestellt, dass Ihre Anfrage
+            direkt bei der richtigen Person landet.
+          </p>
+        </div>
+      </section>
+
+      <section class="owner owner--reverse" aria-labelledby="dusko">
+        <div class="owner__media reveal">
+          <Photo
+            src="dusko-bjelovuk.jpeg"
+            alt="Duško Bjelovuk, Inhaber von Pflegende Bienen"
+            width={440}
+            height={440}
+            sizes="(min-width: 900px) 32vw, 100vw"
+            class="owner__image owner__image--small"
+          />
+        </div>
+        <div class="owner__text">
+          <span class="eyebrow">Inhaber</span>
+          <h2 id="dusko">{OWNERS.dusko.name}</h2>
+          <p class="lead">{OWNERS.dusko.intro}</p>
+          <ul class="owner__contact">
+            <li>
+              <Icon name="mail" size={17} />
+              <a href={`mailto:${OWNERS.dusko.email}`}>{OWNERS.dusko.email}</a>
+            </li>
+            <li>
+              <Icon name="phone" size={17} />
+              <a href={OWNERS.dusko.mobileHref}>{OWNERS.dusko.mobileDisplay}</a>
+            </li>
+          </ul>
+          <p class="owner__hint">
+            Für Pflegeanfragen nutzen Sie bitte die Bürorufnummer – diese Kontakte sind für
+            organisatorische Anliegen veröffentlicht.
+          </p>
+        </div>
+      </section>
+
+      <section class="team" aria-labelledby="team-title">
+        <div class="team__head">
+          <span class="eyebrow">Das Team</span>
+          <h2 id="team-title">Viele Hände, ein Miteinander</h2>
+          <p class="lead">
+            Die folgenden Porträts sind auf der Team-Seite von {BRAND.name} veröffentlicht. Wir
+            zeigen sie mit Vornamen, wie sie dort erscheinen. Berufsbezeichnungen, Qualifikationen
+            oder Sprachkenntnisse nennen wir nicht, weil diese Angaben für diese Website nicht
+            belegt sind.
+          </p>
+        </div>
+        <ul class="team__grid">
+          {TEAM.map((member) => (
+            <li class="team__member">
+              <Photo
+                src={`${member.key}.jpg`}
+                alt={`${member.firstName}, Teammitglied bei Pflegende Bienen`}
+                width={160}
+                height={160}
+                sizes="96px"
+                class="team__avatar"
+              />
+              <span class="team__name">{member.firstName}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section class="gallery" aria-labelledby="gallery-title">
+        <h2 id="gallery-title">Momente aus unserem Miteinander</h2>
+        <p class="gallery__intro">
+          Bilder aus den öffentlichen Profilen des Unternehmens. Sie zeigen gemeinsame Anlässe im
+          Team – keine Pflegesituationen und keine Patientinnen oder Patienten.
+        </p>
+        <div class="gallery__grid">
+          <figure class="gallery__item gallery__item--wide reveal">
+            <Photo
+              src="team-garten-facebook.jpg"
+              alt="Gruppenfoto im Garten, veröffentlicht von Pflegende Bienen"
+              width={880}
+              height={660}
+              sizes="(min-width: 900px) 58vw, 100vw"
+              class="gallery__image"
+              position="50% 42%"
+            />
+            <figcaption>
+              Ein veröffentlichtes Gruppenfoto im Garten. Nicht alle abgebildeten Personen sind
+              zwingend Mitarbeitende.
+            </figcaption>
+          </figure>
+          <figure class="gallery__item reveal">
+            <Photo
+              src="team-gruppe-facebook.jpg"
+              alt="Gemeinsames Gruppenfoto im Freien"
+              width={520}
+              height={693}
+              sizes="(min-width: 900px) 30vw, 100vw"
+              class="gallery__image gallery__image--tall"
+            />
+            <figcaption>Ein gemeinsames Treffen im Freien.</figcaption>
+          </figure>
+          <figure class="gallery__item reveal">
+            <Photo
+              src="team-kaffeepause-instagram.webp"
+              alt="Gemeinsame Kaffeepause im Freien"
+              width={520}
+              height={390}
+              sizes="(min-width: 900px) 30vw, 100vw"
+              class="gallery__image"
+            />
+            <figcaption>Kaffeepause am 14.03.2026.</figcaption>
+          </figure>
+          <figure class="gallery__item reveal">
+            <Photo
+              src={ARCHIVE_INSIGHT.image}
+              alt={ARCHIVE_INSIGHT.alt}
+              width={520}
+              height={693}
+              sizes="(min-width: 900px) 30vw, 100vw"
+              class="gallery__image gallery__image--tall"
+              position="50% 35%"
+            />
+            <figcaption>
+              {ARCHIVE_INSIGHT.text}{' '}
+              <a href={ARCHIVE_INSIGHT.sourceUrl} target="_blank" rel="noopener noreferrer">
+                Quelle ansehen
+              </a>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="careers" aria-labelledby="careers-title">
+        <h2 id="careers-title">Arbeiten bei den Pflegenden Bienen</h2>
+        <p>
+          Ob gerade Stellen frei sind, steht auf dieser Website bewusst nicht: Wir möchten keine
+          Vakanzen ankündigen, die nicht bestätigt sind. Wenn Sie sich für eine Mitarbeit
+          interessieren, fragen Sie gern direkt nach den aktuellen Möglichkeiten.
+        </p>
+        <p class="careers__contact">
+          Bewerbungen und Fragen zur Mitarbeit richten Sie bitte an{' '}
+          <a href={`mailto:${OWNERS.dusko.email}`}>{OWNERS.dusko.email}</a> – getrennt von den
+          Pflegeanfragen, die über die Bürorufnummer laufen.
+        </p>
+      </section>
+
+      <section class="offices-note" aria-labelledby="offices-title">
+        <h2 id="offices-title">Wo Sie uns finden</h2>
+        <ul class="offices-note__list">
+          {OFFICES.map((o) => (
+            <li>
+              <strong>{o.label}</strong>
+              <span>{o.street}, {o.postalCode} {o.locality}</span>
+              <a href={o.pagePath}>Einsatzgebiet {o.pageLabel}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <RelatedLinks
+        links={[
+          { label: 'Alle Leistungen', href: '/leistungen/' },
+          { label: 'München-West', href: '/muenchen-west/' },
+          { label: 'Germering', href: '/germering/' },
+          { label: 'Kontakt', href: '/kontakt/' },
+        ]}
+      />
+    </div>
+  </div>
+
+  <ContactCta />
+</Base>
+
+<style>
+  .owner {
+    display: grid;
+    gap: clamp(1.75rem, 4vw, 3.5rem);
+    align-items: center;
+    margin-bottom: clamp(3rem, 6vw, 5rem);
+  }
+  .owner__image { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); }
+  .owner__image--small { max-width: 320px; }
+  .owner__text { max-width: 56ch; }
+
+  .owner__contact { list-style: none; padding: 0; margin: 1.5rem 0 1.2rem; display: grid; gap: 0.6rem; }
+  .owner__contact li { display: flex; align-items: center; gap: 0.55rem; margin: 0; font-size: var(--step--1); }
+  .owner__contact svg { color: var(--brand-deep); flex: 0 0 auto; }
+  .owner__contact a { font-weight: 600; word-break: break-word; }
+  .owner__hint { font-size: var(--step--1); color: var(--ink-faint); max-width: 52ch; }
+
+  .team {
+    padding-block: clamp(2.5rem, 5vw, 4rem);
+    border-top: 1px solid var(--stone);
+  }
+  .team__head { max-width: 62ch; margin-bottom: 2.25rem; }
+  .team__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+    gap: clamp(1rem, 2.5vw, 1.6rem);
+  }
+  .team__member { margin: 0; display: grid; justify-items: center; gap: 0.5rem; text-align: center; }
+  .team__avatar {
+    width: 100%;
+    max-width: 96px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--brand-wash-2);
+  }
+  .team__name { font-size: 0.9rem; font-weight: 600; color: var(--ink-soft); }
+
+  .gallery { padding-block: clamp(2.5rem, 5vw, 4rem); border-top: 1px solid var(--stone); }
+  .gallery__intro { max-width: 62ch; color: var(--ink-soft); margin-bottom: 2rem; }
+  .gallery__grid { display: grid; gap: 1.25rem; }
+  .gallery__item { margin: 0; }
+  .gallery__image { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius-lg); }
+  .gallery__image--tall { aspect-ratio: 3 / 4; }
+  .gallery__item figcaption {
+    margin-top: 0.8rem;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  .careers {
+    padding: clamp(1.5rem, 3.5vw, 2.25rem);
+    background: var(--paper-2);
+    border: 1px solid var(--stone);
+    border-radius: var(--radius-lg);
+    margin-block: clamp(1.5rem, 3vw, 2.5rem);
+    max-width: var(--shell-narrow);
+  }
+  .careers h2 { margin-top: 0; }
+  .careers p { color: var(--ink-soft); }
+  .careers__contact { margin-bottom: 0; }
+
+  .offices-note { padding-block: clamp(2rem, 4vw, 3rem); }
+  .offices-note__list { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; gap: 1rem; }
+  .offices-note__list li {
+    margin: 0;
+    display: grid;
+    gap: 0.25rem;
+    padding: 1.1rem 1.3rem;
+    background: var(--surface);
+    border: 1px solid var(--stone);
+    border-radius: var(--radius);
+  }
+  .offices-note__list span { color: var(--ink-soft); font-size: var(--step--1); }
+  .offices-note__list a { font-size: var(--step--1); font-weight: 600; }
+
+  @media (min-width: 700px) {
+    .offices-note__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (min-width: 900px) {
+    .owner { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); }
+    .owner--reverse { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); }
+    .owner--reverse .owner__media { order: 2; }
+    .gallery__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .gallery__item--wide { grid-column: span 2; }
+  }
+</style>

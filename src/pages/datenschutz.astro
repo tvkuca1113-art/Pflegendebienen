@@ -1,0 +1,159 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { BRAND, CONTACT, LEGAL_HEADQUARTERS, SOCIAL } from '../data/business';
+import { IS_DEMO } from '../config/site.mjs';
+
+const crumbs = [
+  { name: 'Startseite', path: '/' },
+  { name: 'Datenschutz', path: '/datenschutz/' },
+];
+---
+
+<Base
+  title="Datenschutz | Pflegende Bienen"
+  description="Welche Daten diese Website verarbeitet: keine Tracker, keine Analyse-Dienste, keine eingebetteten Social-Media-Feeds und keine Formularübermittlung."
+  path="/datenschutz/"
+  crumbs={crumbs}
+>
+  <PageHeader
+    eyebrow="Rechtliches"
+    title="Datenschutz"
+    intro="Diese Seite beschreibt die tatsächliche technische Datenverarbeitung dieser Website – nicht eine allgemeine Mustererklärung."
+    crumbs={crumbs}
+  />
+
+  <div class="section">
+    <div class="shell legal">
+      {IS_DEMO && (
+        <p class="legal__demo">
+          <strong>Hinweis:</strong> Diese Seite gehört zu einer nicht öffentlichen Vorschau. Vor
+          einer Veröffentlichung ist die Erklärung an die dann tatsächlich eingesetzte
+          Hosting-Umgebung anzupassen und rechtlich zu prüfen.
+        </p>
+      )}
+
+      <section class="legal__block">
+        <h2>Verantwortlich</h2>
+        <p class="legal__lines">
+          {BRAND.legalName}<br />
+          {LEGAL_HEADQUARTERS.street}, {LEGAL_HEADQUARTERS.postalCode} {LEGAL_HEADQUARTERS.locality}<br />
+          Telefon: <a href={CONTACT.phoneHref}>{CONTACT.phoneDisplay}</a><br />
+          E-Mail: <a href={CONTACT.emailHref}>{CONTACT.email}</a>
+        </p>
+        <p class="legal__note">
+          Diese Anschrift ist der Sitz des Unternehmens und kein Büro für Besuche. Die Büros für ein
+          persönliches Gespräch finden Sie auf der <a href="/kontakt/">Kontaktseite</a>.
+        </p>
+      </section>
+
+      <section class="legal__block legal__highlight">
+        <h2>Was diese Website nicht tut</h2>
+        <ul class="check-list">
+          <li>Keine Analyse- oder Statistikdienste, keine Werbepixel, kein Fingerprinting.</li>
+          <li>Keine Cookies und keine Einträge im lokalen Speicher Ihres Browsers.</li>
+          <li>Keine eingebetteten Instagram- oder Facebook-Feeds und keine Social-Plugins.</li>
+          <li>Keine eingebettete Karte und kein Karten-SDK.</li>
+          <li>Keine Schriftarten von externen Servern – alle Schriften werden mitgeliefert.</li>
+          <li>Kein Kontaktformular und damit keine Formularübermittlung.</li>
+        </ul>
+        <p class="legal__note">
+          Weil keine einwilligungspflichtigen Dienste eingesetzt werden, gibt es hier auch kein
+          Cookie-Banner.
+        </p>
+      </section>
+
+      <section class="legal__block">
+        <h2>Server-Logdateien</h2>
+        <p>
+          Beim Aufruf der Website übermittelt Ihr Browser technisch notwendige Daten an den Server
+          des Hosting-Anbieters. Dazu gehören üblicherweise die aufgerufene Adresse, Datum und
+          Uhrzeit, der übertragene Datenumfang, der Browsertyp und die IP-Adresse. Diese
+          Verarbeitung ist für den Betrieb und die Sicherheit der Website erforderlich; Rechtsgrundlage
+          ist Art. 6 Abs. 1 lit. f DSGVO.
+        </p>
+        <p class="legal__note">
+          Die genaue Speicherdauer und der eingesetzte Hosting-Anbieter hängen von der
+          Produktivumgebung ab und sind vor der Veröffentlichung hier konkret zu benennen. Ein
+          Auftragsverarbeitungsvertrag mit dem Hoster ist abzuschließen.
+        </p>
+      </section>
+
+      <section class="legal__block">
+        <h2>Kontaktaufnahme</h2>
+        <p>
+          Wenn Sie uns anrufen, uns per E-Mail schreiben oder uns über WhatsApp kontaktieren,
+          verarbeiten wir die Angaben, die Sie uns dabei mitteilen, zur Bearbeitung Ihres Anliegens
+          (Art. 6 Abs. 1 lit. b bzw. lit. f DSGVO). Diese Kommunikation findet außerhalb dieser
+          Website statt.
+        </p>
+        <p>
+          Die WhatsApp-Schaltfläche ist ein gewöhnlicher Link. Erst wenn Sie ihn anklicken, wird
+          eine Verbindung zu WhatsApp aufgebaut; dann gelten die Bedingungen und
+          Datenschutzhinweise des Betreibers. Bitte senden Sie uns über WhatsApp keine
+          Gesundheitsdaten oder Diagnosen.
+        </p>
+      </section>
+
+      <section class="legal__block">
+        <h2>Externe Links</h2>
+        <p>
+          Links zu <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer">Instagram</a>,
+          <a href={SOCIAL.facebook} target="_blank" rel="noopener noreferrer"> Facebook</a>, zu
+          Kartendiensten für die Routenplanung und zu behördlichen Informationsseiten sind
+          gewöhnliche Verweise. Sie laden beim Aufruf dieser Website nichts nach. Für die Inhalte
+          und die Datenverarbeitung der verlinkten Seiten sind deren Betreiber verantwortlich.
+        </p>
+      </section>
+
+      <section class="legal__block">
+        <h2>Ihre Rechte</h2>
+        <p>
+          Sie haben im Rahmen der gesetzlichen Voraussetzungen das Recht auf Auskunft, Berichtigung,
+          Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch. Wenden Sie
+          sich dafür an die oben genannten Kontaktdaten. Zudem besteht ein Beschwerderecht bei einer
+          Datenschutz-Aufsichtsbehörde; für Bayern ist das das Bayerische Landesamt für
+          Datenschutzaufsicht.
+        </p>
+      </section>
+
+      <section class="legal__block legal__open">
+        <h2>Vor der Veröffentlichung zu ergänzen</h2>
+        <ul>
+          <li>Konkreter Hosting-Anbieter, Serverstandort und Speicherdauer der Logdateien</li>
+          <li>Benennung einer oder eines Datenschutzbeauftragten, sofern erforderlich</li>
+          <li>Hinweise zur Verarbeitung von Patientendaten außerhalb der Website (Pflegedokumentation)</li>
+          <li>Rechtliche Prüfung des gesamten Textes</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .legal { max-width: var(--shell-narrow); }
+  .legal__block { margin-bottom: clamp(2rem, 4vw, 2.75rem); }
+  .legal__block h2 { font-size: var(--step-1); margin-bottom: 0.6em; }
+  .legal__lines { line-height: 1.8; }
+  .legal__note { font-size: var(--step--1); color: var(--ink-faint); }
+
+  .legal__demo {
+    padding: 1rem 1.25rem;
+    background: var(--brand-wash);
+    border: 1px solid var(--brand-wash-2);
+    border-radius: var(--radius);
+    font-size: var(--step--1);
+    color: var(--brand-deep);
+    margin-bottom: 2.5rem;
+  }
+
+  .legal__highlight,
+  .legal__open {
+    padding: clamp(1.3rem, 3vw, 1.8rem);
+    background: var(--paper-2);
+    border: 1px solid var(--stone);
+    border-left: 4px solid var(--brand);
+    border-radius: var(--radius-lg);
+  }
+  .legal__highlight h2, .legal__open h2 { margin-top: 0; }
+</style>

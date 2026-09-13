@@ -1,0 +1,176 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import ContactPanel from '../components/ContactPanel.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import ContactCta from '../components/ContactCta.astro';
+import Icon from '../components/Icon.astro';
+import { SERVICE_AREA, OFFICES, CONTACT, fullAddress } from '../data/business';
+import { SERVICES } from '../data/services';
+
+const office = OFFICES.find((o) => o.id === 'muenchen')!;
+const crumbs = [
+  { name: 'Startseite', path: '/' },
+  { name: 'München-West', path: '/muenchen-west/' },
+];
+---
+
+<Base
+  title="Ambulanter Pflegedienst München-West | Pflegende Bienen"
+  description="Pflege zu Hause in Neuhausen, Nymphenburg, Laim, Pasing, Obermenzing, Aubing, Großhadern und Blumenau. Büro in der Fürstenrieder Str. 137, 80686 München."
+  path="/muenchen-west/"
+  crumbs={crumbs}
+>
+  <PageHeader
+    eyebrow="Einsatzgebiet"
+    title="Ambulante Pflege in München-West"
+    intro="Unser Münchner Büro liegt in der Fürstenrieder Straße. Von dort aus sind wir in den westlichen Stadtteilen unterwegs – von Neuhausen und Nymphenburg bis Aubing und Blumenau."
+    crumbs={crumbs}
+  />
+
+  <div class="section">
+    <div class="shell loc__layout">
+      <div class="loc__main">
+        <section aria-labelledby="stadtteile">
+          <h2 id="stadtteile">Diese Stadtteile sind als Einsatzgebiet genannt</h2>
+          <p class="loc__intro">
+            Die folgenden Stadtteile stehen auf unserer Website als Einsatzgebiet. Eine Nennung
+            bedeutet nicht automatisch, dass zu einem bestimmten Zeitpunkt ein Einsatz möglich ist –
+            das hängt vom Bedarf und von unseren aktuellen Möglichkeiten ab.
+          </p>
+          <ul class="tag-list loc__tags">
+            {SERVICE_AREA.munichDistricts.map((d) => <li>{d}</li>)}
+          </ul>
+          <p class="loc__note">
+            Ihr Stadtteil ist nicht dabei oder liegt am Rand? Fragen Sie ihn bitte direkt bei uns
+            an. Auch angrenzende Orte im Umland versorgen wir – sie finden Sie auf der
+            <a href="/germering/">Seite Germering &amp; Umland</a>.
+          </p>
+        </section>
+
+        <section class="loc__block" aria-labelledby="buero">
+          <h2 id="buero">Ihr Büro in München</h2>
+          <div class="loc__office">
+            <div>
+              <h3 class="loc__office-name">
+                <Icon name="pin" size={20} />
+                {office.label}
+              </h3>
+              <address class="loc__address">
+                {office.street}<br />
+                {office.postalCode} {office.locality}
+              </address>
+              <p class="loc__office-note">
+                Bitte vereinbaren Sie einen Besuch vorher telefonisch. Verbindliche Öffnungszeiten
+                nennen wir auf dieser Website nicht, weil sie hier nicht belegt sind.
+              </p>
+            </div>
+            <div class="loc__office-actions">
+              <a class="btn" href={CONTACT.phoneHref}>
+                <Icon name="phone" size={19} />
+                {CONTACT.phoneDisplay}
+              </a>
+              <a class="btn btn--secondary" href={office.directionsUrl} target="_blank" rel="noopener noreferrer">
+                <Icon name="route" size={18} />
+                Route planen
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section class="loc__block" aria-labelledby="leistungen-hier">
+          <h2 id="leistungen-hier">Welche Leistungen wir hier erbringen</h2>
+          <p class="loc__intro">
+            In München-West gilt dasselbe Angebot wie im übrigen Einsatzgebiet. Es gibt keine
+            gesonderten Standortleistungen und kein zweites Unternehmen – es ist derselbe Betrieb
+            mit derselben Telefonnummer.
+          </p>
+          <ul class="loc__services">
+            {SERVICES.map((s) => (
+              <li>
+                <a href={s.path}>
+                  <strong>{s.navLabel}</strong>
+                  <span>{s.cardText}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <RelatedLinks
+          links={[
+            { label: 'Germering & Umland', href: '/germering/' },
+            { label: 'Alle Leistungen', href: '/leistungen/' },
+            { label: 'Kosten & Finanzierung', href: '/kosten-finanzierung/' },
+            { label: 'Kontakt', href: '/kontakt/' },
+          ]}
+        />
+      </div>
+
+      <div class="loc__aside">
+        <ContactPanel
+          title="Einsatz in München-West anfragen"
+          text={`Nennen Sie uns Ihren Stadtteil und die gewünschte Unterstützung. Adresse des Büros: ${fullAddress(office)}.`}
+        />
+      </div>
+    </div>
+  </div>
+
+  <ContactCta
+    title="Pflege in München-West besprechen"
+    text="Ein Anruf genügt, um zu klären, ob und wie wir Sie in Ihrem Stadtteil unterstützen können."
+  />
+</Base>
+
+<style>
+  .loc__layout { display: grid; gap: clamp(2rem, 4vw, 3.5rem); align-items: start; }
+  .loc__main { min-width: 0; }
+  .loc__block { margin-top: clamp(2.5rem, 5vw, 3.5rem); }
+  .loc__intro { max-width: 68ch; color: var(--ink-soft); }
+  .loc__tags { margin-bottom: 1.5rem; }
+  .loc__note {
+    max-width: 68ch;
+    padding-left: 1.1rem;
+    border-left: 3px solid var(--brand);
+    color: var(--ink-soft);
+    font-size: var(--step--1);
+  }
+
+  .loc__office {
+    display: grid;
+    gap: 1.5rem;
+    padding: clamp(1.3rem, 3vw, 1.9rem);
+    background: var(--surface);
+    border: 1px solid var(--stone);
+    border-radius: var(--radius-lg);
+  }
+  .loc__office-name { display: flex; align-items: center; gap: 0.55rem; font-size: var(--step-1); margin-bottom: 0.5em; }
+  .loc__office-name svg { color: var(--brand-2); }
+  .loc__address { font-style: normal; line-height: 1.6; margin-bottom: 1em; }
+  .loc__office-note { margin: 0; color: var(--ink-soft); font-size: var(--step--1); max-width: 52ch; }
+  .loc__office-actions { display: flex; flex-wrap: wrap; gap: 0.7rem; align-content: start; }
+
+  .loc__services { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; gap: 0.75rem; }
+  .loc__services li { margin: 0; }
+  .loc__services a {
+    display: grid;
+    gap: 0.3rem;
+    padding: 1rem 1.2rem;
+    background: var(--paper-2);
+    border: 1px solid var(--stone);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--ink);
+    transition: border-color 0.15s var(--ease), background-color 0.15s var(--ease);
+  }
+  .loc__services a:hover { border-color: var(--brand); background: #fffdf8; }
+  .loc__services strong { color: var(--brand-deep); }
+  .loc__services span { font-size: var(--step--1); color: var(--ink-soft); }
+
+  @media (min-width: 700px) {
+    .loc__office { grid-template-columns: minmax(0, 1fr) auto; }
+  }
+  @media (min-width: 980px) {
+    .loc__layout { grid-template-columns: minmax(0, 1fr) 330px; gap: 4rem; }
+  }
+</style>

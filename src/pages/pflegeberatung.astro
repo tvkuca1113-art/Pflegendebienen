@@ -1,0 +1,137 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import ContactPanel from '../components/ContactPanel.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import ContactCta from '../components/ContactCta.astro';
+import { INFORMATIONSSTAND, SOURCES } from '../data/funding';
+
+const crumbs = [
+  { name: 'Startseite', path: '/' },
+  { name: 'Leistungen', path: '/leistungen/' },
+  { name: 'Pflegeberatung', path: '/pflegeberatung/' },
+];
+---
+
+<Base
+  title="Pflegeberatung & Hilfe bei Anträgen | Pflegende Bienen"
+  description="Unterstützung beim Einordnen der nächsten Schritte und bei pflegebezogenen Anträgen in München-West und Germering. Was wir besprechen können und was nicht."
+  path="/pflegeberatung/"
+  crumbs={crumbs}
+>
+  <PageHeader
+    eyebrow="Orientierung & Anträge"
+    title="Pflegeberatung: die nächsten Schritte sortieren"
+    intro="Am Anfang steht meist kein fertiger Plan, sondern eine Reihe offener Fragen. Wir helfen beim Einordnen und bei pflegebezogenen Anträgen."
+    crumbs={crumbs}
+  />
+
+  <div class="section">
+    <div class="shell counsel__layout">
+      <div class="counsel__main">
+        <section class="prose">
+          <h2>Wobei wir unterstützen können</h2>
+          <p>
+            Viele Familien wissen zu Beginn nicht, welche Leistung wie heißt, wer zuständig ist und
+            in welcher Reihenfolge etwas beantragt werden sollte. Genau dort setzen wir an: Wir
+            besprechen Ihre Situation, ordnen die möglichen Leistungen ein und sagen Ihnen, welche
+            Unterlagen erfahrungsgemäß gebraucht werden.
+          </p>
+          <ul class="check-list">
+            <li>Einordnen, welche Unterstützung zu Ihrer Situation passen könnte.</li>
+            <li>Erklären, wofür Pflegekasse und Krankenkasse jeweils zuständig sind.</li>
+            <li>Unterstützung bei pflegebezogenen Anträgen und den dafür nötigen Unterlagen.</li>
+            <li>Besprechen, welche Fragen Sie mit Ihrer Kasse oder Ihrer Ärztin bzw. Ihrem Arzt klären sollten.</li>
+          </ul>
+        </section>
+
+        <section class="counsel__limits" aria-labelledby="grenzen">
+          <h2 id="grenzen">Was diese Beratung nicht ist</h2>
+          <p>
+            Wir sind transparent, wo die Grenzen liegen. Eine Zulassung für verpflichtende
+            Beratungseinsätze nach § 37 Abs. 3 SGB XI ist für uns nicht unabhängig belegt – wir
+            behaupten sie deshalb nicht. Ob wir solche Einsätze durchführen dürfen, fragen Sie
+            bitte direkt bei uns nach.
+          </p>
+          <p>
+            Ebenso wenig können wir über die Website entscheiden, ob ein Antrag bewilligt wird, wie
+            hoch Ihr Anspruch ist oder welche medizinische Maßnahme richtig ist. Verbindliche
+            Auskünfte zu Leistungsansprüchen erteilt Ihre Pflege- oder Krankenkasse; medizinische
+            Fragen gehören in die ärztliche Behandlung.
+          </p>
+        </section>
+
+        <section class="prose counsel__block">
+          <h2>Unabhängige Anlaufstellen</h2>
+          <p>
+            Neben dem Gespräch mit uns gibt es öffentliche Informationsangebote. Diese Quellen
+            beschreiben die gesetzlichen Leistungen unabhängig von einem einzelnen Pflegedienst.
+          </p>
+          <ul class="counsel__sources">
+            <li>
+              <a href={SOURCES.pflegeZuHause.url} target="_blank" rel="noopener noreferrer">
+                {SOURCES.pflegeZuHause.label}
+              </a>
+            </li>
+            <li>
+              <a href={SOURCES.entlastungsbetrag.url} target="_blank" rel="noopener noreferrer">
+                {SOURCES.entlastungsbetrag.label}
+              </a>
+            </li>
+            <li>
+              <a href={SOURCES.verhinderungspflege.url} target="_blank" rel="noopener noreferrer">
+                {SOURCES.verhinderungspflege.label}
+              </a>
+            </li>
+          </ul>
+          <p class="counsel__stand">Informationsstand der verlinkten Übersicht: {INFORMATIONSSTAND}</p>
+        </section>
+
+        <RelatedLinks
+          links={[
+            { label: 'Kosten & Finanzierung', href: '/kosten-finanzierung/' },
+            { label: 'Verhinderungspflege', href: '/leistungen/verhinderungspflege/' },
+            { label: 'Alle Leistungen', href: '/leistungen/' },
+            { label: 'Kontakt', href: '/kontakt/' },
+          ]}
+        />
+      </div>
+
+      <div class="counsel__aside">
+        <ContactPanel
+          title="Fragen sortieren"
+          text="Sie müssen die richtigen Begriffe nicht kennen. Schildern Sie einfach, was gerade ansteht."
+        />
+      </div>
+    </div>
+  </div>
+
+  <ContactCta />
+</Base>
+
+<style>
+  .counsel__layout { display: grid; gap: clamp(2rem, 4vw, 3.5rem); align-items: start; }
+  .counsel__main { min-width: 0; }
+  .counsel__block { margin-top: clamp(2.25rem, 4vw, 3rem); }
+
+  .counsel__limits {
+    margin-top: clamp(2.25rem, 4vw, 3rem);
+    padding: clamp(1.4rem, 3vw, 2rem);
+    background: var(--paper-2);
+    border: 1px solid var(--stone);
+    border-left: 4px solid var(--brand);
+    border-radius: var(--radius-lg);
+    max-width: var(--shell-narrow);
+  }
+  .counsel__limits h2 { margin-top: 0; }
+  .counsel__limits p { color: var(--ink-soft); }
+
+  .counsel__sources { list-style: none; padding: 0; margin: 0 0 1.2em; display: grid; gap: 0.6rem; }
+  .counsel__sources li { margin: 0; }
+  .counsel__sources a { font-weight: 600; font-size: var(--step--1); }
+  .counsel__stand { font-size: 0.85rem; color: var(--ink-faint); }
+
+  @media (min-width: 980px) {
+    .counsel__layout { grid-template-columns: minmax(0, 1fr) 330px; gap: 4rem; }
+  }
+</style>

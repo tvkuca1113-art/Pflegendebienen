@@ -1,0 +1,63 @@
+---
+import { CONTACT } from '../data/business';
+import Icon from './Icon.astro';
+---
+
+{/* Fixed only below 900px. Body reserves matching bottom padding, so it never
+    covers content, accordions or the page end. */}
+<div class="contact-bar">
+  <a class="contact-bar__action contact-bar__action--primary" href={CONTACT.phoneHref}>
+    <Icon name="phone" size={20} />
+    <span>Anrufen</span>
+  </a>
+  <a
+    class="contact-bar__action"
+    href={CONTACT.whatsappHref}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <Icon name="whatsapp" size={20} />
+    <span>WhatsApp</span>
+  </a>
+</div>
+
+<style>
+  .contact-bar { display: none; }
+
+  @media (max-width: 899px) {
+    .contact-bar {
+      position: fixed;
+      inset-inline: 0;
+      bottom: 0;
+      z-index: 90;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 0.6rem;
+      padding: 0.6rem 0.75rem calc(0.6rem + env(safe-area-inset-bottom, 0px));
+      background: color-mix(in srgb, var(--paper) 94%, transparent);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--stone);
+    }
+    .contact-bar__action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      min-height: 50px;
+      padding: 0.6rem 0.8rem;
+      border-radius: 999px;
+      border: 1.5px solid #9a8a70;
+      background: var(--surface);
+      color: var(--ink);
+      font-weight: 700;
+      font-size: 1rem;
+      text-align: center;
+      text-decoration: none;
+    }
+    .contact-bar__action--primary {
+      background: var(--brand);
+      border-color: transparent;
+      box-shadow: 0 6px 16px -8px rgba(138, 74, 5, 0.6);
+    }
+  }
+</style>

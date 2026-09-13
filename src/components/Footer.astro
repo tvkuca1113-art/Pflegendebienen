@@ -1,0 +1,201 @@
+---
+import { FOOTER_NAV } from '../data/navigation';
+import {
+  BRAND,
+  CONTACT,
+  OFFICES,
+  LEGAL_HEADQUARTERS,
+  SOCIAL,
+  fullAddress,
+} from '../data/business';
+import { IS_DEMO } from '../config/site.mjs';
+import Icon from './Icon.astro';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer on-dark">
+  <div class="shell">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        {/* Light-on-dark original logo variant, unmodified. */}
+        <img src="/logo-weiss-90px.png" width="90" height="55" alt={BRAND.name} class="site-footer__logo" />
+        <p class="site-footer__descriptor">{BRAND.descriptor}</p>
+        <p class="site-footer__slogan serif">„{BRAND.slogan}“</p>
+        <ul class="site-footer__contact">
+          <li>
+            <Icon name="phone" size={18} />
+            <a href={CONTACT.phoneHref}>{CONTACT.phoneDisplay}</a>
+          </li>
+          <li>
+            <Icon name="whatsapp" size={18} />
+            <a href={CONTACT.whatsappHref} target="_blank" rel="noopener noreferrer">
+              WhatsApp: {CONTACT.whatsappDisplay}
+            </a>
+          </li>
+          <li>
+            <Icon name="mail" size={18} />
+            <a href={CONTACT.emailHref}>{CONTACT.email}</a>
+          </li>
+        </ul>
+        <ul class="site-footer__social">
+          <li>
+            <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer">Instagram</a>
+          </li>
+          <li>
+            <a href={SOCIAL.facebook} target="_blank" rel="noopener noreferrer">Facebook</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="site-footer__cols">
+        <div>
+          <h2 class="site-footer__heading">Leistungen</h2>
+          <ul class="site-footer__links">
+            {FOOTER_NAV.leistungen.map((l) => (
+              <li><a href={l.href}>{l.label}</a></li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h2 class="site-footer__heading">Orientierung</h2>
+          <ul class="site-footer__links">
+            {FOOTER_NAV.orientierung.map((l) => (
+              <li><a href={l.href}>{l.label}</a></li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h2 class="site-footer__heading">Büros für Besuche</h2>
+          <ul class="site-footer__offices">
+            {OFFICES.map((o) => (
+              <li>
+                <strong>{o.label}</strong>
+                <span>{fullAddress(o)}</span>
+                <a href={o.directionsUrl} target="_blank" rel="noopener noreferrer">
+                  Route planen
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p class="site-footer__note">
+            Sitz laut Impressum: {LEGAL_HEADQUARTERS.street}, {LEGAL_HEADQUARTERS.postalCode}{' '}
+            {LEGAL_HEADQUARTERS.locality} – kein Besucherbüro.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-footer__bottom">
+      <p class="site-footer__legal">© {year} {BRAND.legalName}</p>
+      <ul class="site-footer__links site-footer__links--inline">
+        {FOOTER_NAV.rechtliches.map((l) => (
+          <li><a href={l.href}>{l.label}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    {IS_DEMO && (
+      <p class="site-footer__demo">
+        Diese Website ist eine nicht öffentliche Vorschau. Sie ist auf <code>noindex</code> gestellt
+        und ersetzt die offizielle Website nicht.
+      </p>
+    )}
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--night);
+    padding-block: clamp(3rem, 6vw, 4.5rem) 2.5rem;
+    margin-top: 0;
+  }
+  .site-footer__top {
+    display: grid;
+    gap: clamp(2.2rem, 5vw, 4rem);
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(247, 241, 231, 0.16);
+  }
+  .site-footer__logo { width: 90px; height: auto; margin-bottom: 1.1rem; }
+  .site-footer__descriptor { font-weight: 700; margin-bottom: 0.3em; color: #fffaf3; }
+  .site-footer__slogan { color: var(--brand); font-size: var(--step-1); margin-bottom: 1.4em; }
+
+  .site-footer__contact,
+  .site-footer__social,
+  .site-footer__links,
+  .site-footer__offices { list-style: none; margin: 0; padding: 0; }
+
+  .site-footer__contact li {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-bottom: 0.55em;
+  }
+  .site-footer__contact svg { color: var(--brand); flex: 0 0 auto; }
+  .site-footer__contact a { color: #f7f1e7; text-decoration: none; font-weight: 600; }
+  .site-footer__contact a:hover { color: var(--brand); text-decoration: underline; }
+
+  .site-footer__social { display: flex; gap: 1.25rem; margin-top: 1.4rem; }
+  .site-footer__social li { margin: 0; }
+  .site-footer__social a { color: #d9cfc0; font-size: var(--step--1); font-weight: 600; }
+
+  .site-footer__cols { display: grid; gap: 2.2rem; }
+  .site-footer__heading {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--brand);
+    margin-bottom: 1rem;
+  }
+  .site-footer__links li { margin-bottom: 0.15em; }
+  .site-footer__links a {
+    display: inline-block;
+    padding: 0.3rem 0;
+    color: #e4dbcd;
+    text-decoration: none;
+    font-size: var(--step--1);
+  }
+  .site-footer__links a:hover { color: var(--brand); text-decoration: underline; }
+
+  .site-footer__offices li { margin-bottom: 1.1rem; display: grid; gap: 0.15rem; }
+  .site-footer__offices strong { color: #fffaf3; font-size: var(--step--1); }
+  .site-footer__offices span { color: #cfc5b6; font-size: var(--step--1); }
+  .site-footer__offices a { color: var(--brand); font-size: var(--step--1); font-weight: 600; padding-block: 0.25rem; display: inline-block; }
+
+  .site-footer__note {
+    color: #b9ad9c;
+    font-size: 0.86rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .site-footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem 2rem;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1.8rem;
+  }
+  .site-footer__legal { margin: 0; color: #b9ad9c; font-size: 0.88rem; }
+  .site-footer__links--inline { display: flex; gap: 1.5rem; }
+
+  .site-footer__demo {
+    margin: 1.6rem 0 0;
+    padding: 0.9rem 1.1rem;
+    border: 1px dashed rgba(248, 155, 28, 0.5);
+    border-radius: 12px;
+    color: #d9cfc0;
+    font-size: 0.86rem;
+    line-height: 1.5;
+  }
+  .site-footer__demo code { color: var(--brand); font-size: 0.95em; }
+
+  @media (min-width: 720px) {
+    .site-footer__cols { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (min-width: 1000px) {
+    .site-footer__top { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.6fr); }
+  }
+</style>

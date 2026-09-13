@@ -1,0 +1,149 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { BRAND, CONTACT, OWNERS, LEGAL_HEADQUARTERS, OFFICES, RESEARCH_DATE } from '../data/business';
+import { IS_DEMO } from '../config/site.mjs';
+
+const crumbs = [
+  { name: 'Startseite', path: '/' },
+  { name: 'Impressum', path: '/impressum/' },
+];
+---
+
+<Base
+  title="Impressum | Pflegende Bienen"
+  description="Anbieterkennzeichnung der Pflegenden Bienen: Firmierung, Sitz, vertretungsberechtigte Inhaber und Kontaktdaten."
+  path="/impressum/"
+  crumbs={crumbs}
+>
+  <PageHeader eyebrow="Rechtliches" title="Impressum" crumbs={crumbs} />
+
+  <div class="section">
+    <div class="shell legal">
+      {IS_DEMO && (
+        <p class="legal__demo">
+          <strong>Hinweis:</strong> Diese Seite gehört zu einer nicht öffentlichen Vorschau. Die
+          rechtlichen Angaben stammen aus der bestehenden Website und sind vor einer
+          Veröffentlichung durch die Inhaber und rechtlich zu prüfen.
+        </p>
+      )}
+
+      <section class="legal__block">
+        <h2>Angaben gemäß § 5 DDG</h2>
+        <p class="legal__lines">
+          {BRAND.legalName}<br />
+          {LEGAL_HEADQUARTERS.street}<br />
+          {LEGAL_HEADQUARTERS.postalCode} {LEGAL_HEADQUARTERS.locality}<br />
+          Deutschland
+        </p>
+        <p class="legal__note">
+          Diese Anschrift ist der Sitz des Unternehmens und kein Büro für Besuche.
+        </p>
+      </section>
+
+      <section class="legal__block">
+        <h2>Vertreten durch</h2>
+        <p class="legal__lines">
+          {OWNERS.marija.name}<br />
+          {OWNERS.dusko.name}
+        </p>
+        <p class="legal__note">
+          Gesellschaft bürgerlichen Rechts (GbR). Die Schreibweise der Firmierung entspricht der
+          Angabe im bestehenden Impressum.
+        </p>
+      </section>
+
+      <section class="legal__block">
+        <h2>Kontakt</h2>
+        <p class="legal__lines">
+          Telefon: <a href={CONTACT.phoneHref}>{CONTACT.phoneDisplay}</a><br />
+          Fax: {CONTACT.faxDisplay}<br />
+          E-Mail: <a href={CONTACT.emailHref}>{CONTACT.email}</a>
+        </p>
+      </section>
+
+      <section class="legal__block">
+        <h2>Büros für Besuche</h2>
+        <ul class="legal__offices">
+          {OFFICES.map((o) => (
+            <li>
+              <strong>{o.label}:</strong> {o.street}, {o.postalCode} {o.locality}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section class="legal__block">
+        <h2>Verbraucherstreitbeilegung</h2>
+        <p>
+          Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer
+          Verbraucherschlichtungsstelle teilzunehmen.
+        </p>
+        <p class="legal__note">
+          Ein Hinweis auf die europäische Online-Streitbeilegungsplattform entfällt: Die Plattform
+          hat ihren Betrieb zum 20. Juli 2025 eingestellt. Ein entsprechender Verweis aus der alten
+          Website wurde deshalb nicht übernommen.
+        </p>
+      </section>
+
+      <section class="legal__block legal__open">
+        <h2>Von den Inhabern zu ergänzen</h2>
+        <p>
+          Die folgenden Angaben konnten für diese Vorschau nicht belegt werden und sind vor einer
+          Veröffentlichung zu prüfen und zu ergänzen:
+        </p>
+        <ul>
+          <li>Umsatzsteuer-Identifikationsnummer oder Hinweis auf Steuerbefreiung</li>
+          <li>Zuständige Aufsichtsbehörde und Angaben zur Zulassung als Pflegedienst</li>
+          <li>Gesetzliche Berufsbezeichnung und Staat der Verleihung, sofern einschlägig</li>
+          <li>Angaben zur Berufshaftpflichtversicherung, sofern anzugeben</li>
+          <li>Verantwortliche Person für redaktionelle Inhalte nach § 18 Abs. 2 MStV</li>
+        </ul>
+        <p class="legal__note">
+          Diese Liste ersetzt keine Rechtsberatung. Sie benennt nur die Felder, die für diese
+          Vorschau bewusst offengelassen wurden, statt sie zu erfinden. Recherchestand der
+          übernommenen Unternehmensdaten: {RESEARCH_DATE}.
+        </p>
+      </section>
+
+      <section class="legal__block">
+        <h2>Bildnachweis</h2>
+        <p>
+          Alle Fotografien stammen aus öffentlich zugänglichen Veröffentlichungen des Unternehmens
+          (eigene Website sowie die offiziellen Instagram- und Facebook-Profile) und wurden
+          unverändert übernommen. Vor einer Veröffentlichung sind die Nutzungsrechte und die
+          Einwilligungen der abgebildeten Personen durch die Inhaber zu bestätigen.
+        </p>
+      </section>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .legal { max-width: var(--shell-narrow); }
+  .legal__block { margin-bottom: clamp(2rem, 4vw, 2.75rem); }
+  .legal__block h2 { font-size: var(--step-1); margin-bottom: 0.6em; }
+  .legal__lines { line-height: 1.8; }
+  .legal__note { font-size: var(--step--1); color: var(--ink-faint); }
+  .legal__offices { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.5rem; }
+  .legal__offices li { margin: 0; }
+
+  .legal__demo {
+    padding: 1rem 1.25rem;
+    background: var(--brand-wash);
+    border: 1px solid var(--brand-wash-2);
+    border-radius: var(--radius);
+    font-size: var(--step--1);
+    color: var(--brand-deep);
+    margin-bottom: 2.5rem;
+  }
+
+  .legal__open {
+    padding: clamp(1.3rem, 3vw, 1.8rem);
+    background: var(--paper-2);
+    border: 1px solid var(--stone);
+    border-left: 4px solid var(--brand);
+    border-radius: var(--radius-lg);
+  }
+  .legal__open h2 { margin-top: 0; }
+</style>

@@ -1,0 +1,240 @@
+---
+import Photo from './Photo.astro';
+import Icon from './Icon.astro';
+import { CONTACT, TRUST_POINTS } from '../data/business';
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  {/* Signature motion: a soft amber ribbon at the hero edge. Decorative only,
+      behind the content, never over the text or the photograph's faces. */}
+  <div class="hero__ribbon" aria-hidden="true">
+    <svg viewBox="0 0 620 760" preserveAspectRatio="xMidYMid slice" focusable="false">
+      <defs>
+        <linearGradient id="ribbon-a" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#f89b1c" stop-opacity="0.34" />
+          <stop offset="55%" stop-color="#f47f2c" stop-opacity="0.16" />
+          <stop offset="100%" stop-color="#f89b1c" stop-opacity="0.04" />
+        </linearGradient>
+        <linearGradient id="ribbon-b" x1="1" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#f89b1c" stop-opacity="0.2" />
+          <stop offset="100%" stop-color="#f89b1c" stop-opacity="0" />
+        </linearGradient>
+      </defs>
+      <path
+        class="hero__ribbon-path hero__ribbon-path--1"
+        d="M640 -40C430 60 470 240 330 340 190 440 60 470 -20 620"
+        fill="none"
+        stroke="url(#ribbon-a)"
+        stroke-width="118"
+        stroke-linecap="round"
+      />
+      <path
+        class="hero__ribbon-path hero__ribbon-path--2"
+        d="M700 120C520 200 540 360 400 450 260 540 150 570 60 740"
+        fill="none"
+        stroke="url(#ribbon-b)"
+        stroke-width="64"
+        stroke-linecap="round"
+      />
+    </svg>
+  </div>
+
+  <div class="shell hero__inner">
+    <div class="hero__text">
+      <span class="eyebrow">Ambulante Pflege · München-West &amp; Germering</span>
+      <h1 id="hero-title" class="hero__title">
+        Zuhause bleiben.<br />
+        <span class="serif hero__title-accent">Mit Unterstützung, die zu Ihnen passt.</span>
+      </h1>
+      <p class="lead hero__lead">
+        Sie suchen Pflege für sich oder einen Angehörigen? Die Pflegenden Bienen unterstützen bei
+        der Körperpflege, bei ärztlich verordneten Behandlungen und im Haushalt. In München-West,
+        Germering und ausgewählten Orten im Umland.
+      </p>
+
+      <div class="hero__actions">
+        <a class="btn hero__call" href={CONTACT.phoneHref}>
+          <Icon name="phone" size={20} />
+          Jetzt persönlich sprechen
+        </a>
+        <a class="btn btn--secondary" href="#orientierung">Welche Hilfe passt zu uns?</a>
+      </div>
+      <p class="hero__number">
+        <a href={CONTACT.phoneHref}>{CONTACT.phoneDisplay}</a>
+        <span class="muted">Wir besprechen Ihre Situation persönlich am Telefon.</span>
+      </p>
+
+      <p class="hero__support">
+        Sie müssen noch nicht wissen, welche Leistung die richtige ist. Beschreiben Sie uns zuerst
+        Ihre Situation.
+      </p>
+    </div>
+
+    <div class="hero__media">
+      <div class="hero__frame">
+        <Photo
+          src="hero-garten-original.jpg"
+          alt="Zwei Frauen und ein Kind sitzen gemeinsam lächelnd in einem Garten"
+          width={1100}
+          height={825}
+          sizes="(min-width: 1100px) 620px, (min-width: 700px) 60vw, 100vw"
+          priority={true}
+          class="hero__image"
+          position="50% 42%"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="hero__trust">
+    <div class="shell">
+      <ul class="hero__trust-list">
+        {TRUST_POINTS.map((point) => (
+          <li>{point}</li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    background: linear-gradient(174deg, #fffdf8 0%, var(--paper) 62%, #fdf3e4 100%);
+    overflow: hidden;
+    border-bottom: 1px solid var(--stone);
+  }
+
+  .hero__ribbon {
+    position: absolute;
+    top: -8%;
+    right: -12%;
+    width: min(62vw, 720px);
+    height: 118%;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hero__ribbon svg { width: 100%; height: 100%; }
+
+  .hero__ribbon-path {
+    stroke-dasharray: 1400;
+    stroke-dashoffset: 1400;
+    animation: ribbon-draw 1.5s var(--ease) 0.15s forwards;
+  }
+  .hero__ribbon-path--2 { animation-duration: 1.8s; animation-delay: 0.3s; }
+
+  @keyframes ribbon-draw {
+    to { stroke-dashoffset: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero__ribbon-path { stroke-dasharray: none; stroke-dashoffset: 0; animation: none; }
+  }
+
+  .hero__inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: clamp(2rem, 5vw, 3.5rem);
+    padding-block: clamp(2.25rem, 5vw, 5rem) clamp(2.5rem, 5vw, 4.5rem);
+    align-items: center;
+  }
+
+  .hero__title {
+    font-size: var(--step-5);
+    max-width: 14ch;
+    margin-bottom: 0.45em;
+  }
+  .hero__title-accent { color: var(--brand-deep); font-weight: 600; }
+
+  .hero__lead { max-width: 46ch; margin-bottom: 1.6em; }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem 1rem;
+    margin-bottom: 1rem;
+  }
+  .hero__call { flex: 0 1 auto; }
+
+  .hero__number {
+    font-size: var(--step-1);
+    font-weight: 700;
+    margin-bottom: 1.5em;
+  }
+  .hero__number a { color: var(--ink); text-decoration: none; border-bottom: 2px solid var(--brand); }
+  .hero__number a:hover { color: var(--brand-deep); }
+  .hero__number .muted { font-size: var(--step--1); font-weight: 500; display: block; margin-top: 0.3em; }
+
+  .hero__support {
+    max-width: 44ch;
+    padding-left: 1.1rem;
+    border-left: 3px solid var(--brand);
+    color: var(--ink-soft);
+    font-size: var(--step--1);
+    margin-bottom: 0;
+  }
+
+  .hero__media { position: relative; }
+  .hero__frame {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background: var(--stone-2);
+  }
+  .hero__image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .hero__trust {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--stone);
+    background: color-mix(in srgb, var(--paper-2) 80%, transparent);
+  }
+  .hero__trust-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 2.25rem;
+    list-style: none;
+    margin: 0;
+    padding-block: 1.1rem;
+    font-size: var(--step--1);
+    font-weight: 600;
+    color: var(--ink-soft);
+  }
+  .hero__trust-list li {
+    position: relative;
+    margin: 0;
+    padding-left: 1.35rem;
+  }
+  .hero__trust-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--brand);
+  }
+
+  /* Mobile: headline and phone stay first; the photo follows immediately. */
+  @media (max-width: 699px) {
+    .hero__image { aspect-ratio: 5 / 4; }
+    .hero__title { font-size: clamp(2.1rem, 8.5vw, 2.8rem); }
+    .hero__ribbon { width: 120vw; right: -45vw; opacity: 0.75; }
+  }
+
+  @media (min-width: 700px) {
+    .hero__inner { grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr); }
+    .hero__media { order: 2; }
+  }
+  @media (min-width: 1100px) {
+    .hero__inner { grid-template-columns: minmax(0, 1fr) minmax(0, 1.14fr); gap: 4rem; }
+    .hero__title { max-width: 15ch; }
+  }
+</style>

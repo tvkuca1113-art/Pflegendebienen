@@ -1,0 +1,118 @@
+---
+import { SERVICES } from '../data/services';
+import Photo from './Photo.astro';
+
+/** Four entry points as text-led rows, with one humanising team photograph
+    beside them. The photograph carries its own caption so it is never read as
+    an illustration of a particular service. */
+---
+
+<section class="section entries" id="hilfe" aria-labelledby="entries-title">
+  <div class="shell">
+    <div class="entries__head">
+      <span class="eyebrow">Erster Überblick</span>
+      <h2 id="entries-title">Wobei dürfen wir Sie unterstützen?</h2>
+      <p class="lead">
+        Manchmal fehlt eine helfende Hand. Manchmal wird Pflege plötzlich zum Thema. Hier finden
+        Sie einen ersten Überblick.
+      </p>
+    </div>
+
+    <div class="entries__grid">
+      <figure class="entries__figure reveal">
+        <Photo
+          src="team-alltag-facebook.jpg"
+          alt="Vier Teammitglieder der Pflegenden Bienen in gelben Poloshirts bei einer gemeinsamen Feier im Büro"
+          width={620}
+          height={827}
+          sizes="(min-width: 1080px) 34vw, (min-width: 760px) 45vw, 100vw"
+          class="entries__image"
+        />
+        <figcaption class="entries__caption">
+          Teammitglieder der Pflegenden Bienen im Büro. Wer Sie im Einzelfall besucht, stimmen wir
+          persönlich ab.
+        </figcaption>
+      </figure>
+
+      <ol class="entries__rows">
+        {SERVICES.map((s, i) => (
+          <li class="entry reveal">
+            <span class="entry__index" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <div class="entry__body">
+              <h3 class="entry__title"><a href={s.path}>{s.cardTitle}</a></h3>
+              <p class="entry__text">{s.cardText}</p>
+              <span class="arrow-link entry__link" aria-hidden="true">{s.navLabel} ansehen</span>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .entries__head { max-width: 58ch; margin-bottom: clamp(2rem, 4vw, 3.25rem); }
+
+  .entries__grid { display: grid; gap: clamp(1.75rem, 4vw, 3rem); align-items: start; }
+
+  .entries__figure { margin: 0; }
+  .entries__image {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+  .entries__caption {
+    margin-top: 0.9rem;
+    padding-left: 0.95rem;
+    border-left: 3px solid var(--brand);
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  .entries__rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.9rem; }
+
+  .entry {
+    position: relative;
+    margin: 0;
+    display: flex;
+    gap: clamp(0.9rem, 2vw, 1.5rem);
+    padding: clamp(1.25rem, 2.6vw, 1.7rem) clamp(1.25rem, 2.6vw, 1.8rem);
+    background: var(--surface);
+    border: 1px solid var(--stone);
+    border-radius: var(--radius-lg);
+    transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), border-color 0.2s var(--ease);
+  }
+  .entry:nth-child(even) { background: linear-gradient(180deg, #fffdf8 0%, #fdf4e6 100%); }
+  .entry:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: #d8c9ae; }
+  .entry:focus-within { border-color: var(--brand); }
+
+  .entry__index {
+    flex: 0 0 auto;
+    font-family: var(--font-serif);
+    font-size: var(--step-1);
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--brand);
+    padding-top: 0.1em;
+  }
+
+  .entry__body { display: flex; flex-direction: column; gap: 0.5rem; }
+  .entry__title { margin: 0; font-size: var(--step-1); }
+  .entry__title a { color: var(--ink); text-decoration: none; }
+  .entry__title a::after { content: ''; position: absolute; inset: 0; }
+  .entry:hover .entry__title a { color: var(--brand-deep); }
+
+  .entry__text { margin: 0; color: var(--ink-soft); font-size: var(--step--1); max-width: 62ch; }
+  .entry__link { margin-top: 0.3rem; align-self: flex-start; font-size: var(--step--1); }
+
+  @media (min-width: 760px) {
+    .entries__grid { grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.35fr); }
+  }
+  @media (min-width: 1080px) {
+    .entries__grid { grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.4fr); gap: 3.5rem; }
+    .entries__rows { gap: 1.1rem; }
+  }
+</style>

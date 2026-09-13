@@ -1,0 +1,182 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import ContactPanel from '../components/ContactPanel.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import ContactCta from '../components/ContactCta.astro';
+import Icon from '../components/Icon.astro';
+import {
+  SERVICE_AREA,
+  OFFICES,
+  CONTACT,
+  LEGAL_HEADQUARTERS,
+  BRAND,
+  fullAddress,
+} from '../data/business';
+
+const office = OFFICES.find((o) => o.id === 'germering')!;
+const crumbs = [
+  { name: 'Startseite', path: '/' },
+  { name: 'Germering', path: '/germering/' },
+];
+---
+
+<Base
+  title="Ambulanter Pflegedienst Germering & Umland | Pflegende Bienen"
+  description="Pflege zu Hause in Germering, Puchheim, Eichenau, Gilching, Gräfelfing und Planegg. Besucherbüro in der Otto-Wagner-Str. 10, 82110 Germering."
+  path="/germering/"
+  crumbs={crumbs}
+>
+  <PageHeader
+    eyebrow="Einsatzgebiet"
+    title="Ambulante Pflege in Germering und im Umland"
+    intro="Von Germering aus versorgen wir den westlichen Landkreis: Puchheim, Eichenau, Gilching sowie Gräfelfing und Planegg gehören zum veröffentlichten Einsatzgebiet."
+    crumbs={crumbs}
+  />
+
+  <div class="section">
+    <div class="shell loc__layout">
+      <div class="loc__main">
+        <section aria-labelledby="orte">
+          <h2 id="orte">Diese Orte sind als Einsatzgebiet genannt</h2>
+          <p class="loc__intro">
+            Die folgenden Orte im Umland stehen auf unserer Website als Einsatzgebiet. Ob und wann
+            ein Einsatz möglich ist, hängt vom Bedarf und von unseren aktuellen Möglichkeiten ab und
+            wird persönlich geklärt.
+          </p>
+          <ul class="tag-list loc__tags">
+            {SERVICE_AREA.surroundingPlaces.map((d) => <li>{d}</li>)}
+          </ul>
+          <p class="loc__note">
+            Sie wohnen in einem Stadtteil im Westen Münchens? Diese Gebiete finden Sie auf der
+            <a href="/muenchen-west/">Seite München-West</a>. Für alle anderen Orte fragen Sie
+            bitte direkt bei uns an.
+          </p>
+        </section>
+
+        <section class="loc__block" aria-labelledby="buero">
+          <h2 id="buero">Ihr Büro in Germering</h2>
+          <div class="loc__office">
+            <div>
+              <h3 class="loc__office-name">
+                <Icon name="pin" size={20} />
+                {office.label}
+              </h3>
+              <address class="loc__address">
+                {office.street}<br />
+                {office.postalCode} {office.locality}
+              </address>
+              <p class="loc__office-note">
+                Bitte vereinbaren Sie einen Besuch vorher telefonisch. Feste Öffnungszeiten nennen
+                wir hier nicht, weil sie für diese Website nicht belegt sind.
+              </p>
+            </div>
+            <div class="loc__office-actions">
+              <a class="btn" href={CONTACT.phoneHref}>
+                <Icon name="phone" size={19} />
+                {CONTACT.phoneDisplay}
+              </a>
+              <a class="btn btn--secondary" href={office.directionsUrl} target="_blank" rel="noopener noreferrer">
+                <Icon name="route" size={18} />
+                Route planen
+              </a>
+            </div>
+          </div>
+
+          <div class="loc__hq">
+            <h3 class="loc__hq-title">Hinweis zur Adresse im Impressum</h3>
+            <p>
+              Im Impressum ist eine weitere Germeringer Adresse eingetragen:
+              <strong>{LEGAL_HEADQUARTERS.street}, {LEGAL_HEADQUARTERS.postalCode}{' '}
+              {LEGAL_HEADQUARTERS.locality}</strong>. Das ist der Sitz von {BRAND.legalName} und
+              <strong> kein Büro für Besuche</strong>. Kommen Sie für ein Gespräch bitte in die
+              {' '}{office.street}.
+            </p>
+          </div>
+        </section>
+
+        <section class="loc__block" aria-labelledby="wege">
+          <h2 id="wege">Was das für Ihren Alltag bedeutet</h2>
+          <p class="loc__intro">
+            Zwei Büros bedeuten nicht zwei Unternehmen. Sie erreichen uns für beide Gebiete unter
+            derselben Telefonnummer, und die Versorgung wird von demselben Team organisiert. Für Sie
+            ändert sich also nur, welches Büro für ein persönliches Gespräch am nächsten liegt.
+          </p>
+          <ul class="check-list loc__points">
+            <li>Eine Telefonnummer für München-West und für Germering: {CONTACT.phoneDisplay}.</li>
+            <li>Dasselbe Leistungsangebot – von der Grundpflege bis zur Verhinderungspflege.</li>
+            <li>Gespräche vor Ort nach vorheriger telefonischer Absprache.</li>
+          </ul>
+        </section>
+
+        <RelatedLinks
+          links={[
+            { label: 'München-West', href: '/muenchen-west/' },
+            { label: 'Alle Leistungen', href: '/leistungen/' },
+            { label: 'Verhinderungspflege', href: '/leistungen/verhinderungspflege/' },
+            { label: 'Kontakt', href: '/kontakt/' },
+          ]}
+        />
+      </div>
+
+      <div class="loc__aside">
+        <ContactPanel
+          title="Einsatz in Germering anfragen"
+          text={`Nennen Sie uns Ihren Ort und die gewünschte Unterstützung. Adresse des Besucherbüros: ${fullAddress(office)}.`}
+        />
+      </div>
+    </div>
+  </div>
+
+  <ContactCta
+    title="Pflege in Germering und Umgebung besprechen"
+    text="Rufen Sie uns an – wir klären persönlich, ob und wie eine Versorgung an Ihrem Wohnort möglich ist."
+  />
+</Base>
+
+<style>
+  .loc__layout { display: grid; gap: clamp(2rem, 4vw, 3.5rem); align-items: start; }
+  .loc__main { min-width: 0; }
+  .loc__block { margin-top: clamp(2.5rem, 5vw, 3.5rem); }
+  .loc__intro { max-width: 68ch; color: var(--ink-soft); }
+  .loc__tags { margin-bottom: 1.5rem; }
+  .loc__note {
+    max-width: 68ch;
+    padding-left: 1.1rem;
+    border-left: 3px solid var(--brand);
+    color: var(--ink-soft);
+    font-size: var(--step--1);
+  }
+  .loc__points { max-width: 68ch; }
+
+  .loc__office {
+    display: grid;
+    gap: 1.5rem;
+    padding: clamp(1.3rem, 3vw, 1.9rem);
+    background: var(--surface);
+    border: 1px solid var(--stone);
+    border-radius: var(--radius-lg);
+  }
+  .loc__office-name { display: flex; align-items: center; gap: 0.55rem; font-size: var(--step-1); margin-bottom: 0.5em; }
+  .loc__office-name svg { color: var(--brand-2); }
+  .loc__address { font-style: normal; line-height: 1.6; margin-bottom: 1em; }
+  .loc__office-note { margin: 0; color: var(--ink-soft); font-size: var(--step--1); max-width: 52ch; }
+  .loc__office-actions { display: flex; flex-wrap: wrap; gap: 0.7rem; align-content: start; }
+
+  .loc__hq {
+    margin-top: 1.25rem;
+    padding: clamp(1.1rem, 2.5vw, 1.5rem);
+    background: var(--brand-wash);
+    border: 1px solid var(--brand-wash-2);
+    border-radius: var(--radius);
+  }
+  .loc__hq-title { font-size: var(--step-0); margin-bottom: 0.5em; color: var(--brand-deep); }
+  .loc__hq p { margin: 0; font-size: var(--step--1); color: var(--ink-soft); max-width: 64ch; }
+
+  @media (min-width: 700px) {
+    .loc__office { grid-template-columns: minmax(0, 1fr) auto; }
+  }
+  @media (min-width: 980px) {
+    .loc__layout { grid-template-columns: minmax(0, 1fr) 330px; gap: 4rem; }
+  }
+</style>

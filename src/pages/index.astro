@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import ServiceEntries from '../components/ServiceEntries.astro';
+import Guide from '../components/Guide.astro';
+import Steps from '../components/Steps.astro';
+import People from '../components/People.astro';
+import FundingTeaser from '../components/FundingTeaser.astro';
+import AreaSection from '../components/AreaSection.astro';
+import Insights from '../components/Insights.astro';
+import Faq from '../components/Faq.astro';
+import ContactCta from '../components/ContactCta.astro';
+import { FAQ } from '../data/faq';
+import { faqGraph, serviceGraph } from '../lib/schema';
+
+const title = 'Pflegedienst München-West & Germering | Pflegende Bienen';
+const description =
+  'Ambulante Pflege, Behandlungspflege und Alltagshilfe in München-West und Germering. Lernen Sie die Pflegenden Bienen kennen und besprechen Sie Ihren Bedarf.';
+---
+
+<Base
+  title={title}
+  description={description}
+  path="/"
+  crumbs={[{ name: 'Startseite', path: '/' }]}
+  schema={[faqGraph([...FAQ]), ...serviceGraph()]}
+>
+  <Hero />
+  <ServiceEntries />
+  <Guide />
+  <Steps />
+  <People />
+  <FundingTeaser />
+  <AreaSection />
+  <Insights />
+  <Faq items={FAQ} />
+  <ContactCta />
+</Base>

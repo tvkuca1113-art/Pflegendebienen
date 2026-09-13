@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import { CONTACT } from '../data/business';
+import { MAIN_NAV } from '../data/navigation';
+---
+
+<Base
+  title="Seite nicht gefunden | Pflegende Bienen"
+  description="Diese Seite existiert nicht oder wurde verschoben. Hier finden Sie die wichtigsten Bereiche der Website."
+  path="/404/"
+>
+  <div class="section notfound">
+    <div class="shell">
+      <span class="eyebrow">Fehler 404</span>
+      <h1>Diese Seite konnten wir nicht finden.</h1>
+      <p class="lead">
+        Vielleicht hat sich die Adresse geändert. Über die folgenden Bereiche kommen Sie weiter –
+        oder Sie rufen uns einfach an.
+      </p>
+      <ul class="notfound__links">
+        {MAIN_NAV.map((item) => (
+          <li><a class="arrow-link" href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+      <a class="btn notfound__cta" href={CONTACT.phoneHref}>{CONTACT.phoneDisplay} anrufen</a>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .notfound { max-width: 62ch; }
+  .notfound__links {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem 2rem;
+  }
+  .notfound__links li { margin: 0; }
+  .notfound__cta { margin-top: 0.5rem; }
+</style>

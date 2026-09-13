@@ -1,0 +1,80 @@
+{
+  "reviewed_on": "2026-09-13",
+  "brand": "Pflegende Bienen",
+  "legal_name": "Pflegende Bienen Marija Jelacic Bjelovuk und Dusko Bjelovuk GbR",
+  "website": "https://pflegendebienen.de/",
+  "impressum_source": "https://pflegendebienen.de/impressum/",
+  "telephone": "+498954637889",
+  "email": "info@pflegendebienen.de",
+  "whatsapp": "+4917622906287",
+  "visitor_offices": [
+    {
+      "locality": "München",
+      "street": "Fürstenrieder Str. 137",
+      "postal_code": "80686",
+      "country": "DE"
+    },
+    {
+      "locality": "Germering",
+      "street": "Otto-Wagner-Str. 10",
+      "postal_code": "82110",
+      "country": "DE"
+    }
+  ],
+  "legal_headquarters": {
+    "locality": "Germering",
+    "street": "Kurfürstenstr. 16",
+    "postal_code": "82110",
+    "country": "DE"
+  },
+  "owners": [
+    {
+      "name": "Marija Jelačić Bjelovuk",
+      "role": "Inhaberin und Pflegedienstleitung",
+      "experience_note": "The official website attributes more than 20 years of nursing experience to Marija personally."
+    },
+    {
+      "name": "Duško Bjelovuk",
+      "role": "Inhaber; Organisation und interne Abläufe"
+    }
+  ],
+  "service_area": {
+    "munich_districts": [
+      "Neuhausen",
+      "Nymphenburg",
+      "Laim",
+      "Pasing",
+      "Obermenzing",
+      "Aubing",
+      "Großhadern",
+      "Blumenau"
+    ],
+    "surrounding_places": [
+      "Gräfelfing",
+      "Planegg",
+      "Germering",
+      "Puchheim",
+      "Eichenau",
+      "Gilching"
+    ],
+    "capacity_confirmed": false,
+    "other_locations": "Personal enquiry"
+  },
+  "social": {
+    "instagram": "https://www.instagram.com/pflegendebienen/",
+    "facebook": "https://www.facebook.com/pflegendebienen/"
+  },
+  "logo_colour_sample": "#F89B1C",
+  "unconfirmed": [
+    "opening_hours",
+    "current_capacity",
+    "fixed_prices",
+    "response_time",
+    "service_languages",
+    "review_rating",
+    "current_vacancies",
+    "specific_counselling_authorisations",
+    "current_partnerships"
+  ],
+  "website_mode": "private demo; noindex until authorised production launch"
+}

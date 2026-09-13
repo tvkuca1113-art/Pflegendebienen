@@ -1,0 +1,67 @@
+---
+import { OFFICES, CONTACT } from '../data/business';
+import Icon from './Icon.astro';
+
+interface Props { compact?: boolean }
+const { compact = false } = Astro.props;
+---
+
+<ul class={compact ? 'offices offices--compact' : 'offices'}>
+  {OFFICES.map((o) => (
+    <li class="office">
+      <h3 class="office__title">
+        <Icon name="pin" size={20} />
+        {o.label}
+      </h3>
+      <address class="office__address">
+        {o.street}<br />
+        {o.postalCode} {o.locality}
+      </address>
+      <div class="office__actions">
+        <a class="btn btn--sm btn--secondary" href={o.directionsUrl} target="_blank" rel="noopener noreferrer">
+          <Icon name="route" size={17} />
+          Route planen
+        </a>
+        <a class="btn btn--sm" href={CONTACT.phoneHref}>
+          <Icon name="phone" size={17} />
+          {CONTACT.phoneDisplay}
+        </a>
+      </div>
+      <p class="office__link">
+        <a href={o.pagePath}>Einsatzgebiet {o.pageLabel} ansehen</a>
+      </p>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .offices { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.25rem; }
+  .office {
+    margin: 0;
+    background: var(--surface);
+    border: 1px solid var(--stone);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.3rem, 3vw, 1.85rem);
+  }
+  .office__title {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: var(--step-1);
+    margin-bottom: 0.6em;
+  }
+  .office__title svg { color: var(--brand-2); flex: 0 0 auto; }
+  .office__address {
+    font-style: normal;
+    font-size: var(--step-0);
+    line-height: 1.6;
+    margin-bottom: 1.2rem;
+    color: var(--ink-soft);
+  }
+  .office__actions { display: flex; flex-wrap: wrap; gap: 0.65rem; margin-bottom: 1rem; }
+  .office__link { margin: 0; font-size: var(--step--1); }
+
+  @media (min-width: 700px) {
+    .offices { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+</style>
