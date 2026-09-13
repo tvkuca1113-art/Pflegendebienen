@@ -39,7 +39,7 @@ const crumbs = [
               <h2 class="overview__title"><a href={s.path}>{s.navLabel}</a></h2>
               <p class="overview__text">{s.cardText}</p>
               <ul class="overview__scope">
-                {s.scope.items.slice(0, 4).map((item) => <li>{item}</li>)}
+                {s.highlights.map((item) => <li>{item}</li>)}
               </ul>
               <span class="arrow-link overview__link" aria-hidden="true">Details ansehen</span>
             </div>

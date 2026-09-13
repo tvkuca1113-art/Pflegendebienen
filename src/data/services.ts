@@ -24,6 +24,8 @@ export type Service = {
   metaDescription: string;
   /** Legal basis shown as a factual note, not as a coverage promise. */
   legalBasis?: string;
+  /** Short labels for the overview page — same published offer, condensed. */
+  highlights: string[];
   intro: string;
   whatItMeans: { heading: string; paragraphs: string[] };
   /** Concrete items published in the company's own offer. */
@@ -48,6 +50,7 @@ export const SERVICES: readonly Service[] = [
     metaDescription:
       'Körperpflege, Unterstützung beim Essen und bei der Bewegung zu Hause. Wie die Grundpflege bei den Pflegenden Bienen abläuft und wie Sie ein Gespräch vereinbaren.',
     legalBasis: 'Körperbezogene Pflegemaßnahmen im Rahmen der Pflegeversicherung (SGB XI)',
+    highlights: ['Körperpflege', 'Waschen & Ankleiden', 'Essen und Trinken', 'Mobilität'],
     intro:
       'Wenn alltägliche Handgriffe schwerer werden, muss niemand alles allein schaffen. Die Grundpflege unterstützt genau dort, wo es im Tagesablauf zuerst schwierig wird – zu Hause, in der gewohnten Umgebung.',
     whatItMeans: {
@@ -106,6 +109,7 @@ export const SERVICES: readonly Service[] = [
     metaDescription:
       'Medikamentengabe, Wundversorgung, Kompressionsversorgung und weitere ärztlich verordnete Maßnahmen zu Hause. Welche Voraussetzungen dafür zu klären sind.',
     legalBasis: 'Häusliche Krankenpflege nach ärztlicher Verordnung (SGB V)',
+    highlights: ['Medikamentengabe', 'Wundversorgung', 'Kompressionsversorgung', 'PEG-Versorgung'],
     intro:
       'Manche pflegerischen Maßnahmen sind medizinisch veranlasst. Sie beruhen auf einer ärztlichen Verordnung und folgen anderen Voraussetzungen als Leistungen der Pflegeversicherung.',
     whatItMeans: {
@@ -167,6 +171,7 @@ export const SERVICES: readonly Service[] = [
     metaTitle: 'Haushaltshilfe & Seniorenbetreuung München-West | Pflegende Bienen',
     metaDescription:
       'Unterstützung im Haushalt, beim Einkaufen, bei Spaziergängen und bei der Begleitung zu Arztterminen in München-West und Germering.',
+    highlights: ['Haushaltsführung', 'Einkäufe', 'Gesellschaft im Alltag', 'Arztbegleitung'],
     intro:
       'Nicht jede Unterstützung ist pflegerisch. Oft geht es darum, dass der Haushalt weiterläuft, Wege erledigt werden und jemand Zeit mitbringt.',
     whatItMeans: {
@@ -227,6 +232,7 @@ export const SERVICES: readonly Service[] = [
     metaDescription:
       'Wenn die pflegende Person vorübergehend ausfällt: Verhinderungspflege nach § 39 SGB XI. Voraussetzungen, Ablauf und Kontakt zu den Pflegenden Bienen.',
     legalBasis: 'Verhinderungspflege ist eine Leistung der Pflegeversicherung nach § 39 SGB XI',
+    highlights: ['Vertretung bei Abwesenheit', 'Pflege im vereinbarten Umfang', 'Haushalt & Betreuung'],
     intro:
       'Wer zu Hause pflegt, braucht selbst manchmal eine Pause – geplant oder ganz unvorhergesehen. Für diesen Fall sieht die Pflegeversicherung die Verhinderungspflege vor.',
     whatItMeans: {
