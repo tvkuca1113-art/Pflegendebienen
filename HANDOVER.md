@@ -357,10 +357,31 @@ Website oder sind ausdrücklich als ungeklärt gekennzeichnet.
 - Canonical-URLs und die Sitemap zeigen auf `https://demo.pflegendebienen.de`.
 - Im Footer sowie in Impressum und Datenschutz steht ein sichtbarer Vorschau-Hinweis.
 
+### Vorschau auf Vercel bereitstellen
+
+`vercel.json` liegt im Projekt und legt Framework (`astro`), Build-Befehl
+(`npm run build`), Ausgabeordner (`dist`), `trailingSlash: true` sowie
+Cache- und Sicherheits-Header fest. In Vercel muss nichts von Hand konfiguriert
+werden.
+
+Eine Umgebungsvariable sollte gesetzt werden, damit Canonical-URLs, Sitemap und
+Open-Graph-Angaben auf die tatsächliche Adresse zeigen:
+
+```
+PUBLIC_SITE_ORIGIN = https://<projekt>.vercel.app
+```
+
+Die Vorschau bleibt dabei auf `noindex, nofollow`. Ein sauberer Build aus einem
+frischen Klon (`npm ci && npm run build`) wurde geprüft: 15 Seiten, keine
+Fehler. Die abgeleiteten Dateien in `public/` (Favicon, Apple-Touch-Icon,
+Social-Preview) liegen zusätzlich im Repository, damit sie auch dann vorhanden
+sind, wenn ein Build-Schritt übersprungen wird.
+
 ### Umschalten (nach Freigabe und Rechtsprüfung)
 
 1. Punkte aus Abschnitt 4 abarbeiten, insbesondere Bildrechte und Rechtstexte.
-2. Beim Build zwei Umgebungsvariablen setzen:
+2. Beim Build zwei Umgebungsvariablen setzen (in Vercel unter
+   *Settings → Environment Variables*):
 
    ```bash
    PUBLIC_SITE_MODE=production \

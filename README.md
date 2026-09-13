@@ -53,10 +53,34 @@ Texte werden in `src/data/` gepflegt, nicht in den Komponenten.
   WhatsApp und E-Mail-Entwurf sind die echten Kontaktwege.
 - **Kein Tracking**, keine eingebetteten Social-Feeds, keine externen Schriften.
 
+## Deployment auf Vercel
+
+Das Projekt ist eine rein statische Ausgabe; `vercel.json` legt Framework,
+Build-Befehl, Ausgabeordner, Trailing-Slash-Verhalten und Cache-Header fest.
+
+1. Repository in Vercel importieren und den Branch wählen. Build-Befehl und
+   Ausgabeordner müssen nicht von Hand gesetzt werden.
+2. **Eine Umgebungsvariable setzen**, damit Canonical-URLs, Sitemap und
+   Open-Graph-Angaben auf die tatsächliche Adresse zeigen:
+
+   ```
+   PUBLIC_SITE_ORIGIN = https://<projekt>.vercel.app
+   ```
+
+3. Deployen. Die Seite bleibt im Vorschau-Modus: jede Seite trägt
+   `noindex, nofollow`, im Footer steht der Vorschau-Hinweis.
+
+Ohne diese Variable funktioniert die Seite ebenfalls, die Canonical-URLs
+zeigen dann aber auf den Platzhalter `https://demo.pflegendebienen.de`.
+
 ## Produktivbetrieb
 
-```bash
-PUBLIC_SITE_MODE=production PUBLIC_SITE_ORIGIN=https://pflegendebienen.de npm run build
+Erst nach Freigabe und Rechtsprüfung — zusätzlich zur obigen Variable:
+
+```
+PUBLIC_SITE_MODE   = production
+PUBLIC_SITE_ORIGIN = https://pflegendebienen.de
 ```
 
-Details in [HANDOVER.md](./HANDOVER.md), Abschnitt 5.
+Das entfernt `noindex` und alle Vorschau-Hinweise. Details und Checkliste in
+[HANDOVER.md](./HANDOVER.md), Abschnitte 4 und 5.
