@@ -84,7 +84,7 @@ const must = [
   'Was brauchen Sie gerade?',         // situation selector
   'Was zahlt die Kasse',              // costs section
   'Kommen Sie auch zu uns?',          // service area check
-  'KI-generiertes Symbolbild',        // AI illustration disclosure
+  'Symbolbild, KI-generiert',         // AI illustration disclosure
 ];
 // And what must live on the about page instead.
 const aboutMust = ['Duško Bjelovuk', 'Marija Jelačić Bjelovuk'];

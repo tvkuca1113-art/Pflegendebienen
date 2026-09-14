@@ -21,7 +21,7 @@ npm run preview  # dist/ lokal ausliefern
 ```bash
 npm run test                 # Rückruf-Validierung, 8 Tests
 npm run verify               # astro check + Tests + HTML- und Inhaltsprüfung
-npm run verify:interaction   # 64 Prüfungen, braucht einen laufenden preview auf Port 4321
+npm run verify:interaction   # 65 Prüfungen, braucht einen laufenden preview auf Port 4321
 npm run verify:screenshots   # Screenshots nach screenshots/ (Desktop, Tablet, Telefon + Gerätehöhen)
 npm run measure:performance  # LCP/CLS lokal messen
 ```

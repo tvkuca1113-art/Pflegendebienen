@@ -181,7 +181,7 @@ export const SERVICES: readonly Service[] = [
     photo: {
       src: 'einkauf-kueche.jpg',
       alt: 'Ein älterer Mann räumt am Küchentisch gemeinsam mit einer Helferin Einkäufe aus',
-      caption: 'KI-generiertes Symbolbild',
+      caption: 'Symbolbild, KI-generiert',
     },
     lede: 'Einkaufen, Wäsche, Post, ein Gang zum Arzt: Wir übernehmen, was im Alltag liegen bleibt – und bringen Zeit für ein Gespräch mit.',
     intro:

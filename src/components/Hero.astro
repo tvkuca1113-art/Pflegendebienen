@@ -29,7 +29,6 @@ import { CONTACT } from '../data/business';
         class="hero__image"
         position="66% 34%"
       />
-      <p class="hero__credit">KI-generiertes Symbolbild</p>
     </div>
 
     <div class="hero__panel">
@@ -57,7 +56,10 @@ import { CONTACT } from '../data/business';
 
   <p class="hero__note">
     <Icon name="check" size={18} />
-    Sie müssen noch nicht wissen, welche Unterstützung die richtige ist.
+    <span class="hero__note-text">
+      Sie müssen noch nicht wissen, welche Unterstützung die richtige ist.
+    </span>
+    <span class="hero__credit">Symbolbild, KI-generiert</span>
   </p>
 </section>
 
@@ -69,16 +71,13 @@ import { CONTACT } from '../data/business';
   .hero__canvas { position: relative; overflow: hidden; background: var(--sage); }
   .hero__image { width: 100%; height: 100%; object-fit: cover; display: block; }
 
+  /* The disclosure sits under the photograph, at the weight of a picture
+     credit, so it informs without being pasted across the picture. */
   .hero__credit {
-    position: absolute;
-    right: 0.6rem;
-    bottom: 0.6rem;
     margin: 0;
-    padding: 0.25rem 0.55rem;
-    border-radius: 4px;
-    background: rgba(39, 40, 32, 0.86);
-    color: #ffffff;
-    font-size: 0.75rem;
+    color: var(--olive);
+    font-size: 0.8125rem;
+    white-space: nowrap;
   }
 
   .hero__panel { background: var(--paper); }
@@ -114,15 +113,18 @@ import { CONTACT } from '../data/business';
 
   .hero__note {
     display: flex;
-    align-items: flex-start;
-    gap: 0.6rem;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.35rem 0.9rem;
     margin: 0;
     padding: 1rem var(--gutter) 1.4rem;
     max-width: none;
     color: var(--olive);
     font-size: var(--step--1);
   }
-  .hero__note svg { flex: 0 0 auto; color: var(--brand); margin-top: 0.15em; }
+  .hero__note svg { flex: 0 0 auto; color: var(--brand); align-self: flex-start; margin-top: 0.15em; }
+  .hero__note-text { flex: 1 1 16rem; min-width: 0; }
 
   /* ---------------------------------------------------------------- mobile */
   @media (max-width: 899px) {

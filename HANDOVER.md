@@ -237,7 +237,7 @@ Preise, Auszeichnungen oder Qualifikationen · keine Social-CDN-Links · keine e
 Kapazitäts-, Preis- oder Reaktionszusagen · Verhinderungspflege durchgehend unter
 SGB XI · Sitzadresse nirgends als Besucherbüro.
 
-### Interaktion und Barrierefreiheit (`npm run verify:interaction`) — 64 Prüfungen, 0 Fehler
+### Interaktion und Barrierefreiheit (`npm run verify:interaction`) — 65 Prüfungen, 0 Fehler
 
 | Prüfung | Ergebnis |
 |---|---|
@@ -280,6 +280,7 @@ SGB XI · Sitzadresse nirgends als Besucherbüro.
 | `prefers-reduced-motion`: alles sofort sichtbar | bestanden |
 | Ohne JavaScript: alle sechs Antworten und alle FAQ-Antworten lesbar | bestanden |
 | Kontrast auf Start- und Karriereseite, durch transparente Ebenen hindurch gerechnet | bestanden, jede sichtbare Textstelle ≥ WCAG AA |
+| KI-Kennzeichnung vorhanden, aber nicht über das Foto gelegt | bestanden, „Symbolbild, KI-generiert" als Bildunterschrift |
 
 **Breitenlauf über zehn Seiten je Breite** (`/`, `/karriere/`, `/leistungen/`,
 `/leistungen/behandlungspflege/`, `/kosten-finanzierung/`, `/kontakt/`, `/ueber-uns/`,
@@ -418,7 +419,7 @@ npm run verify       # astro check + Tests + HTML- + Inhaltsprüfung
 Mit laufendem `npm run preview` auf Port 4321:
 
 ```bash
-npm run verify:interaction    # 64 Interaktions- und Barrierefreiheitsprüfungen
+npm run verify:interaction    # 65 Interaktions- und Barrierefreiheitsprüfungen
 npm run verify:screenshots    # alle Seiten bei 1440/768/390 px + fünf echte Gerätehöhen
 npm run measure:performance   # LCP/CLS/Übertragung lokal messen
 ```

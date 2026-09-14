@@ -263,6 +263,20 @@ const browser = await chromium.launch({ executablePath: EXE });
     await cp.close();
   }
 
+  // 8f. The AI disclosure stays present, but never pasted across the picture.
+  const disclosure = await page.evaluate(() => {
+    const img = document.querySelector('.hero__image')?.getBoundingClientRect();
+    const c = document.querySelector('.hero__credit');
+    if (!img || !c) return { missing: true };
+    const r = c.getBoundingClientRect();
+    const overlaps = r.top < img.bottom - 1 && r.bottom > img.top + 1
+      && r.left < img.right - 1 && r.right > img.left + 1;
+    return { text: c.innerText.trim(), overlaps, visible: r.height > 0 };
+  });
+  disclosure.visible && /KI/.test(disclosure.text || '') && !disclosure.overlaps
+    ? ok(`hero: AI disclosure present as a caption ("${disclosure.text}"), not laid over the photograph`)
+    : bad('hero AI disclosure: ' + JSON.stringify(disclosure));
+
   // 9. Hero copy and word budget
   const h1 = await page.locator('#hero-title').innerText();
   h1.replace(/\s+/g, ' ') === 'Zuhause gut versorgt. Als Familie entlastet.'

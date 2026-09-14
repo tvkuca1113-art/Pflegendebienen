@@ -26,7 +26,7 @@ Design-Entscheidung; die Logodatei selbst behält ihr gemessenes `#F89B1C`.
 ## 2. KI-generierte Symbolbilder — im Bild gekennzeichnet
 
 Beide zeigen **keine** Patientinnen, Patienten oder Mitarbeitenden dieses
-Pflegedienstes. Beide tragen sichtbar „KI-generiertes Symbolbild".
+Pflegedienstes. Beide tragen sichtbar „Symbolbild, KI-generiert".
 Hände, Finger, Griffe und Objektgeometrie wurden in der Vergrößerung geprüft:
 korrekte Daumen- und Fingerzahl, plausible Griffe, keine verschmolzenen Finger.
 
