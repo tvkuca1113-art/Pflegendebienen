@@ -1,4 +1,4 @@
-import { chromium } from 'playwright';
+import { chromium, devices } from 'playwright';
 
 const EXE = process.env.CHROME_PATH || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
 const BASE = process.env.BASE || 'http://127.0.0.1:4321';
@@ -152,9 +152,10 @@ const browser = await chromium.launch({ executablePath: EXE });
 
 /* ------------------------------ mobile ------------------------------- */
 {
-  const ctx = await browser.newContext({
-    viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: 'de-DE',
-  });
+  // Real device profile: an iPhone 13 exposes 390 x 664 CSS px once the Safari
+  // toolbars are showing, not the 844 px of its layout viewport. Testing
+  // against 844 is how a hero can pass here and still look wrong on a phone.
+  const ctx = await browser.newContext({ ...devices['iPhone 13'], locale: 'de-DE' });
   const page = await ctx.newPage();
   await page.goto(BASE + '/', { waitUntil: 'networkidle' });
   await page.waitForTimeout(500);
@@ -163,16 +164,28 @@ const browser = await chromium.launch({ executablePath: EXE });
   const first = await page.evaluate(() => {
     const vh = window.innerHeight;
     const r = (s) => document.querySelector(s)?.getBoundingClientRect();
-    const h1 = r('h1'), lead = r('.hero__lead'), cta = r('[data-hero-cta]'), img = r('.hero__image');
+    const h1El = document.querySelector('h1');
+    const h1 = r('h1'), lead = r('.hero__lead'), cta = r('[data-hero-cta]'),
+          img = r('.hero__image'), phone = r('.hero__phone');
+    const lh = parseFloat(getComputedStyle(h1El).lineHeight);
     return {
       h1: h1.bottom <= vh, lead: lead.bottom <= vh, cta: cta.bottom <= vh,
+      phone: phone.bottom <= vh,
+      h1Lines: Math.round(h1.height / lh),
       photoPx: Math.max(0, Math.min(img.bottom, vh) - Math.max(img.top, 0)),
+      photoWhole: img.bottom <= vh + 1,
       header: r('.site-header').height, vh,
     };
   });
-  first.h1 && first.lead && first.cta && first.photoPx > 60
-    ? ok(`mobile first view: headline, lead, action and ${Math.round(first.photoPx)}px of the photo`)
+  first.h1 && first.lead && first.cta && first.phone && first.photoPx >= 120
+    ? ok(`mobile first view (390x${first.vh}): headline, lead, action, phone and ${Math.round(first.photoPx)}px of the photo`)
     : bad('mobile first view: ' + JSON.stringify(first));
+  first.h1Lines <= 2
+    ? ok(`mobile headline fits ${first.h1Lines} lines`)
+    : bad(`mobile headline wraps to ${first.h1Lines} lines`);
+  first.photoWhole
+    ? ok('mobile: the photograph is not sliced by the fold')
+    : bad('mobile: the photograph is cut off at the fold');
   first.header >= 70 && first.header <= 84
     ? ok(`mobile header ${Math.round(first.header)}px (target 72-80)`)
     : bad(`mobile header ${Math.round(first.header)}px`);

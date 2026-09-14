@@ -33,7 +33,7 @@
   --step-2: clamp(1.4375rem, 1.31rem + 0.6vw, 1.75rem);    /* 23 → 28 */
   --step-3: clamp(1.75rem, 1.52rem + 1.1vw, 2.375rem);     /* 28 → 38 */
   --step-4: clamp(2rem, 1.6rem + 1.9vw, 3rem);             /* 32 → 48 */
-  --step-5: clamp(2.25rem, 1.66rem + 2.8vw, 3.625rem);     /* 36 → 58 */
+  --step-5: clamp(1.75rem, 1.22rem + 2.6vw, 3.625rem);     /* 28 → 58 */
 
   /* Rhythm */
   --shell: 1240px;

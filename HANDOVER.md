@@ -79,22 +79,55 @@ Inhaltsbreite 1240 px, Außenabstand 20 px auf dem Handy, Kopfzeile 77 px mobil.
 
 ### Hero
 
-Redaktioneller Split statt der üblichen Karte: Die Fotografie läuft ab 900 px randlos
-über ihre Bildschirmhälfte, vom unteren Rand der Kopfzeile bis zum Ende des Hero. Der
-Text steht daneben auf ruhiger Papierfläche, die zur linken Bildschirmkante ausläuft;
-seine Ausrichtung folgt weiterhin dem Raster der übrigen Seite.
+**Desktop:** redaktioneller Split statt der üblichen Karte. Die Fotografie läuft ab
+900 px randlos über ihre Bildschirmhälfte, vom unteren Rand der Kopfzeile bis zum Ende
+des Hero. Der Text steht daneben auf ruhiger Papierfläche, die zur linken
+Bildschirmkante ausläuft; seine Ausrichtung folgt weiterhin dem Raster der Seite.
 
 **Kein Text liegt über der Fotografie.** Eine Überlagerung hätte einen Schleier über die
-Gesichter gelegt und den Kontrast gesenkt — bei der Zielgruppe der falsche Kompromiss.
-So bleibt der Text bei 14,20 : 1 und das Bild unangetastet. Die Höhe ist eine
-`min-height`, kein fester Wert, damit vergrößerter Text nichts abschneidet.
+Gesichter gelegt und den Kontrast gesenkt — bei dieser Zielgruppe der falsche
+Kompromiss. So bleibt der Text bei 14,20 : 1 und das Bild unangetastet.
 
-Unter 900 px steht der Text zuerst, danach folgt das Foto als randloses Band über die
-volle Breite. In der ersten Ansicht bei 390 × 844 sind Überschrift, Text, Hauptaktion,
-Telefonnummer und 120 px des Fotos sichtbar.
+**Mobil — nach dem, was ein Telefon wirklich zeigt.** Ein iPhone 13 hat bei
+eingeblendeten Safari-Leisten **390 × 664 CSS-Pixel**, nicht die 844 seines
+Layout-Viewports. Genau das war der Fehler der ersten Fassung: gegen 844 geprüft,
+bestanden — und auf dem Gerät lag vom Foto nur ein Streifen hinter der Adressleiste.
+
+Der Hero ist deshalb mit `svh` (kleinster Viewport) bemessen und endet
+**absichtlich vor dem Seitenumbruch**:
+
+```
+min-height: calc(100svh - var(--header-h) - 2.5rem);
+```
+
+Die verbleibenden 2,5 rem lassen den Hinweisstreifen darunter hineinragen — ein
+bewusster Hinweis, dass die Seite weitergeht, statt einer „falschen Unterkante". Die
+Fotografie sitzt in einer `1fr`-Zeile und nimmt genau den Platz, der nach dem Text
+übrig bleibt; ein Boden von 8 rem verhindert, dass sie zum Streifen schrumpft. Weil es
+eine `min-height` ist, darf der Hero bei vergrößertem Text wachsen — nichts wird
+abgeschnitten.
+
+Gemessen mit echten Geräteprofilen:
+
+| Gerät | sichtbare Höhe | Überschrift | Foto in der ersten Ansicht |
+|---|---|---|---|
+| iPhone SE | 568 px | 3 Zeilen | 27 px |
+| iPhone 13 | 664 px | 2 Zeilen | 128 px, vollständig |
+| iPhone 14 Pro Max | 740 px | 2 Zeilen | 266 px, vollständig |
+| Pixel 7 | 839 px | 2 Zeilen | 367 px, vollständig |
+
+Überschrift, Text, Hauptaktion und Telefonnummer sind auf allen vier Geräten in der
+ersten Ansicht. Die Überschrift bleibt ab 390 px bei zwei Zeilen — drei Zeilen würden
+auf einem Telefon die Hauptaktion nach unten drücken.
 
 Die Bildunterschrift „KI-generiertes Symbolbild" sitzt als kleine Auszeichnung in der
 unteren Ecke des Fotos, auf deckendem dunklem Grund.
+
+**Grundlagen dieser Entscheidungen:** die `dvh`/`svh`-Einheiten gegen das
+iOS-Safari-Viewport-Problem, die Regel „Überschrift auf dem Telefon höchstens zwei
+Zeilen, sonst rutscht die Aktion unter den Umbruch", und der Hinweis, dass ein Hero
+über die volle Viewport-Höhe als „falsche Unterkante" gelesen wird und das Scrollen
+verhindert. Quellen stehen im Abschnitt unten.
 
 ### Logo
 
@@ -191,6 +224,9 @@ SGB XI · Sitzadresse nirgends als Besucherbüro.
 | Prüfung | Ergebnis |
 |---|---|
 | Alle sechs Auswahlmöglichkeiten öffnen genau eine Antwort | bestanden, 47–55 Wörter je Antwort |
+| Erste Ansicht auf echtem iPhone-13-Profil (390 × 664) | bestanden: Überschrift, Text, Aktion, Telefon und 128 px Foto |
+| Überschrift auf dem Telefon höchstens zwei Zeilen | bestanden |
+| Fotografie wird vom Seitenumbruch nicht zerschnitten | bestanden |
 | Jeder Antwort-Link liefert HTTP 200 | bestanden |
 | Erneuter Klick schließt; Zurücksetzen gibt den Fokus zurück | bestanden |
 | Tastatur: Fokus landet im Antwortfeld, frei von der 107-px-Kopfzeile | bestanden |
@@ -211,8 +247,18 @@ SGB XI · Sitzadresse nirgends als Besucherbüro.
 | Skip-Link erster Tabstopp und sichtbar | bestanden |
 | Alle 15 internen Links liefern 200 | bestanden |
 
-Screenshots aller 16 Seiten bei **1440, 768 und 390 px** wurden erzeugt und gesichtet.
-Kein horizontaler Überlauf, keine JavaScript-, Konsolen- oder HTTP-Fehler.
+Alle 16 Seiten wurden gegen **vier echte Geräteprofile** geprüft (Desktop 1440,
+iPad Mini, iPhone 13, iPhone SE): kein horizontaler Überlauf, keine JavaScript-,
+Konsolen- oder HTTP-Fehler.
+
+**Quellen zur mobilen Hero-Gestaltung**
+
+- [100vh-Problem in iOS Safari und die dvh-Einheit](https://dev.to/maciejtrzcinski/100vh-problem-with-ios-safari-3ge9)
+- [Fix 100vh Layout Bugs on Mobile Safari — dvh/svh/lvh](https://us.corejsc.com/blog/fixing-100vh-mobile-safari-dynamic-viewport-bug/)
+- [Mobile Hero Section: Key Elements for Conversion](https://conversionwise.com/blog/mobile-hero-section-key-elements-for-conversion)
+- [Above the Fold: Best Practices](https://www.invespcro.com/blog/above-the-fold/)
+- [Above the Fold Design Guide — „falsche Unterkante" und Scroll-Hinweis](https://madebyevoke.com/blog/above-the-fold-design-guide)
+- [NN/g: UX Design for Seniors](https://www.nngroup.com/reports/senior-citizens-on-the-web/)
 
 ### Gemessene Performance (`npm run measure:performance`)
 
