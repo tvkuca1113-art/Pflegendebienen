@@ -176,17 +176,19 @@ const submitLabel =
   .cbf__status[hidden] { display: none; }
   .cbf__status[data-state='error'] { border-left-color: #9a2b12; background: #fff1ee; }
 
-  .on-dark .cbf__field label { color: #fffdf8; }
-  .on-dark .cbf__opt, .on-dark .cbf__privacy { color: #c9cbbf; }
-  .on-dark .cbf__privacy a { color: var(--brand); }
-  .on-dark .cbf input, .on-dark .cbf select, .on-dark .cbf textarea {
+  /* `.on-dark` belongs to the surrounding section, not to this component, so it
+     must stay out of Astro's scope attribute or none of these rules match. */
+  :global(.on-dark) .cbf__field label { color: #fffdf8; }
+  :global(.on-dark) .cbf__opt, :global(.on-dark) .cbf__privacy { color: #c9cbbf; }
+  :global(.on-dark) .cbf__privacy a { color: var(--brand); }
+  :global(.on-dark) .cbf input, :global(.on-dark) .cbf select, :global(.on-dark) .cbf textarea {
     border-color: rgba(255, 255, 255, 0.4);
     background: rgba(255, 255, 255, 0.06);
     color: #fffdf8;
   }
-  .on-dark .cbf input::placeholder, .on-dark .cbf textarea::placeholder { color: #a9ab9f; }
-  .on-dark .cbf__err { color: #ffb4a2; }
-  .on-dark .cbf__status { background: rgba(255, 255, 255, 0.08); color: #f4f2ea; }
+  :global(.on-dark) .cbf input::placeholder, :global(.on-dark) .cbf textarea::placeholder { color: #a9ab9f; }
+  :global(.on-dark) .cbf__err { color: #ffb4a2; }
+  :global(.on-dark) .cbf__status { background: rgba(255, 255, 255, 0.08); color: #f4f2ea; }
 
   @media (min-width: 620px) {
     .cbf__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }

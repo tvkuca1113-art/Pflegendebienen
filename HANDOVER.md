@@ -237,7 +237,7 @@ Preise, Auszeichnungen oder Qualifikationen · keine Social-CDN-Links · keine e
 Kapazitäts-, Preis- oder Reaktionszusagen · Verhinderungspflege durchgehend unter
 SGB XI · Sitzadresse nirgends als Besucherbüro.
 
-### Interaktion und Barrierefreiheit (`npm run verify:interaction`) — 62 Prüfungen, 0 Fehler
+### Interaktion und Barrierefreiheit (`npm run verify:interaction`) — 64 Prüfungen, 0 Fehler
 
 | Prüfung | Ergebnis |
 |---|---|
@@ -279,6 +279,7 @@ SGB XI · Sitzadresse nirgends als Besucherbüro.
 | 200 % Textzoom: kein horizontaler Überlauf, Hero wächst mit | bestanden |
 | `prefers-reduced-motion`: alles sofort sichtbar | bestanden |
 | Ohne JavaScript: alle sechs Antworten und alle FAQ-Antworten lesbar | bestanden |
+| Kontrast auf Start- und Karriereseite, durch transparente Ebenen hindurch gerechnet | bestanden, jede sichtbare Textstelle ≥ WCAG AA |
 
 **Breitenlauf über zehn Seiten je Breite** (`/`, `/karriere/`, `/leistungen/`,
 `/leistungen/behandlungspflege/`, `/kosten-finanzierung/`, `/kontakt/`, `/ueber-uns/`,
@@ -330,6 +331,16 @@ Lokaler Server, **ohne Netzwerk- oder CPU-Drosselung**. Keine Feldwerte, kein Li
 Das Hero-Bild lädt `eager` mit `fetchpriority="high"` und festen Maßen; alle übrigen
 Bilder sind `lazy`. CLS ist auf allen gemessenen Seiten 0. `/ueber-uns/` ist mit
 24 Porträts die schwerste Seite – das ist der richtige Ort dafür.
+
+### Ein Fehler, der dabei gefunden wurde
+
+Die Beschriftungen des Rückrufformulars standen im dunklen Kontaktabschnitt fast
+unlesbar da (1,13 : 1). Ursache war kein Farbwert, sondern Astros Scoping: in
+`.on-dark .cbf__field label` hängt Astro auch an `.on-dark` das Scope-Attribut der
+Komponente. Der Abschnitt gehört aber einer anderen Komponente, trägt dieses Attribut
+also nicht – die Regel griff nie. Behoben mit `:global(.on-dark)` in `CallbackForm.astro`
+und `SocialLinks.astro`. Die Kontrastprüfung oben rechnet jetzt durch transparente
+Ebenen hindurch und fängt genau diesen Fall; ohne die Korrektur meldet sie ihn wieder.
 
 ### Was nicht geprüft wurde
 
@@ -407,7 +418,7 @@ npm run verify       # astro check + Tests + HTML- + Inhaltsprüfung
 Mit laufendem `npm run preview` auf Port 4321:
 
 ```bash
-npm run verify:interaction    # 62 Interaktions- und Barrierefreiheitsprüfungen
+npm run verify:interaction    # 64 Interaktions- und Barrierefreiheitsprüfungen
 npm run verify:screenshots    # alle Seiten bei 1440/768/390 px + fünf echte Gerätehöhen
 npm run measure:performance   # LCP/CLS/Übertragung lokal messen
 ```

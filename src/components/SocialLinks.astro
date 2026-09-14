@@ -64,7 +64,7 @@ const PROFILES = [
   .social--inline a { justify-content: flex-start; font-weight: 600; }
   .social--inline a:hover { background: transparent; text-decoration: underline; }
 
-  .on-dark .social a { color: #f4f2ea; }
-  .on-dark .social a:hover { background: rgba(255, 255, 255, 0.1); color: var(--brand); }
-  .on-dark .social--buttons a { border-color: rgba(255, 255, 255, 0.35); }
+  :global(.on-dark) .social a { color: #f4f2ea; }
+  :global(.on-dark) .social a:hover { background: rgba(255, 255, 255, 0.1); color: var(--brand); }
+  :global(.on-dark) .social--buttons a { border-color: rgba(255, 255, 255, 0.35); }
 </style>

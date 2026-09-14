@@ -246,6 +246,23 @@ const browser = await chromium.launch({ executablePath: EXE });
     : bad(`routing: both forms point at the same recipient "${careRecipient}"`);
   await kp.close();
 
+  // 8e. Text contrast, composited through transparent layers. A scoped
+  //     `.on-dark` rule that silently fails to match shows up here.
+  const auditContrast = async (target) => {
+    await target.addScriptTag({ path: 'scripts/lib/contrast-audit.js' });
+    return target.evaluate(() => window.__contrastAudit());
+  };
+  for (const [label, route] of [['Startseite', '/'], ['Karriereseite', '/karriere/']]) {
+    const cp = await ctx.newPage();
+    await cp.goto(BASE + route, { waitUntil: 'networkidle' });
+    await cp.waitForTimeout(400);
+    const findings = await auditContrast(cp);
+    findings.length === 0
+      ? ok(`contrast ${label}: every visible text run meets WCAG AA (composited through transparency)`)
+      : bad(`contrast ${label}: ` + findings.slice(0, 8).join(' | '));
+    await cp.close();
+  }
+
   // 9. Hero copy and word budget
   const h1 = await page.locator('#hero-title').innerText();
   h1.replace(/\s+/g, ' ') === 'Zuhause gut versorgt. Als Familie entlastet.'
