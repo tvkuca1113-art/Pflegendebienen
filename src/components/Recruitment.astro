@@ -1,0 +1,33 @@
+---
+import { recruitmentEnabled } from '../config/site.mjs';
+
+/** Kept behind one switch so the owner can remove the section, its menu entry
+    and the route together. Candidate contact stays separate from care enquiries. */
+---
+
+{recruitmentEnabled && (
+  <section class="jobs section--tight" aria-labelledby="jobs-title">
+    <div class="shell jobs__inner">
+      <div>
+        <h2 id="jobs-title" class="jobs__title">Sie möchten bei den Pflegenden Bienen arbeiten?</h2>
+        <p class="jobs__text">
+          Lernen Sie unseren Pflegedienst kennen und nehmen Sie Kontakt zu uns auf.
+        </p>
+      </div>
+      <a class="btn btn--outline" href="/karriere/">Arbeiten bei uns</a>
+    </div>
+  </section>
+)}
+
+<style>
+  .jobs { background: var(--sage); }
+  .jobs__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem 2rem;
+  }
+  .jobs__title { margin-bottom: 0.3em; font-size: var(--step-2); }
+  .jobs__text { margin: 0; max-width: 46ch; font-size: var(--step--1); }
+</style>

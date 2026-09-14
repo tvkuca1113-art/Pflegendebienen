@@ -4,6 +4,7 @@ import PageHeader from '../../components/PageHeader.astro';
 import ContactPanel from '../../components/ContactPanel.astro';
 import RelatedLinks from '../../components/RelatedLinks.astro';
 import ContactCta from '../../components/ContactCta.astro';
+import Photo from '../../components/Photo.astro';
 import { SERVICES } from '../../data/services';
 import { SERVICE_AREA } from '../../data/business';
 import { abs, ORGANIZATION_ID } from '../../lib/schema';
@@ -63,10 +64,25 @@ const serviceSchema = {
           {service.whatItMeans.paragraphs.map((p) => <p>{p}</p>)}
         </section>
 
+        {service.photo && (
+          <figure class="service__figure">
+            <Photo
+              src={service.photo.src}
+              alt={service.photo.alt}
+              width={860}
+              height={573}
+              sizes="(min-width: 980px) 60vw, 100vw"
+              class="service__image"
+              position="50% 45%"
+            />
+            <figcaption>{service.photo.caption}</figcaption>
+          </figure>
+        )}
+
         <section class="service__block" aria-labelledby="umfang">
           <h2 id="umfang">{service.scope.heading}</h2>
           {service.scope.note && <p class="service__note">{service.scope.note}</p>}
-          <ul class="check-list service__scope">
+          <ul class="ticks service__scope">
             {service.scope.items.map((i) => <li>{i}</li>)}
           </ul>
         </section>
@@ -82,7 +98,7 @@ const serviceSchema = {
           <h2 id="kosten">{service.funding.heading}</h2>
           {service.funding.paragraphs.map((p) => <p>{p}</p>)}
           <p>
-            <a class="arrow-link" href="/kosten-finanzierung/">Kosten &amp; Finanzierung im Überblick</a>
+            <a class="link-action" href="/kosten-finanzierung/">Kosten &amp; Finanzierung im Überblick</a>
           </p>
         </section>
 
@@ -94,7 +110,7 @@ const serviceSchema = {
             festen Starttermin oder eine Zusage können wir über die Website nicht geben.
           </p>
           <h3 class="service__ask-title">Diese Fragen helfen beim ersten Gespräch</h3>
-          <ul class="check-list">
+          <ul class="ticks">
             {service.questionsToPrepare.map((q) => <li>{q}</li>)}
           </ul>
         </section>
@@ -121,31 +137,35 @@ const serviceSchema = {
   .service__basis {
     margin-bottom: 2.25rem;
     padding: 0.95rem 1.2rem;
-    background: var(--brand-wash);
-    border: 1px solid var(--brand-wash-2);
+    background: var(--sage);
+    border: 1px solid var(--brand-edge);
     border-radius: var(--radius);
     font-size: var(--step--1);
-    color: var(--brand-deep);
+    color: var(--brand-ink);
   }
 
-  .service__block { margin-top: clamp(2.25rem, 4vw, 3rem); max-width: var(--shell-narrow); }
-  .service__note { color: var(--ink-soft); font-size: var(--step--1); max-width: 68ch; }
+  .service__block { margin-top: clamp(2.25rem, 4vw, 3rem); max-width: var(--measure); }
+
+  .service__figure { margin: clamp(2rem, 4vw, 2.75rem) 0 0; }
+  .service__image { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--radius-lg); }
+  .service__figure figcaption { margin-top: 0.5rem; color: var(--olive); font-size: 0.8125rem; }
+  .service__note { color: var(--ink-body); font-size: var(--step--1); max-width: 68ch; }
 
   .service__cases { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.7rem; }
   .service__cases li {
     margin: 0;
     padding: 0.9rem 1.1rem;
     background: var(--surface);
-    border: 1px solid var(--stone);
+    border: 1px solid var(--hairline);
     border-radius: var(--radius);
     font-size: var(--step--1);
-    color: var(--ink-soft);
+    color: var(--ink-body);
   }
 
   .service__ask {
     padding: clamp(1.4rem, 3vw, 2rem);
-    background: var(--paper-2);
-    border: 1px solid var(--stone);
+    background: var(--surface);
+    border: 1px solid var(--hairline);
     border-radius: var(--radius-lg);
   }
   .service__ask h2 { margin-top: 0; }
@@ -154,7 +174,7 @@ const serviceSchema = {
     font-size: 0.8rem;
     letter-spacing: 0.11em;
     text-transform: uppercase;
-    color: var(--ink-faint);
+    color: var(--olive);
   }
 
   @media (min-width: 980px) {

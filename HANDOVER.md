@@ -1,408 +1,321 @@
-# Pflegende Bienen — Website-Vorschau: Übergabe
+# Pflegende Bienen — Website: Übergabe
 
-Stand: 13.09.2026 · Recherchestand der Unternehmensdaten: 13.09.2026
+Redesign: 14.09.2026 · Recherchestand der Unternehmensdaten: 13.09.2026
 
 Diese Website ist eine **nicht öffentliche Vorschau**. Sie ist auf `noindex, nofollow`
-gestellt und ersetzt die bestehende Website nicht automatisch. Abschnitt 5 beschreibt,
-wie sie nach der Freigabe produktiv geschaltet wird.
+gestellt und ersetzt die bestehende Website nicht automatisch. Abschnitt 6 beschreibt
+den Weg in den Produktivbetrieb.
 
 ---
 
-## 1. Was umgesetzt wurde und wie das Projekt läuft
+## 1. Was dieser Redesign geändert hat
 
-### Stack
+Die Startseite ist jetzt um die Entscheidung der Besucherin herum gebaut, nicht um die
+Selbstdarstellung des Betriebs.
 
-| Thema | Entscheidung |
+| Vorher | Jetzt |
 |---|---|
-| Framework | Astro 7 (`output: 'static'`) — jede Route wird als vollständiges HTML vorgerendert |
-| Sprache | TypeScript (strict), `astro check` ohne Fehler, Warnungen und Hinweise |
-| Bilder | Astro Image + sharp, lokale Ableitungen in WebP mit `srcset`/`sizes` |
-| Schriften | Manrope Variable und Lora 600, selbst gehostet (kein externer Font-Request) |
-| Abhängigkeiten | astro, sharp, zwei Fontsource-Pakete, TypeScript, playwright (nur Prüfung) |
-| JavaScript im Browser | ca. 2 KB inline, kein Framework-Runtime, keine Animations-Bibliothek |
+| Überschrift brach in fünf kurze Zeilen | Drei volle Sinnzeilen, H1 auf 58 px begrenzt |
+| Großes Team-Gruppenfoto vor den Entscheidungen | Ruhiges Alltagsbild im Hero, Team erst nach Kosten und Einsatzgebiet |
+| Leistungskarten **und** Situationsauswahl mit doppeltem Inhalt | Eine Situationsauswahl direkt unter dem Hero; die Kartensektion entfällt |
+| Auswahl mit langer Einleitung, leerem Antwortfeld und Vorbehalten | Sechs kompakte Schaltflächen, kurze Antwort (47–55 Wörter) |
+| Kosten erst nach der Inhaber-Vorstellung | Kosten, Ablauf und Einsatzgebiet vor dem Team |
+| Wiederholte weiße Karten, Creme-Flächen, orange Buttons | Wechsel aus offenen Flächen, Salbei-Blöcken, einem dunklen Abschnitt |
+| Sichtbare Hinweise auf fehlenden Formularempfänger und unbelegte Angaben | Entfernt; diese Punkte stehen nur noch hier |
+| Zwei Schriftfamilien inkl. großer brauner Serif | Eine humanistische Sans (Source Sans 3) |
+
+### Neue Startseiten-Reihenfolge
+
+1. Hero — Überschrift, kurzer Text, „Pflege anfragen", Telefonnummer, Symbolbild
+2. „Was brauchen Sie gerade?" — sechs Situationen mit je einer kurzen Antwort
+3. „Was zahlt die Kasse – und was bleibt für Sie?" — drei Erklärungen, drei Schritte,
+   Checkliste fürs erste Telefonat
+4. „Kommen Sie auch zu uns?" — Ortsprüfung und die beiden Besucherbüros
+5. „Persönlich ansprechbar." — eine kompakte Vorstellung von Marija Jelačić Bjelovuk
+6. Häufige Fragen — sechs Antworten
+7. „Lassen Sie uns Ihren nächsten Schritt klären." — Telefon, E-Mail, WhatsApp
+8. „Sie möchten bei den Pflegenden Bienen arbeiten?" — abschaltbar
+
+Sichtbarer Textumfang der Startseite im Grundzustand: **663 Wörter** (Ziel 650–850,
+ohne Navigation, Fußzeile und eingeklappte Antworten).
+
+### Navigation
+
+Hauptnavigation: **Hilfe finden · Kosten · Einsatzgebiet · Kontakt**.
+Zweite Reihe: **Über uns · Arbeiten bei uns**. Alle Leistungsseiten bleiben über
+„Hilfe finden", das Mobilmenü, die Fußzeile und interne Links erreichbar; keine URL
+wurde geändert, keine Weiterleitung ist nötig.
+
+---
+
+## 2. Gestaltung
+
+### Farben — aus dem Originallogo gemessen
+
+`public/logo-original.png` enthält genau **einen** gesättigten Farbwert:
+**#F89B1C** (2614 Pixel). Der im Briefing genannte Startwert #F6A21A wurde durch
+diesen gemessenen Wert ersetzt.
+
+| Rolle | Wert | Kontrast |
+|---|---|---|
+| Marke | `#F89B1C` | dunkle Schrift darauf 6,96 : 1 |
+| Warmes Weiß | `#FAF8F3` | – |
+| Salbei | `#E8EDE3` | Text darauf 12,67 : 1 |
+| Dunkler Abschnitt | `#313A2C` | heller Text darauf 11,16 : 1 |
+| Haupttext | `#222821` | 14,20 : 1 auf Papier |
+| Fließtext | `#4A5245` | 7,66 : 1 |
+| Gedämpfte Labels | `#626C57` | 5,20 : 1 |
+| Textlinks | `#7A4104` | 7,65 : 1 |
+| Rahmen von Bedienelementen | `#7C8672` | 3,59 : 1 (Anforderung 3 : 1) |
+
+Alle Werte wurden mit der WCAG-Formel berechnet, nicht geschätzt.
+
+### Schrift und Maße
+
+Eine Familie: **Source Sans 3 Variable**, selbst gehostet, latin-Subset vorgeladen.
+Fließtext 18 px, H1 36 px mobil bis 58 px auf dem Desktop, Zeilenlänge rund 62 Zeichen.
+Inhaltsbreite 1240 px, Außenabstand 20 px auf dem Handy, Kopfzeile 77 px mobil.
+
+### Logo
+
+Unverändert: dieselbe Datei, dasselbe Seitenverhältnis 195 : 120, 98 px mobil und
+128 px auf dem Desktop. Nicht neu gezeichnet, nicht eingefärbt, nicht animiert.
+
+---
+
+## 3. Die Situationsauswahl
+
+Sechs Schaltflächen: Nach dem Krankenhaus · Waschen & Anziehen · Medikamente &
+Verbände · Haushalt & Begleitung · Entlastung für Angehörige · Ich brauche Orientierung.
+3 × 2 ab 61 rem, 2 × 3 ab 22 rem, eine Spalte darunter — die Abfragen sind bewusst in
+`rem`, damit bei vergrößertem Text automatisch auf eine Spalte umgestellt wird.
+
+- **Kein Konto, keine Kontaktdaten, keine Pflegegrad-Frage**, um eine Antwort zu sehen.
+- Jede Antwort: eine Aussage, drei praktische Punkte, die echte Telefonnummer und der
+  Link auf die passende Leistungsseite. Gemessen 47–55 Wörter.
+- Auswahl wechseln, erneut klicken zum Schließen und „Auswahl zurücksetzen" funktionieren
+  ohne Neuladen; der Fokus kehrt danach auf die Schaltfläche zurück.
+- Bei Tastaturbedienung erhält das Antwortfeld den Fokus; es wird nur gescrollt, wenn
+  es sonst hinter der Kopfzeile läge (`prefers-reduced-motion` wird beachtet).
+- **Ohne JavaScript** sind alle sechs Antworten mit ihren gewöhnlichen Links sichtbar.
+- „Für das Gespräch merken" erzeugt eine druckbare Notiz in einem versteckten
+  `iframe`. Nichts wird gespeichert, übertragen, in die URL geschrieben oder in
+  WhatsApp vorbefüllt.
+
+---
+
+## 4. Kontakt, Formular und Zahlen
+
+### Was heute funktioniert
+
+Telefon, WhatsApp (neutrale Nachricht, nichts aus der Auswahl vorbefüllt) und ein
+E-Mail-Entwurf. Die Schaltfläche heißt **„Rückruf per E-Mail anfragen"** – sie ist
+nirgends als abgesendetes Webformular bezeichnet, und es gibt keinen vorgetäuschten
+Erfolgszustand.
+
+### Rückrufformular — bewusst nicht ausgeliefert
+
+Ein Formular wurde **nicht** in die Oberfläche aufgenommen, weil kein autorisiertes
+Empfangsziel konfiguriert ist. Damit es später ergänzt werden kann, fehlt genau das:
+
+1. Ein Empfangsziel (Formulardienst, E-Mail-API oder eigener Endpunkt) samt
+   Auftragsverarbeitungsvertrag.
+2. Zugangsdaten als Umgebungsvariablen der Produktivumgebung, nicht im Repository.
+3. Serverseitiger Endpunkt mit Validierung, Rate-Limiting, Spam- und
+   Doppelsende-Schutz sowie echten Erfolgs- und Fehlerzuständen.
+4. Felder: Name und Telefon verpflichtend, Ort optional. Keine Diagnosen, keine
+   Gesundheitsfragen, keine Pflichtangabe einer E-Mail-Adresse.
+
+Bis dahin bleibt der ehrliche Weg: anrufen, schreiben oder WhatsApp.
+
+### Mobile Kontaktleiste
+
+Erscheint erst, wenn die Hauptaktion im Hero aus dem Bild gescrollt ist, und
+verschwindet wieder, sobald der Kontaktbereich sichtbar ist oder ein Eingabefeld den
+Fokus hat. Der Platz am Seitenende wird nur reserviert, solange die Leiste da ist;
+`env(safe-area-inset-bottom)` ist berücksichtigt. Beim Drucken wird sie ausgeblendet.
+
+### Messung (noch nicht eingerichtet)
+
+Es ist **keine Analyse eingebaut** – kein Pixel, kein Session-Replay, keine Cookies.
+Wenn später gemessen wird, sollte unterschieden werden zwischen Klicks auf Telefon
+bzw. WhatsApp, angenommenen Rückrufanfragen und Bewerbungskontakten. Ein Klick auf die
+Telefonnummer ist **kein** geführtes Gespräch und kein neuer Auftrag. Namen,
+Kontaktdaten, Diagnosen, gewählte Pflegesituationen und genaue Orte gehören nicht in
+Analysewerkzeuge. Die betriebliche Kennzahl ist die Zahl passender Pflegeanfragen und
+tatsächlicher Versorgungsbeginne, bewertet im Verhältnis zur freien Kapazität.
+
+---
+
+## 5. Tatsächlich durchgeführte Prüfungen
+
+Ausgeführt am 14.09.2026, Chromium 1194 über Playwright gegen den lokalen
+Vorschau-Server. Alle Zahlen unten stammen aus diesen Läufen.
+
+### Build und Code
+
+`astro check`: **0 Fehler, 0 Warnungen, 0 Hinweise** · `npm run build`: 16 Seiten ·
+`npm audit`: **0 Schwachstellen**.
+
+### HTML und Inhalt (`npm run verify`, 16 Seiten)
+
+Bestanden: genau ein `<h1>` je Seite (im DOM geprüft) · seitenspezifischer Title und
+Description · Canonical · `noindex` in der Vorschau · `lang="de"` · jedes Bild mit
+`alt`, `width` und `height` · valides JSON-LD ohne Bewertungen, Öffnungszeiten,
+Preise, Auszeichnungen oder Qualifikationen · keine Social-CDN-Links · keine erfundenen
+Kapazitäts-, Preis- oder Reaktionszusagen · Verhinderungspflege durchgehend unter
+SGB XI · Sitzadresse nirgends als Besucherbüro.
+
+### Interaktion und Barrierefreiheit (`npm run verify:interaction`) — 38 Prüfungen, 0 Fehler
+
+| Prüfung | Ergebnis |
+|---|---|
+| Alle sechs Auswahlmöglichkeiten öffnen genau eine Antwort | bestanden, 47–55 Wörter je Antwort |
+| Jeder Antwort-Link liefert HTTP 200 | bestanden |
+| Erneuter Klick schließt; Zurücksetzen gibt den Fokus zurück | bestanden |
+| Tastatur: Fokus landet im Antwortfeld, frei von der 107-px-Kopfzeile | bestanden |
+| Ortsprüfung: Treffer nennt den Ort, Nicht-Treffer verweist auf Rückfrage | bestanden |
+| Navigation primär und sekundär wie gebrieft | bestanden |
+| Karriereabschnitt sichtbar, `/karriere/` erreichbar | bestanden |
+| `tel:`, WhatsApp ohne vorbefüllte Auswahl, E-Mail als Rückrufanfrage | bestanden |
+| Logo: Originaldatei, Seitenverhältnis erhalten | bestanden |
+| Startseite 663 sichtbare Wörter | im Ziel 650–850 |
+| Erste Ansicht 390 × 844: Überschrift, Text, Aktion und 126 px Foto | bestanden |
+| Mobile Kopfzeile 77 px | im Ziel 72–80 |
+| Kontaktleiste: erst nach dem Hero, weg beim Kontaktbereich und bei Fokus im Feld | bestanden |
+| Mobilmenü öffnet, enthält „Arbeiten bei uns", schließt mit Escape | bestanden |
+| Auswahl bei 390 px zweispaltig | bestanden |
+| 200 % Textzoom: kein horizontaler Überlauf, Hero wächst mit | bestanden |
+| `prefers-reduced-motion`: alles sofort sichtbar | bestanden |
+| Ohne JavaScript: alle sechs Antworten und alle FAQ-Antworten lesbar | bestanden |
+| Skip-Link erster Tabstopp und sichtbar | bestanden |
+| Alle 15 internen Links liefern 200 | bestanden |
+
+Screenshots aller 16 Seiten bei **1440, 768 und 390 px** wurden erzeugt und gesichtet.
+Kein horizontaler Überlauf, keine JavaScript-, Konsolen- oder HTTP-Fehler.
+
+### Gemessene Performance (`npm run measure:performance`)
+
+Lokaler Server, **ohne Netzwerk- oder CPU-Drosselung**. Keine Feldwerte, kein Lighthouse.
+
+| Seite | LCP Desktop | LCP Mobil | CLS | Übertragung |
+|---|---|---|---|---|
+| `/` | 184 ms | 136 ms | 0 | 145 KB |
+| `/leistungen/` | 136 ms | 92 ms | 0 | 42–122 KB |
+| `/kosten-finanzierung/` | 132 ms | 112 ms | 0 | 42 KB |
+| `/ueber-uns/` | 708 ms | 132 ms | 0 | 284–412 KB |
+
+Die Startseite ist von 227 KB auf 145 KB gefallen. Das Hero-Bild lädt `eager` mit
+`fetchpriority="high"` und festen Maßen; alle übrigen Bilder sind `lazy`. CLS ist 0.
+`/ueber-uns/` ist mit 24 Porträts die schwerste Seite – das ist der richtige Ort dafür.
+
+### Was nicht geprüft wurde
+
+- **Kein Lighthouse-Lauf und keine Feldmessung.** Die Zahlen oben sind Laborwerte ohne
+  Drosselung; unter realen Bedingungen fallen sie schlechter aus.
+- **Kein automatisierter Audit mit axe** und kein vollständiges WCAG-2.2-Audit.
+  Geprüft wurde mit den oben aufgeführten gezielten Tests, Kontrastrechnung und
+  manueller Sichtung.
+- **Kein Test mit echten Screenreadern** (NVDA, VoiceOver) und nicht auf echten Geräten.
+- **Strukturierte Daten nicht gegen das Google-Rich-Results-Werkzeug geprüft**
+  (kein Zugang aus dieser Umgebung); das JSON-LD ist syntaktisch valide.
+- **Keine Testanfrage** an die echte Rufnummer, WhatsApp-Nummer oder E-Mail-Adresse.
+
+---
+
+## 6. Vor der Veröffentlichung durch die Inhaber zu klären
+
+### Vorrangig
+
+1. **Bildrechte und Einwilligungen** für alle echten Team- und Gruppenfotos.
+2. **Zwei Symbolbilder sind KI-generiert** (`src/assets/illustrative/`): das Gespräch
+   auf dem Sofa im Hero und die Küchenszene auf der Seite Haushalt & Betreuung. Beide
+   sind im Bild als „KI-generiertes Symbolbild" gekennzeichnet und zeigen **keine**
+   Patientinnen, Patienten oder Mitarbeitenden. Falls das nicht gewünscht ist, können
+   sie durch echte Fotos ersetzt werden — dann bitte die Bildunterschrift entfernen.
+3. **Rückrufformular**: Empfangsziel und Zugangsdaten bereitstellen (Abschnitt 4).
+4. **Aktuelle Kapazität und Aufnahmeprozess**: Die Seite sagt überall, dass ein
+   möglicher Beginn persönlich geklärt wird. Gibt es einen festen Ablauf, sollte der
+   Drei-Schritte-Abschnitt daran angepasst werden.
+5. **Erreichbarkeitszeiten**: Stehen bewusst nirgends. Die Bürokarten bitten stattdessen
+   um vorherige telefonische Anmeldung.
+6. **Aktuelle Stellen**: Die Karriereseite ist eine Einladung zur Initiativbewerbung —
+   ohne Positionen, Gehälter, Vorteile oder JobPosting-Markup. Gibt es offene Stellen,
+   können sie ergänzt werden. Soll der Bereich ganz weg: `PUBLIC_RECRUITMENT=false`
+   entfernt Abschnitt, Menüeinträge, Sitemap-Eintrag und leitet `/karriere/` um.
+
+### Weiterhin offen
+
+7. **Beratungseinsätze nach § 37 Abs. 3 SGB XI**: Die Seite `/pflegeberatung/` bittet
+   um Rückfrage, statt eine Zulassung zu behaupten. Liegt sie vor, bitte Nachweis.
+8. **Palliative Begleitung**: Umfang klären; aktuell mit ausdrücklicher Abgrenzung von
+   SAPV und Rund-um-die-Uhr-Betreuung.
+9. **Physiotherapie, Fußpflege, Friseur**: als nicht eigenständige Leistung beschrieben.
+10. **Sprachkenntnisse im Team**: nicht genannt, weil nicht belegt — und aus Namen nicht
+    ableitbar. Falls mehrsprachige Versorgung angeboten wird, ist das ein starkes Argument.
+11. **Finanzierungsbeträge** auf `/kosten-finanzierung/` tragen „Informationsstand:
+    13.09.2026" und die amtlichen Quellen. Vor dem Launch erneut prüfen und danach
+    regelmäßig (`src/data/funding.ts`, `RESEARCH_DATE` in `src/data/business.ts`).
+12. **Impressum**: Umsatzsteuer-ID bzw. Steuerbefreiung, Aufsichtsbehörde und Zulassung,
+    Berufsbezeichnung, Berufshaftpflicht und die nach § 18 Abs. 2 MStV verantwortliche
+    Person fehlen und müssen ergänzt werden. Nichts davon wurde erfunden. Der Verweis auf
+    die zum 20.07.2025 eingestellte EU-Streitbeilegungsplattform wurde nicht übernommen.
+13. **Datenschutz**: Hosting-Anbieter, Serverstandort, Speicherdauer der Logdateien,
+    Auftragsverarbeitungsvertrag, ggf. Datenschutzbeauftragte.
+14. **Beide Rechtstexte anwaltlich prüfen lassen.**
+15. **NAP-Konsistenz**: In externen Verzeichnissen erscheint teils ein älterer Name und
+    eine abweichende Adresse. Vor lokalem SEO-Aufbau angleichen. Das
+    Google-Unternehmensprofil wurde **nicht** angefasst.
+
+---
+
+## 7. Betrieb
 
 ### Befehle
 
 ```bash
 npm install
-npm run dev        # Entwicklungsserver
-npm run build      # erzeugt Bilder-Derivate und baut nach dist/
-npm run preview    # baut dist/ lokal aus
-npm run verify     # astro check + HTML-Prüfung + Inhaltsprüfung
+npm run dev          # Entwicklungsserver
+npm run build        # Bilder-Derivate + statischer Build nach dist/
+npm run preview      # dist/ lokal ausliefern
+npm run verify       # astro check + HTML- + Inhaltsprüfung
 ```
 
-Weitere Prüfskripte (brauchen einen laufenden `npm run preview` auf Port 4321):
+Mit laufendem `npm run preview` auf Port 4321:
 
 ```bash
-npm run verify:interaction    # Guide, Tastatur, Mobilmenü, 200 % Zoom, ohne JavaScript
-npm run verify:screenshots    # Screenshots aller Seiten in screenshots/ (Desktop + Mobil)
-npm run measure:performance   # LCP/CLS/Übertragungsvolumen lokal messen
+npm run verify:interaction    # 38 Interaktions- und Barrierefreiheitsprüfungen
+npm run verify:screenshots    # Screenshots aller Seiten bei 1440/768/390 px
+npm run measure:performance   # LCP/CLS/Übertragung lokal messen
 ```
 
-### Struktur
+### Schalter
 
-```
-src/
-  config/site.mjs     Betriebsmodus (demo | production), Origin, Sprache
-  data/               ALLE Inhalte und Fakten (business, services, faq, funding,
-                      guide, insights, team, navigation, routes)
-  lib/schema.ts       strukturierte Daten (JSON-LD)
-  layouts/Base.astro  <head>, Landmarks, Skip-Link, Reveal-Logik
-  components/         Header, Footer, Hero, Guide, FAQ, Photo, …
-  pages/              Routen (inkl. sitemap.xml.ts und robots.txt.ts)
-  assets/             Originalfotos (werden vom Bild-Pipeline verarbeitet)
-public/               Originallogo (unverändert), Favicon, Social-Preview
-docs/                 Rechercheunterlagen aus dem Paket (Quellennachweis)
-```
-
-Inhalte stehen ausschließlich in `src/data/`. Für Textänderungen muss keine
-Komponente angefasst werden.
-
-### Seiten
-
-`/` · `/leistungen/` · `/leistungen/grundpflege/` · `/leistungen/behandlungspflege/` ·
-`/leistungen/haushalt-betreuung/` · `/leistungen/verhinderungspflege/` ·
-`/pflegeberatung/` · `/kosten-finanzierung/` · `/muenchen-west/` · `/germering/` ·
-`/ueber-uns/` · `/kontakt/` · `/impressum/` · `/datenschutz/` · 404 ·
-`/sitemap.xml` · `/robots.txt`
-
-### Funktionen
-
-- **Orientierungshilfe auf der Startseite** („Welche Unterstützung brauchen Sie
-  gerade?"): fünf Situationen, jeweils mit passender Leistung, kurzer Erklärung,
-  drei Vorbereitungsfragen und der echten Telefonnummer. Es werden **keine Daten
-  abgefragt und nichts übertragen**. Ohne JavaScript sind alle fünf Antworten
-  gleichzeitig lesbar.
-- **Optionale Ortsprüfung** gegen das veröffentlichte Einsatzgebiet. Ein Treffer
-  sagt ausdrücklich nur, dass der Ort zum veröffentlichten Gebiet gehört — nie,
-  dass Kapazität frei ist.
-- **Kontaktwege, die wirklich funktionieren**: Telefon, WhatsApp (mit neutralem
-  Text) und ein E-Mail-Entwurf. Die Schaltfläche heißt bewusst
-  „E-Mail-Entwurf öffnen" und nicht „Anfrage absenden".
-- **Kein Kontaktformular**, weil kein autorisierter Empfänger existiert. Ein
-  Formular würde einen Versand nur vortäuschen.
-- **Mobile Kontaktleiste** („Anrufen" / „WhatsApp") unter 900 px. Der Body
-  reserviert die passende Höhe plus Safe-Area, die Leiste verdeckt nichts.
-- **FAQ** als native `details`/`summary`: Antworten stehen im HTML und
-  funktionieren ohne JavaScript.
-- **Signature-Motion**: ein abstraktes bernsteinfarbenes Band an der Hero-Kante
-  (SVG, einmalige Einblendung) und sanfte Abschnitts-Einblendungen. Beides
-  respektiert `prefers-reduced-motion`; eine Sicherung blendet Inhalte nach
-  1,5 s in jedem Fall ein, damit nie etwas unsichtbar bleibt.
-
----
-
-## 2. Verwendete Geschäftsdaten und Bildquellen
-
-### Geschäftsdaten (aus dem Rechercheppaket, Stand 13.09.2026)
-
-| Feld | Wert |
-|---|---|
-| Marke | Pflegende Bienen |
-| Leistungsbezeichnung | Ambulanter Pflegedienst & Seniorenbetreuung |
-| Slogan (sekundär) | „Damit das Leben lebenswert bleibt" |
-| Firmierung (rechtlich) | Pflegende Bienen Marija Jelacic Bjelovuk und Dusko Bjelovuk GbR |
-| Telefon | 089 54637889 → `tel:+498954637889` |
-| E-Mail | info@pflegendebienen.de |
-| Fax | 089 54637891 |
-| WhatsApp | +49 176 22906287 → `https://wa.me/4917622906287` |
-| Büro München | Fürstenrieder Str. 137, 80686 München |
-| Büro Germering | Otto-Wagner-Str. 10, 82110 Germering |
-| Sitz laut Impressum | Kurfürstenstr. 16, 82110 Germering — **kein Besucherbüro** |
-| Inhaberin | Marija Jelačić Bjelovuk — Inhaberin & Pflegedienstleitung |
-| Inhaber | Duško Bjelovuk — Organisation & interne Abläufe, d.bjelovuk@pflegendebienen.de, +49 179 9543008 |
-| Instagram | https://www.instagram.com/pflegendebienen/ |
-| Facebook | https://www.facebook.com/pflegendebienen/ |
-
-Einsatzgebiet wie veröffentlicht — München: Neuhausen, Nymphenburg, Laim, Pasing,
-Obermenzing, Aubing, Großhadern, Blumenau. Umland: Gräfelfing, Planegg, Germering,
-Puchheim, Eichenau, Gilching.
-
-Die rechtliche Schreibweise ohne diakritische Zeichen steht ausschließlich in
-Impressum und Datenschutz; redaktionell werden die korrekt akzentuierten Namen
-verwendet. Die Sitzadresse erscheint nirgends als Besucherbüro — auf jeder Seite,
-auf der sie auftaucht, steht der entsprechende Hinweis.
-
-Die „mehr als 20 Jahre Erfahrung" sind ausschließlich Marija Jelačić Bjelovuk
-persönlich zugeschrieben, nicht dem Unternehmen.
-
-### Bilder
-
-Alle Bilder stammen aus dem gelieferten Paket und sind unverändert übernommen
-(keine KI-Retusche, keine Szenenänderung). Quellen und Prüfsummen:
-`docs/SELECTED_ASSETS.json` und `docs/ASSET_SOURCES.json`.
-
-| Datei | Verwendung | Quelle |
+| Variable | Standard | Wirkung |
 |---|---|---|
-| `public/logo-original.png` | Header, Social-Preview, Favicon | pflegendebienen.de (195 × 120 px, bytegleich, MD5 `3b5a04d0…`) |
-| `public/logo-weiss-90px.png` | Footer (helle Variante) | Originalvariante aus `assets/originals` |
-| `hero-garten-original.jpg` | Hero | pflegendebienen.de |
-| `marija-jelacic-bjelovuk.jpeg` | Startseite + Über uns | pflegendebienen.de (1000 × 1000) |
-| `dusko-bjelovuk.jpeg` | Startseite + Über uns | pflegendebienen.de (1000 × 1000) |
-| `team-alltag-facebook.jpg` | Startseite, Abschnitt „Wobei dürfen wir…" | Facebook 1624282706363580 |
-| `team-fortbildung-instagram.webp` | Einblicke, 19.03.2026 | instagram.com/p/DWEl3z3CCsl/ |
-| `team-gemeinsam-instagram.webp` | Einblicke, 23.03.2026 | instagram.com/p/DWPHSbdiG7Q/ |
-| `team-terrasse-instagram.webp` | Einblicke, 10.03.2026 | instagram.com/p/DVtRtxTCGhd/ |
-| `team-garten-facebook.jpg` | Leistungen + Über uns | Facebook 1426070486184804 |
-| `team-gruppe-facebook.jpg` | Über uns | Facebook 1633111288814055 |
-| `team-kaffeepause-instagram.webp` | Über uns | instagram.com/p/DV2_4xAiEhL/ |
-| `team-laura-sanja-facebook.jpg` | Über uns (Archiv, 06.08.2026) | Facebook 1674412474683936 |
-| 24 Porträts in `src/assets/team/` | Über uns, kleine Profilbilder | Team-Seite von pflegendebienen.de |
+| `PUBLIC_SITE_MODE` | `demo` | `production` entfernt `noindex` und alle Vorschau-Hinweise |
+| `PUBLIC_SITE_ORIGIN` | `https://demo.pflegendebienen.de` | Canonical, Sitemap, Open Graph, JSON-LD-IDs |
+| `PUBLIC_RECRUITMENT` | an | `false` entfernt Karriereabschnitt, Menüeinträge und Route |
 
-Das Originallogo wurde **nicht** neu gezeichnet, eingefärbt, vereinfacht oder
-animiert. Es wird mit 132 px (mobil) bzw. 145 px (Desktop) Breite im
-Originalseitenverhältnis 195 : 120 dargestellt. Favicon und Social-Preview sind
-reine Skalierungen bzw. Kompositionen aus dem Originallogo und dem echten
-Hero-Foto (`scripts/generate-static-images.mjs`), keine Neuzeichnungen.
+### Vorschau auf Vercel
 
-Die Team-Porträts zeigen **nur Vornamen**, so wie sie in den veröffentlichten
-Dateinamen der Team-Seite stehen. Es werden keine Berufsbezeichnungen,
-Qualifikationen, Sprachkenntnisse oder Dienstjahre behauptet.
+`vercel.json` legt Framework, Build-Befehl, Ausgabeordner, `trailingSlash` sowie Cache-
+und Sicherheits-Header fest. In Vercel nur `PUBLIC_SITE_ORIGIN` auf die tatsächliche
+Adresse setzen. Ein sauberer Build aus einem frischen Klon (`npm ci && npm run build`)
+wurde geprüft.
 
-Alle Bilder liegen lokal. Es wird nichts von Instagram- oder Facebook-CDNs
-nachgeladen.
+### Umschalten auf Produktion
 
----
-
-## 3. Tatsächlich durchgeführte Prüfungen und verbleibende Grenzen
-
-Alle folgenden Prüfungen wurden am 13.09.2026 in dieser Umgebung ausgeführt.
-Chromium 1194 über Playwright, lokaler Preview-Server.
-
-### Build und Typen
-
-- `astro check`: **0 Fehler, 0 Warnungen, 0 Hinweise** (58 Dateien).
-- `npm run build`: 15 Seiten, erfolgreich.
-- `npm audit`: **0 Schwachstellen**.
-
-### HTML- und Metadaten-Prüfung (`npm run verify:html`, 15 Seiten)
-
-Bestanden: genau ein `<h1>` je Seite · seitenspezifischer Title und Description ·
-Canonical-URL · `noindex, nofollow` im Demo-Modus · `lang="de"` · jedes `<img>`
-mit `alt` sowie `width`/`height` · valides JSON-LD · keine Social-CDN-Hotlinks ·
-keine verbotenen Schema-Felder (`aggregateRating`, `Review`, `Physician`,
-`Hospital`, `openingHours`, `priceRange`, `geo`, `award`, `hasCredential`).
-
-### Inhaltsprüfung (`npm run verify:content`, 15 Seiten)
-
-Bestanden: keine erfundenen Bewertungen, Öffnungszeiten, Kapazitäts- oder
-Reaktionszusagen, Preise, Zertifikate oder Auszeichnungen · Verhinderungspflege
-nirgends unter SGB V eingeordnet · „§ 39 SGB XI" auf der Verhinderungspflege-Seite
-vorhanden · Sitzadresse nirgends ohne den Hinweis „kein Büro für Besuche" ·
-SAPV nur innerhalb einer ausdrücklichen Abgrenzung · rechtliche Firmierung im
-Impressum, akzentuierte Namen redaktionell.
-
-### Interaktion und Barrierefreiheit (`npm run verify:interaction`, 24 Prüfungen, 0 Fehler)
-
-| Prüfung | Ergebnis |
-|---|---|
-| Guide: Antworten eingeklappt beim Laden, genau eine sichtbar nach Auswahl | bestanden |
-| Guide: Pfeiltasten wechseln die Auswahl (native Radiogruppe) | bestanden |
-| Ortsprüfung: Treffer- und Nicht-Treffer-Meldung | bestanden |
-| Skip-Link: erster Tabstopp, wird sichtbar, setzt den Fokus in `<main>` | bestanden |
-| FAQ-Akkordeon öffnet per Klick und Tastatur | bestanden |
-| `tel:`, `wa.me` (mit neutralem Text) und `mailto:` korrekt | bestanden |
-| Logo 145 × 89 CSS aus 195 × 120 Original, Seitenverhältnis erhalten | bestanden |
-| Kein interaktives Ziel unter 32 px Höhe (Schaltflächen ≥ 46–52 px) | bestanden |
-| Alle 14 internen Links liefern HTTP 200 | bestanden |
-| Mobil: Menü öffnet, `aria-expanded` korrekt, Escape schließt | bestanden |
-| Mobil: Kontaktleiste verdeckt das Seitenende nicht | bestanden |
-| 200 % Textzoom auf 390 px: kein horizontaler Überlauf | bestanden |
-| `prefers-reduced-motion`: alle Inhalte sofort sichtbar | bestanden |
-| Ohne JavaScript: alle Guide-Antworten und FAQ-Antworten lesbar, nichts versteckt | bestanden |
-
-Zusätzlich: Screenshots aller 15 Seiten bei 1440 px und 390 px wurden erzeugt und
-gesichtet. Auf keiner Seite gab es horizontalen Überlauf, JavaScript-Fehler,
-Konsolenfehler oder HTTP-Fehler.
-
-Kontrastwerte wurden rechnerisch geprüft (WCAG-Formel): Fließtext 8,9 : 1,
-Haupttext 15,5 : 1, Textlinks 6,6 : 1, dunkle Schrift auf Markenorange 7,5 : 1,
-heller Text auf dunklem Abschnitt 14,9 : 1, Rahmen der sekundären Schaltfläche
-3,2 : 1. Alle Werte erfüllen mindestens WCAG AA.
-
-### Gemessene Performance (`npm run measure:performance`)
-
-Lokaler Preview-Server, **ohne Netzwerk- oder CPU-Drosselung**. Das sind keine
-Feldwerte und kein Lighthouse-Ergebnis.
-
-| Seite | LCP | CLS | Übertragung |
-|---|---|---|---|
-| `/` (Desktop 1440) | 256 ms | 0 | 227 KB |
-| `/` (Mobil 390) | 148 ms | 0 | 265 KB |
-| `/leistungen/` | 124–144 ms | 0 | 64–143 KB |
-| `/kosten-finanzierung/` | 116–156 ms | 0 | 64 KB |
-| `/ueber-uns/` | 136–192 ms | 0 | 261–405 KB |
-
-Das Hero-Bild wird bewusst **nicht** lazy geladen (`loading="eager"`,
-`fetchpriority="high"`, feste Maße). Alle übrigen Bilder sind lazy. CLS ist 0,
-weil alle Bilder explizite Maße und Seitenverhältnisse haben.
-
-### Verbleibende technische Grenzen
-
-- **Kein Lighthouse-Lauf und keine Feldmessung.** Die Zahlen oben stammen aus der
-  Performance-API auf einem lokalen Server ohne Drosselung. Unter realen
-  Bedingungen (Hosting, Mobilfunk, langsames Gerät) fallen sie schlechter aus.
-  Vor dem Launch sollte auf der Zielumgebung gemessen werden.
-- **Kein automatisierter Audit mit axe oder ähnlichen Werkzeugen.** Geprüft wurde
-  mit den oben aufgeführten gezielten Tests, Kontrastrechnung und manueller
-  Sichtung — nicht mit einem vollständigen WCAG-Audit. Eine unabhängige Prüfung
-  vor dem Launch ist sinnvoll, besonders wegen der älteren Zielgruppe.
-- **Kein Test mit echten Screenreadern** (NVDA, VoiceOver) und kein Test auf
-  echten Geräten; geprüft wurde in Chromium-Emulation.
-- **Strukturierte Daten wurden nicht gegen das Google-Rich-Results-Werkzeug
-  geprüft** (kein Zugang aus dieser Umgebung). Das JSON-LD ist syntaktisch valide
-  und inhaltlich auf die belegten Felder beschränkt.
-- **`hyphens: auto`** verbessert Umbrüche langer Komposita, ist aber
-  browserabhängig. Als Absicherung sorgt `overflow-wrap: anywhere` dafür, dass
-  auch ohne Trennwörterbuch nichts abgeschnitten wird.
-- **Die Vorschau läuft unter `https://demo.pflegendebienen.de`** als Platzhalter-
-  Origin. Vor dem Launch muss der echte Origin gesetzt werden (Abschnitt 5).
-
----
-
-## 4. Vor der Veröffentlichung durch die Inhaber zu klären
-
-Die folgenden Punkte wurden bewusst **nicht** erfunden. Sie fehlen auf der
-Website oder sind ausdrücklich als ungeklärt gekennzeichnet.
-
-### Bilder und Personen — vorrangig
-
-1. **Nutzungsrechte an allen Fotos** schriftlich bestätigen (eigene Website,
-   Facebook, Instagram).
-2. **Einwilligungen der abgebildeten Personen** für die Verwendung auf der neuen
-   Website einholen — insbesondere für die Team-Porträts, die Gruppenfotos und
-   das Hero-Bild. Die im Hero abgebildeten Personen sind nicht als Patientinnen,
-   Angehörige oder bestimmte Familie bezeichnet; das sollte so bleiben, solange
-   nichts anderes belegt und eingewilligt ist.
-3. **Vornamen der Team-Porträts prüfen** und entscheiden, ob Rollen ergänzt werden
-   sollen. Aktuell steht bewusst keine einzige Funktionsbezeichnung dort.
-4. Falls das Logo auch für Druck gebraucht wird: **größere Original- oder
-   Vektordatei beim Unternehmen anfordern.** Die vorhandene Fassung hat
-   195 × 120 px; eine SVG-Rekonstruktion wurde bewusst nicht erfunden.
-
-### Betrieb und Erreichbarkeit
-
-5. **Öffnungs- bzw. Erreichbarkeitszeiten** festlegen. Stehen aktuell nirgends.
-   Die Bürokarten sagen stattdessen „bitte vorher telefonisch anmelden".
-6. **Bedeutung der „24-Std-Hotline"** aus der alten Meta-Beschreibung klären.
-   Wurde nicht übernommen, weil unklar ist, was genau zugesagt wird.
-7. **Reaktionszeiten**: Falls eine Zusage gemacht werden soll („Rückruf binnen
-   X"), muss sie betrieblich abgesichert sein. Aktuell wird keine gemacht.
-8. **Kapazität und Aufnahmeprozess**: Die Website sagt überall, dass ein
-   möglicher Beginn persönlich geklärt wird. Falls es einen definierten Ablauf
-   gibt (Erstbesuch, Beratungsgespräch, Probezeitraum), sollte der
-   Drei-Schritte-Abschnitt auf der Startseite daran angepasst werden.
-
-### Leistungen und Zulassungen
-
-9. **Beratungseinsätze nach § 37 Abs. 3 SGB XI**: Die Seite `/pflegeberatung/`
-   sagt ausdrücklich, dass eine solche Zulassung nicht belegt ist. Falls sie
-   besteht, bitte Nachweis liefern — dann kann der Absatz geändert werden.
-10. **Palliative Begleitung**: Umfang klären. Aktuell nur als Gesprächsangebot
-    erwähnt, mit ausdrücklicher Abgrenzung von SAPV und Rund-um-die-Uhr-Betreuung.
-11. **Physiotherapie, Fußpflege, Friseur**: Aktuell als „nicht eigenständige
-    Leistung, bitte mit dem Team absprechen" beschrieben. Falls Kooperationen
-    bestehen, können sie benannt werden — mit Zustimmung der Partner.
-12. **Sprachkenntnisse im Team**: nicht genannt, weil nicht belegt. Falls
-    mehrsprachige Versorgung angeboten wird, ist das ein starkes Argument und
-    sollte ergänzt werden.
-13. **Aktuelle Stellen**: Die Karriere-Notiz auf `/ueber-uns/` ist bewusst eine
-    allgemeine Einladung ohne Vakanzen. Falls Stellen offen sind, bitte konkret
-    benennen.
-
-### Finanzierung
-
-14. **Beträge prüfen**: Entlastungsbetrag (bis 131 € monatlich) und gemeinsames
-    Jahresbudget für Verhinderungs- und Kurzzeitpflege (bis 3.539 €) tragen den
-    sichtbaren Hinweis „Informationsstand: 13.09.2026" und die amtlichen Quellen.
-    **Vor dem Launch gegen die verlinkten Quellen erneut prüfen** und danach
-    regelmäßig — die Werte in `src/data/funding.ts` und `RESEARCH_DATE` in
-    `src/data/business.ts` aktualisieren.
-15. Es gibt bewusst **keinen Kostenrechner und keine Preisliste**. Falls
-    Preisangaben gewünscht sind, müssen sie fachlich belegt und gepflegt werden.
-
-### Rechtstexte
-
-16. **Impressum**: Die Felder Umsatzsteuer-ID bzw. Steuerbefreiung,
-    Aufsichtsbehörde und Zulassung, Berufsbezeichnung, Berufshaftpflicht und die
-    nach § 18 Abs. 2 MStV verantwortliche Person sind auf der Seite als offen
-    markiert und müssen ergänzt werden. Nichts davon wurde erfunden.
-17. **Der Verweis auf die EU-Online-Streitbeilegungsplattform wurde nicht
-    übernommen** — die Plattform hat den Betrieb am 20.07.2025 eingestellt. Der
-    alte Text sollte auch auf der bestehenden Website korrigiert werden.
-18. **Datenschutz**: Hosting-Anbieter, Serverstandort und Speicherdauer der
-    Logdateien eintragen, Auftragsverarbeitungsvertrag abschließen, ggf.
-    Datenschutzbeauftragte benennen.
-19. **Beide Rechtstexte anwaltlich prüfen lassen.** Die Seiten sind fachlich
-    sauber aufgebaut, aber nicht juristisch geprüft.
-
-### Externe Profile
-
-20. **NAP-Konsistenz herstellen**: In externen Verzeichnissen taucht teilweise ein
-    älterer Name („B. Tolj") und eine abweichende Adresse auf. Vor lokalem
-    SEO-Aufbau sollten Name, Adresse und Telefonnummer über alle Profile
-    angeglichen werden. **Das Google-Unternehmensprofil wurde von dieser Arbeit
-    nicht angefasst** und es wurden keine Änderungen an Verzeichnissen gemeldet.
-
----
-
-## 5. Von der Vorschau in den Produktivbetrieb
-
-### Was im Demo-Modus passiert
-
-- Jede Seite trägt `<meta name="robots" content="noindex, nofollow">`.
-- `robots.txt` erlaubt das Crawlen **absichtlich** — eine `noindex`-Direktive kann
-  nur wirken, wenn die Seite abgerufen werden darf. Ein `Disallow` würde die
-  Direktive verstecken.
-- Canonical-URLs und die Sitemap zeigen auf `https://demo.pflegendebienen.de`.
-- Im Footer sowie in Impressum und Datenschutz steht ein sichtbarer Vorschau-Hinweis.
-
-### Vorschau auf Vercel bereitstellen
-
-`vercel.json` liegt im Projekt und legt Framework (`astro`), Build-Befehl
-(`npm run build`), Ausgabeordner (`dist`), `trailingSlash: true` sowie
-Cache- und Sicherheits-Header fest. In Vercel muss nichts von Hand konfiguriert
-werden.
-
-Eine Umgebungsvariable sollte gesetzt werden, damit Canonical-URLs, Sitemap und
-Open-Graph-Angaben auf die tatsächliche Adresse zeigen:
-
-```
-PUBLIC_SITE_ORIGIN = https://<projekt>.vercel.app
-```
-
-Die Vorschau bleibt dabei auf `noindex, nofollow`. Ein sauberer Build aus einem
-frischen Klon (`npm ci && npm run build`) wurde geprüft: 15 Seiten, keine
-Fehler. Die abgeleiteten Dateien in `public/` (Favicon, Apple-Touch-Icon,
-Social-Preview) liegen zusätzlich im Repository, damit sie auch dann vorhanden
-sind, wenn ein Build-Schritt übersprungen wird.
-
-### Umschalten (nach Freigabe und Rechtsprüfung)
-
-1. Punkte aus Abschnitt 4 abarbeiten, insbesondere Bildrechte und Rechtstexte.
-2. Beim Build zwei Umgebungsvariablen setzen (in Vercel unter
-   *Settings → Environment Variables*):
-
-   ```bash
-   PUBLIC_SITE_MODE=production \
-   PUBLIC_SITE_ORIGIN=https://pflegendebienen.de \
-   npm run build
-   ```
-
-   Das entfernt automatisch alle `noindex`-Tags und die Vorschau-Hinweise und
-   setzt Canonicals, Sitemap, `robots.txt`, Open-Graph-URLs und die IDs der
-   strukturierten Daten auf die echte Domain.
+1. Punkte aus Abschnitt 6 abarbeiten.
+2. `PUBLIC_SITE_MODE=production` und `PUBLIC_SITE_ORIGIN=https://pflegendebienen.de` setzen.
 3. `npm run verify` erneut ausführen. **Hinweis:** die HTML-Prüfung erwartet im
-   Demo-Modus `noindex`; für einen Produktions-Build ist diese eine Zusicherung in
+   Vorschau-Modus `noindex`; für einen Produktions-Build ist diese eine Zusicherung in
    `scripts/verify-html.mjs` umzustellen.
-4. `dist/` als statische Seite ausliefern. Eine 404-Seite liegt unter `/404.html`.
-5. Erst danach die Sitemap in der Google Search Console einreichen.
-6. Vor dem endgültigen Wechsel: Weiterleitungen der bestehenden URLs planen, damit
-   vorhandene Rankings nicht verloren gehen.
+4. Weiterleitungen der bestehenden URLs planen, dann die Sitemap einreichen.
 
 ### Was bewusst nicht getan wurde
 
-- Keine Änderung am Google-Unternehmensprofil und an externen Verzeichnissen.
-- Keine Testanfrage an die echte Rufnummer, WhatsApp-Nummer oder E-Mail-Adresse.
-- Keine Veröffentlichung, keine Indexierung, kein Domainwechsel.
-- Keine Tracking-, Analyse- oder Werbe-Dienste — deshalb auch kein Cookie-Banner.
+Keine Änderung am Google-Unternehmensprofil oder an externen Verzeichnissen. Keine
+Testanfrage an das echte Unternehmen. Keine Veröffentlichung, keine Indexierung, kein
+Domainwechsel. Keine Tracking-, Analyse- oder Werbedienste — und deshalb auch kein
+Cookie-Banner.

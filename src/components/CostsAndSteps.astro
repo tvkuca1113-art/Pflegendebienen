@@ -1,0 +1,138 @@
+---
+/**
+ * Costs come before the owners: money is what visitors are unsure about.
+ * No prices, no calculator, no entitlement claim and no benefit tables here —
+ * the statutory detail with sources lives on /kosten-finanzierung/.
+ */
+const PILLARS = [
+  {
+    title: 'Pflegekasse',
+    text: 'Bei anerkanntem Pflegegrad können Leistungen für Pflege, Betreuung und Entlastung infrage kommen (SGB XI). Dazu gehört auch die Verhinderungspflege, wenn Sie als Angehörige einmal ausfallen. Fragen Sie Ihre Pflegekasse, welcher Betrag Ihnen monatlich zusteht und wofür er verwendet werden darf.',
+  },
+  {
+    title: 'Krankenkasse',
+    text: 'Ärztlich verordnete häusliche Krankenpflege – etwa Wundversorgung, Medikamentengabe oder Kompressionsversorgung – läuft über die Krankenkasse (SGB V). Sie ist nicht an einen Pflegegrad gebunden. Die Verordnung stellt die Arztpraxis aus; die Kasse entscheidet dann über die Genehmigung.',
+  },
+  {
+    title: 'Ihr Eigenanteil',
+    text: 'Was über die bewilligten Leistungen hinausgeht, tragen Sie selbst. Wie hoch dieser Anteil ausfällt, hängt vom vereinbarten Umfang ab. Wir gehen ihn mit Ihnen durch, bevor etwas vereinbart wird – damit am Ende keine Rechnung überrascht.',
+  },
+];
+
+const PREPARE = [
+  'Ihren Wohnort und die gewünschten Zeiten.',
+  'Was im Alltag schwerfällt – und was noch gut allein geht.',
+  'Falls vorhanden: Pflegegrad, ärztliche Verordnung oder Entlassbrief.',
+];
+
+const STEPS = [
+  'Sie erzählen, was gebraucht wird.',
+  'Wir besprechen Hilfe und Kosten.',
+  'Wir klären, ob und wann es losgehen kann.',
+];
+---
+
+<section class="costs section" id="kosten" aria-labelledby="costs-title">
+  <div class="shell">
+    <div class="costs__head">
+      <h2 id="costs-title">Was zahlt die Kasse – und was bleibt für Sie?</h2>
+      <p class="lead">
+        Das hängt von der benötigten Hilfe, Ihrem Pflegegrad und einer möglichen Verordnung ab. Auch
+        ein Eigenanteil kann entstehen.
+      </p>
+    </div>
+
+    <dl class="costs__list">
+      {PILLARS.map((p) => (
+        <div class="costs__item reveal">
+          <dt>{p.title}</dt>
+          <dd>{p.text}</dd>
+        </div>
+      ))}
+    </dl>
+
+    <p class="costs__note">
+      Feste Preise nennen wir hier nicht: Was eine Versorgung kostet, hängt vom vereinbarten Umfang
+      ab. Wir rechnen es gemeinsam mit Ihnen durch, bevor Sie sich entscheiden.
+    </p>
+
+    <p class="costs__link">
+      <a class="link-action" href="/kosten-finanzierung/">Kosten und Finanzierung im Detail</a>
+    </p>
+
+    <ol class="steps">
+      {STEPS.map((step, i) => (
+        <li class="steps__item">
+          <span class="steps__num" aria-hidden="true">{i + 1}</span>
+          <span>{step}</span>
+        </li>
+      ))}
+    </ol>
+
+    <div class="prep">
+      <h3 class="prep__title">Das hilft beim ersten Telefonat</h3>
+      <p class="prep__lead">
+        Sie müssen nichts vorbereiten. Wenn Sie diese Dinge zur Hand haben, geht es aber schneller:
+      </p>
+      <ul class="ticks prep__list">
+        {PREPARE.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .costs__head { margin-bottom: clamp(1.75rem, 3.5vw, 2.5rem); }
+  .costs__head h2 { max-width: 20ch; }
+  .costs__head .lead { max-width: 44ch; }
+
+  .costs__list { display: grid; gap: 1rem; margin: 0 0 1.75rem; }
+  .costs__item {
+    padding: clamp(1.1rem, 2.4vw, 1.5rem);
+    border-radius: var(--radius);
+    background: var(--sage);
+  }
+  .costs__item dt { margin-bottom: 0.35em; color: var(--ink); font-size: var(--step-1); font-weight: 700; }
+  .costs__item dd { margin: 0; font-size: var(--step--1); }
+
+  .costs__note { margin: 0 0 1rem; max-width: 62ch; font-size: var(--step--1); }
+  .costs__link { margin: 0 0 clamp(2rem, 4vw, 3rem); }
+
+  .steps {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: clamp(1.25rem, 3vw, 1.75rem) 0 0;
+    border-top: 1px solid var(--hairline);
+    list-style: none;
+  }
+  .steps__item { display: flex; align-items: center; gap: 0.85rem; margin: 0; font-weight: 600; color: var(--ink); }
+  .steps__num {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--brand);
+    color: var(--ink);
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .prep {
+    margin-top: clamp(2rem, 4vw, 3rem);
+    padding: clamp(1.25rem, 3vw, 1.75rem);
+    border-left: 3px solid var(--brand);
+    background: var(--surface);
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+  .prep__title { margin-bottom: 0.4em; font-size: var(--step-1); }
+  .prep__lead { margin-bottom: 0.9em; font-size: var(--step--1); }
+  .prep__list { margin-bottom: 0; font-size: var(--step--1); }
+
+  @media (min-width: 760px) {
+    .costs__list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; }
+  }
+</style>

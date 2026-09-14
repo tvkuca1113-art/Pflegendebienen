@@ -8,7 +8,7 @@ import {
   SOCIAL,
   fullAddress,
 } from '../data/business';
-import { IS_DEMO } from '../config/site.mjs';
+import { IS_DEMO, recruitmentEnabled } from '../config/site.mjs';
 import Icon from './Icon.astro';
 
 const year = new Date().getFullYear();
@@ -21,7 +21,7 @@ const year = new Date().getFullYear();
         {/* Light-on-dark original logo variant, unmodified. */}
         <img src="/logo-weiss-90px.png" width="90" height="55" alt={BRAND.name} class="site-footer__logo" />
         <p class="site-footer__descriptor">{BRAND.descriptor}</p>
-        <p class="site-footer__slogan serif">„{BRAND.slogan}“</p>
+        <p class="site-footer__slogan">„{BRAND.slogan}“</p>
         <ul class="site-footer__contact">
           <li>
             <Icon name="phone" size={18} />
@@ -63,6 +63,7 @@ const year = new Date().getFullYear();
             {FOOTER_NAV.orientierung.map((l) => (
               <li><a href={l.href}>{l.label}</a></li>
             ))}
+            {recruitmentEnabled && <li><a href="/karriere/">Arbeiten bei uns</a></li>}
           </ul>
         </div>
         <div>
@@ -114,10 +115,10 @@ const year = new Date().getFullYear();
     display: grid;
     gap: clamp(2.2rem, 5vw, 4rem);
     padding-bottom: 2.5rem;
-    border-bottom: 1px solid rgba(247, 241, 231, 0.16);
+    border-bottom: 1px solid rgba(244, 246, 241, 0.18);
   }
   .site-footer__logo { width: 90px; height: auto; margin-bottom: 1.1rem; }
-  .site-footer__descriptor { font-weight: 700; margin-bottom: 0.3em; color: #fffaf3; }
+  .site-footer__descriptor { font-weight: 700; margin-bottom: 0.3em; color: #fffdf8; }
   .site-footer__slogan { color: var(--brand); font-size: var(--step-1); margin-bottom: 1.4em; }
 
   .site-footer__contact,
@@ -132,12 +133,12 @@ const year = new Date().getFullYear();
     margin-bottom: 0.55em;
   }
   .site-footer__contact svg { color: var(--brand); flex: 0 0 auto; }
-  .site-footer__contact a { color: #f7f1e7; text-decoration: none; font-weight: 600; }
+  .site-footer__contact a { color: #f4f6f1; text-decoration: none; font-weight: 600; }
   .site-footer__contact a:hover { color: var(--brand); text-decoration: underline; }
 
   .site-footer__social { display: flex; gap: 1.25rem; margin-top: 1.4rem; }
   .site-footer__social li { margin: 0; }
-  .site-footer__social a { color: #d9cfc0; font-size: var(--step--1); font-weight: 600; }
+  .site-footer__social a { color: #c3cbbc; font-size: var(--step--1); font-weight: 600; }
 
   .site-footer__cols { display: grid; gap: 2.2rem; }
   .site-footer__heading {
@@ -152,19 +153,19 @@ const year = new Date().getFullYear();
   .site-footer__links a {
     display: inline-block;
     padding: 0.3rem 0;
-    color: #e4dbcd;
+    color: #d9dfd3;
     text-decoration: none;
     font-size: var(--step--1);
   }
   .site-footer__links a:hover { color: var(--brand); text-decoration: underline; }
 
   .site-footer__offices li { margin-bottom: 1.1rem; display: grid; gap: 0.15rem; }
-  .site-footer__offices strong { color: #fffaf3; font-size: var(--step--1); }
-  .site-footer__offices span { color: #cfc5b6; font-size: var(--step--1); }
+  .site-footer__offices strong { color: #fffdf8; font-size: var(--step--1); }
+  .site-footer__offices span { color: #c3cbbc; font-size: var(--step--1); }
   .site-footer__offices a { color: var(--brand); font-size: var(--step--1); font-weight: 600; padding-block: 0.25rem; display: inline-block; }
 
   .site-footer__note {
-    color: #b9ad9c;
+    color: #a9b2a1;
     font-size: 0.86rem;
     line-height: 1.5;
     margin: 0;
@@ -178,7 +179,7 @@ const year = new Date().getFullYear();
     justify-content: space-between;
     padding-top: 1.8rem;
   }
-  .site-footer__legal { margin: 0; color: #b9ad9c; font-size: 0.88rem; }
+  .site-footer__legal { margin: 0; color: #a9b2a1; font-size: 0.88rem; }
   .site-footer__links--inline { display: flex; gap: 1.5rem; }
 
   .site-footer__demo {
@@ -186,7 +187,7 @@ const year = new Date().getFullYear();
     padding: 0.9rem 1.1rem;
     border: 1px dashed rgba(248, 155, 28, 0.5);
     border-radius: 12px;
-    color: #d9cfc0;
+    color: #c3cbbc;
     font-size: 0.86rem;
     line-height: 1.5;
   }

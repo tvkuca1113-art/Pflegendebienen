@@ -21,9 +21,11 @@ const forbidden = [
 let problems = [];
 for (const p of pages) {
   const html = readFileSync(p, 'utf8');
+  // Markup inside inline scripts is template text, not document structure.
+  const markup = html.replace(/<script[\s\S]*?<\/script>/g, '');
   for (const f of forbidden) if (html.includes(f)) problems.push(`${p}: forbidden "${f}"`);
 
-  const h1 = [...html.matchAll(/<h1[\s>]/g)].length;
+  const h1 = [...markup.matchAll(/<h1[\s>]/g)].length;
   if (h1 !== 1) problems.push(`${p}: ${h1} <h1> elements`);
 
   const title = html.match(/<title>([^<]*)<\/title>/)?.[1];
@@ -37,7 +39,7 @@ for (const p of pages) {
   if (!html.includes('lang="de"')) problems.push(`${p}: missing lang`);
 
   // images must carry alt + dimensions
-  for (const m of html.matchAll(/<img\b[^>]*>/g)) {
+  for (const m of markup.matchAll(/<img\b[^>]*>/g)) {
     const tag = m[0];
     if (!/\salt="/.test(tag)) problems.push(`${p}: img without alt :: ${tag.slice(0, 90)}`);
     if (!/\swidth="/.test(tag) || !/\sheight="/.test(tag))

@@ -20,3 +20,10 @@ export const SITE = {
 };
 
 export const IS_DEMO = SITE.mode !== 'production';
+
+/**
+ * Recruitment section and its menu links. One switch controls the homepage
+ * section, the secondary navigation entry and the /karriere/ route, so the
+ * owner can remove all of it in one place.
+ */
+export const recruitmentEnabled = env.PUBLIC_RECRUITMENT !== 'false';

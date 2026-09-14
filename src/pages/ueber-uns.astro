@@ -5,7 +5,7 @@ import ContactCta from '../components/ContactCta.astro';
 import Photo from '../components/Photo.astro';
 import RelatedLinks from '../components/RelatedLinks.astro';
 import Icon from '../components/Icon.astro';
-import { OWNERS, BRAND, OFFICES } from '../data/business';
+import { OWNERS, OFFICES } from '../data/business';
 import { TEAM } from '../data/team';
 import { ARCHIVE_INSIGHT } from '../data/insights';
 
@@ -80,7 +80,7 @@ const crumbs = [
           </ul>
           <p class="owner__hint">
             Für Pflegeanfragen nutzen Sie bitte die Bürorufnummer – diese Kontakte sind für
-            organisatorische Anliegen veröffentlicht.
+            organisatorische Anliegen.
           </p>
         </div>
       </section>
@@ -90,10 +90,8 @@ const crumbs = [
           <span class="eyebrow">Das Team</span>
           <h2 id="team-title">Viele Hände, ein Miteinander</h2>
           <p class="lead">
-            Die folgenden Porträts sind auf der Team-Seite von {BRAND.name} veröffentlicht. Wir
-            zeigen sie mit Vornamen, wie sie dort erscheinen. Berufsbezeichnungen, Qualifikationen
-            oder Sprachkenntnisse nennen wir nicht, weil diese Angaben für diese Website nicht
-            belegt sind.
+            Hinter den Pflegenden Bienen stehen viele Menschen, die täglich zu unseren
+            Patientinnen und Patienten fahren. Hier stellen wir sie mit ihrem Vornamen vor.
           </p>
         </div>
         <ul class="team__grid">
@@ -116,14 +114,14 @@ const crumbs = [
       <section class="gallery" aria-labelledby="gallery-title">
         <h2 id="gallery-title">Momente aus unserem Miteinander</h2>
         <p class="gallery__intro">
-          Bilder aus den öffentlichen Profilen des Unternehmens. Sie zeigen gemeinsame Anlässe im
-          Team – keine Pflegesituationen und keine Patientinnen oder Patienten.
+          Gemeinsame Anlässe im Team. Aus Rücksicht auf unsere Patientinnen und Patienten zeigen
+          wir keine Pflegesituationen.
         </p>
         <div class="gallery__grid">
           <figure class="gallery__item gallery__item--wide reveal">
             <Photo
               src="team-garten-facebook.jpg"
-              alt="Gruppenfoto im Garten, veröffentlicht von Pflegende Bienen"
+              alt="Gruppenfoto des Teams im Garten"
               width={880}
               height={660}
               sizes="(min-width: 900px) 58vw, 100vw"
@@ -131,8 +129,7 @@ const crumbs = [
               position="50% 42%"
             />
             <figcaption>
-              Ein veröffentlichtes Gruppenfoto im Garten. Nicht alle abgebildeten Personen sind
-              zwingend Mitarbeitende.
+              Ein gemeinsamer Nachmittag im Garten.
             </figcaption>
           </figure>
           <figure class="gallery__item reveal">
@@ -180,9 +177,8 @@ const crumbs = [
       <section class="careers" aria-labelledby="careers-title">
         <h2 id="careers-title">Arbeiten bei den Pflegenden Bienen</h2>
         <p>
-          Ob gerade Stellen frei sind, steht auf dieser Website bewusst nicht: Wir möchten keine
-          Vakanzen ankündigen, die nicht bestätigt sind. Wenn Sie sich für eine Mitarbeit
-          interessieren, fragen Sie gern direkt nach den aktuellen Möglichkeiten.
+          Sie interessieren sich für eine Mitarbeit? Schreiben Sie uns, welche Tätigkeit Sie
+          suchen und ab wann Sie könnten.
         </p>
         <p class="careers__contact">
           Bewerbungen und Fragen zur Mitarbeit richten Sie bitte an{' '}
@@ -225,19 +221,19 @@ const crumbs = [
     align-items: center;
     margin-bottom: clamp(3rem, 6vw, 5rem);
   }
-  .owner__image { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); }
+  .owner__image { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: var(--radius-lg); box-shadow: 0 1px 2px rgba(34, 40, 33, 0.06); }
   .owner__image--small { max-width: 320px; }
   .owner__text { max-width: 56ch; }
 
   .owner__contact { list-style: none; padding: 0; margin: 1.5rem 0 1.2rem; display: grid; gap: 0.6rem; }
   .owner__contact li { display: flex; align-items: center; gap: 0.55rem; margin: 0; font-size: var(--step--1); }
-  .owner__contact svg { color: var(--brand-deep); flex: 0 0 auto; }
+  .owner__contact svg { color: var(--brand-ink); flex: 0 0 auto; }
   .owner__contact a { font-weight: 600; word-break: break-word; }
-  .owner__hint { font-size: var(--step--1); color: var(--ink-faint); max-width: 52ch; }
+  .owner__hint { font-size: var(--step--1); color: var(--olive); max-width: 52ch; }
 
   .team {
     padding-block: clamp(2.5rem, 5vw, 4rem);
-    border-top: 1px solid var(--stone);
+    border-top: 1px solid var(--hairline);
   }
   .team__head { max-width: 62ch; margin-bottom: 2.25rem; }
   .team__grid {
@@ -255,12 +251,12 @@ const crumbs = [
     aspect-ratio: 1 / 1;
     object-fit: cover;
     border-radius: 50%;
-    border: 2px solid var(--brand-wash-2);
+    border: 2px solid var(--brand-edge);
   }
-  .team__name { font-size: 0.9rem; font-weight: 600; color: var(--ink-soft); }
+  .team__name { font-size: 0.9rem; font-weight: 600; color: var(--ink-body); }
 
-  .gallery { padding-block: clamp(2.5rem, 5vw, 4rem); border-top: 1px solid var(--stone); }
-  .gallery__intro { max-width: 62ch; color: var(--ink-soft); margin-bottom: 2rem; }
+  .gallery { padding-block: clamp(2.5rem, 5vw, 4rem); border-top: 1px solid var(--hairline); }
+  .gallery__intro { max-width: 62ch; color: var(--ink-body); margin-bottom: 2rem; }
   .gallery__grid { display: grid; gap: 1.25rem; }
   .gallery__item { margin: 0; }
   .gallery__image { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius-lg); }
@@ -269,19 +265,19 @@ const crumbs = [
     margin-top: 0.8rem;
     font-size: 0.88rem;
     line-height: 1.55;
-    color: var(--ink-soft);
+    color: var(--ink-body);
   }
 
   .careers {
     padding: clamp(1.5rem, 3.5vw, 2.25rem);
-    background: var(--paper-2);
-    border: 1px solid var(--stone);
+    background: var(--surface);
+    border: 1px solid var(--hairline);
     border-radius: var(--radius-lg);
     margin-block: clamp(1.5rem, 3vw, 2.5rem);
-    max-width: var(--shell-narrow);
+    max-width: var(--measure);
   }
   .careers h2 { margin-top: 0; }
-  .careers p { color: var(--ink-soft); }
+  .careers p { color: var(--ink-body); }
   .careers__contact { margin-bottom: 0; }
 
   .offices-note { padding-block: clamp(2rem, 4vw, 3rem); }
@@ -292,10 +288,10 @@ const crumbs = [
     gap: 0.25rem;
     padding: 1.1rem 1.3rem;
     background: var(--surface);
-    border: 1px solid var(--stone);
+    border: 1px solid var(--hairline);
     border-radius: var(--radius);
   }
-  .offices-note__list span { color: var(--ink-soft); font-size: var(--step--1); }
+  .offices-note__list span { color: var(--ink-body); font-size: var(--step--1); }
   .offices-note__list a { font-size: var(--step--1); font-weight: 600; }
 
   @media (min-width: 700px) {

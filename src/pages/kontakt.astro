@@ -11,9 +11,9 @@ const crumbs = [
   { name: 'Kontakt', path: '/kontakt/' },
 ];
 
-/* No contact form: there is no authorised backend for this demo, so the site
-   uses the real, working phone, WhatsApp and e-mail actions instead of a form
-   that would only pretend to send an enquiry. */
+/* Phone, WhatsApp and an e-mail draft are the working contact routes. A
+   callback form is prepared in the codebase but stays out of the interface
+   until a real delivery destination is configured — see HANDOVER.md. */
 const mailSubject = encodeURIComponent('Anfrage zu Ihrem Pflegeangebot');
 const mailBody = encodeURIComponent(
   'Guten Tag,\n\nich möchte mich über Ihr Pflegeangebot informieren.\n\n' +
@@ -61,10 +61,10 @@ const mailDraftHref = `${CONTACT.emailHref}?subject=${mailSubject}&body=${mailBo
             </a>
           </p>
           <p class="channel__text">
-            Öffnet einen Chat mit einer neutralen Nachricht. Bitte schicken Sie uns keine
-            Gesundheitsdaten oder Diagnosen über WhatsApp.
+            Kurze Fragen gern per Nachricht. Gesundheitliche Details besprechen wir lieber
+            telefonisch.
           </p>
-          <a class="btn btn--secondary" href={CONTACT.whatsappHref} target="_blank" rel="noopener noreferrer">
+          <a class="btn btn--outline" href={CONTACT.whatsappHref} target="_blank" rel="noopener noreferrer">
             Chat öffnen
           </a>
         </article>
@@ -76,31 +76,16 @@ const mailDraftHref = `${CONTACT.emailHref}?subject=${mailSubject}&body=${mailBo
             <a href={CONTACT.emailHref}>{CONTACT.email}</a>
           </p>
           <p class="channel__text">
-            Die Schaltfläche öffnet einen vorbereiteten Entwurf in Ihrem E-Mail-Programm. Gesendet
-            wird erst, wenn Sie ihn selbst abschicken.
+            Schreiben Sie uns, wann wir Sie am besten erreichen. Wir melden uns zurück.
           </p>
-          <a class="btn btn--secondary" href={mailDraftHref}>E-Mail-Entwurf öffnen</a>
+          <a class="btn btn--outline" href={mailDraftHref}>Rückruf per E-Mail anfragen</a>
         </article>
       </div>
-
-      <section class="no-form" aria-labelledby="no-form-title">
-        <h2 id="no-form-title">Warum es hier kein Kontaktformular gibt</h2>
-        <p>
-          Ein Formular würde eine Empfangsbestätigung anzeigen, ohne dass Ihre Anfrage tatsächlich
-          irgendwo ankommt – dafür ist für diese Website kein Empfänger eingerichtet. Statt eines
-          Scheinformulars finden Sie hier die Wege, die wirklich funktionieren.
-        </p>
-        <p class="no-form__note">
-          Bitte senden Sie uns keine Diagnosen oder Gesundheitsdaten über die Website oder über
-          WhatsApp. Solche Angaben besprechen wir am Telefon.
-        </p>
-      </section>
 
       <section class="offices-block" aria-labelledby="offices-title">
         <h2 id="offices-title">Büros für ein persönliches Gespräch</h2>
         <p class="offices-block__intro">
-          Bitte melden Sie sich vor einem Besuch telefonisch an. Feste Öffnungszeiten geben wir hier
-          nicht an, weil sie für diese Website nicht belegt sind.
+          Bitte melden Sie sich vor einem Besuch kurz telefonisch an, damit jemand für Sie da ist.
         </p>
         <OfficeCards />
         <p class="offices-block__hq">
@@ -159,39 +144,27 @@ const mailDraftHref = `${CONTACT.emailHref}?subject=${mailSubject}&body=${mailBo
     gap: 0.55rem;
     padding: clamp(1.4rem, 3vw, 2rem);
     background: var(--surface);
-    border: 1px solid var(--stone);
+    border: 1px solid var(--hairline);
     border-radius: var(--radius-lg);
   }
   .channel--primary {
     background: linear-gradient(180deg, #fffdf8 0%, #fdf1de 100%);
-    border-color: var(--brand-wash-2);
+    border-color: var(--brand-edge);
   }
-  .channel svg { color: var(--brand-2); }
+  .channel svg { color: var(--brand); }
   .channel__title { font-size: var(--step-1); margin: 0.35rem 0 0; }
   .channel__value { margin: 0; font-size: var(--step-1); font-weight: 700; }
   .channel__value a { color: var(--ink); text-decoration: none; border-bottom: 2px solid var(--brand); }
-  .channel__value a:hover { color: var(--brand-deep); }
-  .channel__text { margin: 0.3rem 0 1rem; color: var(--ink-soft); font-size: var(--step--1); flex: 1; }
+  .channel__value a:hover { color: var(--brand-ink); }
+  .channel__text { margin: 0.3rem 0 1rem; color: var(--ink-body); font-size: var(--step--1); flex: 1; }
 
-  .no-form {
-    padding: clamp(1.4rem, 3vw, 2rem);
-    background: var(--paper-2);
-    border: 1px solid var(--stone);
-    border-left: 4px solid var(--brand);
-    border-radius: var(--radius-lg);
-    max-width: var(--shell-narrow);
-    margin-bottom: clamp(2.5rem, 5vw, 4rem);
-  }
-  .no-form h2 { margin-top: 0; }
-  .no-form p { color: var(--ink-soft); }
-  .no-form__note { font-weight: 600; color: var(--brand-deep); margin-bottom: 0; }
 
   .offices-block { margin-bottom: clamp(2.5rem, 5vw, 4rem); }
-  .offices-block__intro { max-width: 66ch; color: var(--ink-soft); margin-bottom: 1.75rem; }
+  .offices-block__intro { max-width: 66ch; color: var(--ink-body); margin-bottom: 1.75rem; }
   .offices-block__hq {
     margin: 1.5rem 0 0;
     font-size: var(--step--1);
-    color: var(--ink-soft);
+    color: var(--ink-body);
     max-width: 66ch;
   }
 
@@ -199,11 +172,11 @@ const mailDraftHref = `${CONTACT.emailHref}?subject=${mailSubject}&body=${mailBo
   .further__list { margin: 1.5rem 0 0; display: grid; gap: 1.1rem; }
   .further__list > div {
     padding-left: 1.1rem;
-    border-left: 2px solid var(--brand-wash-2);
+    border-left: 2px solid var(--brand-edge);
   }
   .further__list dt { font-weight: 700; font-size: var(--step--1); margin-bottom: 0.25em; }
-  .further__list dd { margin: 0; color: var(--ink-soft); font-size: var(--step--1); }
-  .further__hint { margin-top: 1.5rem; font-size: var(--step--1); color: var(--ink-faint); }
+  .further__list dd { margin: 0; color: var(--ink-body); font-size: var(--step--1); }
+  .further__hint { margin-top: 1.5rem; font-size: var(--step--1); color: var(--olive); }
 
   @media (min-width: 820px) {
     .channels { grid-template-columns: repeat(3, minmax(0, 1fr)); }

@@ -26,6 +26,8 @@ export type Service = {
   legalBasis?: string;
   /** Short labels for the overview page — same published offer, condensed. */
   highlights: string[];
+  /** Optional illustrative photograph shown once, in its own context. */
+  photo?: { src: string; alt: string; caption: string };
   intro: string;
   whatItMeans: { heading: string; paragraphs: string[] };
   /** Concrete items published in the company's own offer. */
@@ -62,7 +64,7 @@ export const SERVICES: readonly Service[] = [
     },
     scope: {
       heading: 'Was bei den Pflegenden Bienen dazugehört',
-      note: 'Die folgenden Punkte beschreiben das veröffentlichte Angebot. Der konkrete Umfang wird individuell vereinbart.',
+      note: 'Der genaue Umfang wird individuell vereinbart.',
       items: [
         'Unterstützung bei der Körperpflege, beim Waschen und beim An- und Auskleiden',
         'Hilfe beim Essen und Trinken',
@@ -120,8 +122,8 @@ export const SERVICES: readonly Service[] = [
       ],
     },
     scope: {
-      heading: 'Maßnahmen aus dem veröffentlichten Angebot',
-      note: 'Alle genannten Maßnahmen setzen die entsprechende ärztliche Verordnung und die jeweils geltenden Voraussetzungen voraus.',
+      heading: 'Was wir zu Hause übernehmen',
+      note: 'Alle Maßnahmen setzen eine ärztliche Verordnung voraus.',
       items: [
         'Medikamentengabe',
         'Wundversorgung',
@@ -165,13 +167,18 @@ export const SERVICES: readonly Service[] = [
     navLabel: 'Haushalt & Betreuung',
     cardTitle: 'Haushalt & Begleitung',
     cardText:
-      'Hilfe im Haushalt, beim Einkaufen und bei Wegen im Alltag. Auch gemeinsame Spaziergänge und Arztbegleitung gehören zum veröffentlichten Angebot.',
+      'Hilfe im Haushalt, beim Einkaufen und bei Wegen im Alltag – auch gemeinsame Spaziergänge und die Begleitung zu Arztterminen.',
     h1: 'Hauswirtschaft und Betreuung im Alltag',
     eyebrow: 'Alltagshilfe & Begleitung',
     metaTitle: 'Haushaltshilfe & Seniorenbetreuung München-West | Pflegende Bienen',
     metaDescription:
       'Unterstützung im Haushalt, beim Einkaufen, bei Spaziergängen und bei der Begleitung zu Arztterminen in München-West und Germering.',
     highlights: ['Haushaltsführung', 'Einkäufe', 'Gesellschaft im Alltag', 'Arztbegleitung'],
+    photo: {
+      src: 'einkauf-kueche.jpg',
+      alt: 'Ein älterer Mann räumt am Küchentisch gemeinsam mit einer Helferin Einkäufe aus',
+      caption: 'KI-generiertes Symbolbild',
+    },
     intro:
       'Nicht jede Unterstützung ist pflegerisch. Oft geht es darum, dass der Haushalt weiterläuft, Wege erledigt werden und jemand Zeit mitbringt.',
     whatItMeans: {
@@ -182,8 +189,8 @@ export const SERVICES: readonly Service[] = [
       ],
     },
     scope: {
-      heading: 'Was zum veröffentlichten Angebot gehört',
-      note: 'Welche Unterstützung im Einzelfall möglich ist, wird gemeinsam besprochen und vereinbart.',
+      heading: 'Was wir übernehmen',
+      note: 'Was davon sinnvoll ist, besprechen wir gemeinsam.',
       items: [
         'Unterstützung bei der Haushaltsführung',
         'Einkäufe und Besorgungen',
@@ -244,7 +251,7 @@ export const SERVICES: readonly Service[] = [
     },
     scope: {
       heading: 'Wie eine Vertretung aussehen kann',
-      note: 'Ob und in welchem Umfang wir eine Vertretung übernehmen können, hängt vom Bedarf und von unseren Möglichkeiten zum gewünschten Zeitraum ab.',
+      note: 'Ob wir zum gewünschten Zeitraum eine Vertretung übernehmen können, klären wir persönlich.',
       items: [
         'Übernahme der vereinbarten pflegerischen Unterstützung während der Abwesenheit',
         'Unterstützung im Haushalt und in der Betreuung im vereinbarten Umfang',

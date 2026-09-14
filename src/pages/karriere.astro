@@ -1,0 +1,97 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Photo from '../components/Photo.astro';
+import Icon from '../components/Icon.astro';
+import { OWNERS, CONTACT } from '../data/business';
+import { recruitmentEnabled } from '../config/site.mjs';
+
+/* No vacancies are published, so this is an expression-of-interest page:
+   no positions, salaries, benefits, hiring urgency or JobPosting markup.
+   Candidate contact stays separate from the care enquiry line. */
+if (!recruitmentEnabled) return Astro.redirect('/kontakt/', 301);
+
+const crumbs = [
+  { name: 'Startseite', path: '/' },
+  { name: 'Arbeiten bei uns', path: '/karriere/' },
+];
+
+const mailHref =
+  `mailto:${OWNERS.dusko.email}?subject=${encodeURIComponent('Interesse an einer Mitarbeit')}`;
+---
+
+<Base
+  title="Arbeiten bei uns | Pflegende Bienen"
+  description="Interesse an einer Mitarbeit bei den Pflegenden Bienen in München-West und Germering? Lernen Sie unseren Pflegedienst kennen und melden Sie sich bei uns."
+  path="/karriere/"
+  crumbs={crumbs}
+>
+  <PageHeader
+    eyebrow="Arbeiten bei uns"
+    title="Sie möchten bei den Pflegenden Bienen arbeiten?"
+    intro="Lernen Sie unseren Pflegedienst kennen und nehmen Sie Kontakt zu uns auf. Wir freuen uns über Initiativbewerbungen."
+    crumbs={crumbs}
+  />
+
+  <div class="section">
+    <div class="shell career">
+      <div class="career__main">
+        <h2>Was Sie über uns wissen sollten</h2>
+        <ul class="ticks">
+          <li>Ein inhabergeführter ambulanter Pflegedienst mit Büros in München und Germering.</li>
+          <li>Ein Team, das Grundpflege, Behandlungspflege und Alltagshilfe zu Hause leistet.</li>
+          <li>Touren in München-West, Germering und ausgewählten Orten im Umland.</li>
+        </ul>
+
+        <h2>So nehmen Sie Kontakt auf</h2>
+        <p>
+          Eine bestimmte Stelle schreiben wir hier nicht aus. Schreiben Sie uns gern, welche
+          Tätigkeit Sie suchen und ab wann Sie könnten – wir melden uns und besprechen, ob es
+          gerade passt.
+        </p>
+        <div class="btn-row career__actions">
+          <a class="btn" href={mailHref}>
+            <Icon name="mail" size={19} />
+            Interesse per E-Mail melden
+          </a>
+          <a class="btn btn--outline" href={OWNERS.dusko.mobileHref}>
+            <Icon name="phone" size={19} />
+            {OWNERS.dusko.mobileDisplay}
+          </a>
+        </div>
+        <p class="career__note">
+          Diese Kontakte sind für Bewerbungen. Fragen zur Pflege besprechen Sie bitte über die
+          Bürorufnummer <a href={CONTACT.phoneHref}>{CONTACT.phoneDisplay}</a>.
+        </p>
+      </div>
+
+      <figure class="career__figure">
+        <Photo
+          src="team-alltag-facebook.jpg"
+          alt="Teammitglieder der Pflegenden Bienen in gelben Poloshirts im Büro"
+          width={520}
+          height={694}
+          sizes="(min-width: 900px) 34vw, 100vw"
+          class="career__image"
+        />
+        <figcaption>Teammitglieder der Pflegenden Bienen.</figcaption>
+      </figure>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .career { display: grid; gap: clamp(2rem, 4vw, 3.5rem); align-items: start; }
+  .career__main h2 { margin-top: 2rem; font-size: var(--step-2); }
+  .career__main h2:first-child { margin-top: 0; }
+  .career__actions { margin-top: 1.5rem; }
+  .career__note { margin-top: 1.25rem; color: var(--olive); font-size: var(--step--1); }
+
+  .career__figure { margin: 0; }
+  .career__image { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: var(--radius-lg); }
+  .career__figure figcaption { margin-top: 0.6rem; color: var(--olive); font-size: 0.8125rem; }
+
+  @media (min-width: 900px) {
+    .career { grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr); gap: 4rem; }
+  }
+</style>

@@ -34,11 +34,10 @@ const crumbs = [
         <section aria-labelledby="stadtteile">
           <h2 id="stadtteile">Diese Stadtteile sind als Einsatzgebiet genannt</h2>
           <p class="loc__intro">
-            Die folgenden Stadtteile stehen auf unserer Website als Einsatzgebiet. Eine Nennung
-            bedeutet nicht automatisch, dass zu einem bestimmten Zeitpunkt ein Einsatz möglich ist –
-            das hängt vom Bedarf und von unseren aktuellen Möglichkeiten ab.
+            In diesen Stadtteilen sind wir regelmäßig unterwegs. Ob zu Ihrem Wunschtermin ein
+            Einsatz möglich ist, klären wir persönlich.
           </p>
-          <ul class="tag-list loc__tags">
+          <ul class="chips loc__tags">
             {SERVICE_AREA.munichDistricts.map((d) => <li>{d}</li>)}
           </ul>
           <p class="loc__note">
@@ -61,8 +60,8 @@ const crumbs = [
                 {office.postalCode} {office.locality}
               </address>
               <p class="loc__office-note">
-                Bitte vereinbaren Sie einen Besuch vorher telefonisch. Verbindliche Öffnungszeiten
-                nennen wir auf dieser Website nicht, weil sie hier nicht belegt sind.
+                Bitte vereinbaren Sie einen Besuch vorher telefonisch, damit jemand für Sie da
+                ist.
               </p>
             </div>
             <div class="loc__office-actions">
@@ -70,7 +69,7 @@ const crumbs = [
                 <Icon name="phone" size={19} />
                 {CONTACT.phoneDisplay}
               </a>
-              <a class="btn btn--secondary" href={office.directionsUrl} target="_blank" rel="noopener noreferrer">
+              <a class="btn btn--outline" href={office.directionsUrl} target="_blank" rel="noopener noreferrer">
                 <Icon name="route" size={18} />
                 Route planen
               </a>
@@ -81,9 +80,8 @@ const crumbs = [
         <section class="loc__block" aria-labelledby="leistungen-hier">
           <h2 id="leistungen-hier">Welche Leistungen wir hier erbringen</h2>
           <p class="loc__intro">
-            In München-West gilt dasselbe Angebot wie im übrigen Einsatzgebiet. Es gibt keine
-            gesonderten Standortleistungen und kein zweites Unternehmen – es ist derselbe Betrieb
-            mit derselben Telefonnummer.
+            In München-West gilt dasselbe Angebot wie im übrigen Einsatzgebiet – derselbe Betrieb,
+            dieselbe Telefonnummer, dasselbe Team.
           </p>
           <ul class="loc__services">
             {SERVICES.map((s) => (
@@ -126,13 +124,13 @@ const crumbs = [
   .loc__layout { display: grid; gap: clamp(2rem, 4vw, 3.5rem); align-items: start; }
   .loc__main { min-width: 0; }
   .loc__block { margin-top: clamp(2.5rem, 5vw, 3.5rem); }
-  .loc__intro { max-width: 68ch; color: var(--ink-soft); }
+  .loc__intro { max-width: 68ch; color: var(--ink-body); }
   .loc__tags { margin-bottom: 1.5rem; }
   .loc__note {
     max-width: 68ch;
     padding-left: 1.1rem;
     border-left: 3px solid var(--brand);
-    color: var(--ink-soft);
+    color: var(--ink-body);
     font-size: var(--step--1);
   }
 
@@ -141,13 +139,13 @@ const crumbs = [
     gap: 1.5rem;
     padding: clamp(1.3rem, 3vw, 1.9rem);
     background: var(--surface);
-    border: 1px solid var(--stone);
+    border: 1px solid var(--hairline);
     border-radius: var(--radius-lg);
   }
   .loc__office-name { display: flex; align-items: center; gap: 0.55rem; font-size: var(--step-1); margin-bottom: 0.5em; }
-  .loc__office-name svg { color: var(--brand-2); }
+  .loc__office-name svg { color: var(--brand); }
   .loc__address { font-style: normal; line-height: 1.6; margin-bottom: 1em; }
-  .loc__office-note { margin: 0; color: var(--ink-soft); font-size: var(--step--1); max-width: 52ch; }
+  .loc__office-note { margin: 0; color: var(--ink-body); font-size: var(--step--1); max-width: 52ch; }
   .loc__office-actions { display: flex; flex-wrap: wrap; gap: 0.7rem; align-content: start; }
 
   .loc__services { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; gap: 0.75rem; }
@@ -156,16 +154,16 @@ const crumbs = [
     display: grid;
     gap: 0.3rem;
     padding: 1rem 1.2rem;
-    background: var(--paper-2);
-    border: 1px solid var(--stone);
+    background: var(--surface);
+    border: 1px solid var(--hairline);
     border-radius: var(--radius);
     text-decoration: none;
     color: var(--ink);
     transition: border-color 0.15s var(--ease), background-color 0.15s var(--ease);
   }
   .loc__services a:hover { border-color: var(--brand); background: #fffdf8; }
-  .loc__services strong { color: var(--brand-deep); }
-  .loc__services span { font-size: var(--step--1); color: var(--ink-soft); }
+  .loc__services strong { color: var(--brand-ink); }
+  .loc__services span { font-size: var(--step--1); color: var(--ink-body); }
 
   @media (min-width: 700px) {
     .loc__office { grid-template-columns: minmax(0, 1fr) auto; }

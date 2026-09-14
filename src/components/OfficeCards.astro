@@ -18,7 +18,7 @@ const { compact = false } = Astro.props;
         {o.postalCode} {o.locality}
       </address>
       <div class="office__actions">
-        <a class="btn btn--sm btn--secondary" href={o.directionsUrl} target="_blank" rel="noopener noreferrer">
+        <a class="btn btn--sm btn--outline" href={o.directionsUrl} target="_blank" rel="noopener noreferrer">
           <Icon name="route" size={17} />
           Route planen
         </a>
@@ -39,7 +39,7 @@ const { compact = false } = Astro.props;
   .office {
     margin: 0;
     background: var(--surface);
-    border: 1px solid var(--stone);
+    border: 1px solid var(--hairline);
     border-radius: var(--radius-lg);
     padding: clamp(1.3rem, 3vw, 1.85rem);
   }
@@ -50,13 +50,13 @@ const { compact = false } = Astro.props;
     font-size: var(--step-1);
     margin-bottom: 0.6em;
   }
-  .office__title svg { color: var(--brand-2); flex: 0 0 auto; }
+  .office__title svg { color: var(--brand); flex: 0 0 auto; }
   .office__address {
     font-style: normal;
     font-size: var(--step-0);
     line-height: 1.6;
     margin-bottom: 1.2rem;
-    color: var(--ink-soft);
+    color: var(--ink-body);
   }
   .office__actions { display: flex; flex-wrap: wrap; gap: 0.65rem; margin-bottom: 1rem; }
   .office__link { margin: 0; font-size: var(--step--1); }

@@ -17,7 +17,7 @@ const {
       <Icon name="phone" size={19} />
       {CONTACT.phoneDisplay}
     </a>
-    <a class="btn btn--secondary" href={CONTACT.whatsappHref} target="_blank" rel="noopener noreferrer">
+    <a class="btn btn--outline" href={CONTACT.whatsappHref} target="_blank" rel="noopener noreferrer">
       <Icon name="whatsapp" size={19} />
       WhatsApp
     </a>
@@ -31,14 +31,14 @@ const {
 <style>
   .contact-panel {
     background: linear-gradient(180deg, #fffdf8 0%, #fdf1de 100%);
-    border: 1px solid var(--brand-wash-2);
+    border: 1px solid var(--brand-edge);
     border-radius: var(--radius-lg);
     padding: clamp(1.3rem, 3vw, 1.9rem);
     position: sticky;
     top: 6.5rem;
   }
   .contact-panel__title { font-size: var(--step-1); margin-bottom: 0.45em; }
-  .contact-panel__text { font-size: var(--step--1); color: var(--ink-soft); margin-bottom: 1.3em; }
+  .contact-panel__text { font-size: var(--step--1); color: var(--ink-body); margin-bottom: 1.3em; }
   .contact-panel__actions { display: grid; gap: 0.65rem; margin-bottom: 1.2rem; }
   .contact-panel__mail {
     display: flex;
@@ -48,7 +48,7 @@ const {
     font-size: var(--step--1);
     word-break: break-word;
   }
-  .contact-panel__mail svg { color: var(--brand-deep); flex: 0 0 auto; }
+  .contact-panel__mail svg { color: var(--brand-ink); flex: 0 0 auto; }
 
   @media (max-width: 899px) { .contact-panel { position: static; } }
 </style>

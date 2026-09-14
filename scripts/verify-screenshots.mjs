@@ -8,9 +8,10 @@ const routes = (process.env.ROUTES ||
   '/,/leistungen/,/leistungen/grundpflege/,/leistungen/behandlungspflege/,' +
   '/leistungen/haushalt-betreuung/,/leistungen/verhinderungspflege/,/pflegeberatung/,' +
   '/kosten-finanzierung/,/muenchen-west/,/germering/,/ueber-uns/,/kontakt/,' +
-  '/impressum/,/datenschutz/,/404.html').split(',');
+  '/impressum/,/datenschutz/,/karriere/,/404.html').split(',');
 const viewports = [
   { name: 'desktop', width: 1440, height: 1000, dsf: 1 },
+  { name: 'tablet', width: 768, height: 1024, dsf: 2, mobile: true },
   { name: 'mobile', width: 390, height: 844, dsf: 2, mobile: true },
 ];
 

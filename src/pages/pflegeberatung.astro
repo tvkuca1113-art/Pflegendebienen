@@ -37,7 +37,7 @@ const crumbs = [
             besprechen Ihre Situation, ordnen die möglichen Leistungen ein und sagen Ihnen, welche
             Unterlagen erfahrungsgemäß gebraucht werden.
           </p>
-          <ul class="check-list">
+          <ul class="ticks">
             <li>Einordnen, welche Unterstützung zu Ihrer Situation passen könnte.</li>
             <li>Erklären, wofür Pflegekasse und Krankenkasse jeweils zuständig sind.</li>
             <li>Unterstützung bei pflegebezogenen Anträgen und den dafür nötigen Unterlagen.</li>
@@ -48,10 +48,9 @@ const crumbs = [
         <section class="counsel__limits" aria-labelledby="grenzen">
           <h2 id="grenzen">Was diese Beratung nicht ist</h2>
           <p>
-            Wir sind transparent, wo die Grenzen liegen. Eine Zulassung für verpflichtende
-            Beratungseinsätze nach § 37 Abs. 3 SGB XI ist für uns nicht unabhängig belegt – wir
-            behaupten sie deshalb nicht. Ob wir solche Einsätze durchführen dürfen, fragen Sie
-            bitte direkt bei uns nach.
+            Für verpflichtende Beratungseinsätze nach § 37 Abs. 3 SGB XI braucht es eine eigene
+            Zulassung. Ob wir diese Einsätze für Sie übernehmen können, fragen Sie bitte direkt
+            bei uns nach.
           </p>
           <p>
             Ebenso wenig können wir über die Website entscheiden, ob ein Antrag bewilligt wird, wie
@@ -117,19 +116,19 @@ const crumbs = [
   .counsel__limits {
     margin-top: clamp(2.25rem, 4vw, 3rem);
     padding: clamp(1.4rem, 3vw, 2rem);
-    background: var(--paper-2);
-    border: 1px solid var(--stone);
+    background: var(--surface);
+    border: 1px solid var(--hairline);
     border-left: 4px solid var(--brand);
     border-radius: var(--radius-lg);
-    max-width: var(--shell-narrow);
+    max-width: var(--measure);
   }
   .counsel__limits h2 { margin-top: 0; }
-  .counsel__limits p { color: var(--ink-soft); }
+  .counsel__limits p { color: var(--ink-body); }
 
   .counsel__sources { list-style: none; padding: 0; margin: 0 0 1.2em; display: grid; gap: 0.6rem; }
   .counsel__sources li { margin: 0; }
   .counsel__sources a { font-weight: 600; font-size: var(--step--1); }
-  .counsel__stand { font-size: 0.85rem; color: var(--ink-faint); }
+  .counsel__stand { font-size: 0.85rem; color: var(--olive); }
 
   @media (min-width: 980px) {
     .counsel__layout { grid-template-columns: minmax(0, 1fr) 330px; gap: 4rem; }

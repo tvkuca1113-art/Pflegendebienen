@@ -1,4 +1,5 @@
 import { SERVICES } from './services';
+import { recruitmentEnabled } from '../config/site.mjs';
 
 /** Every indexable route, in navigation order. Used for the XML sitemap. */
 export const ROUTES: readonly { path: string; priority: string; changefreq: string }[] = [
@@ -11,6 +12,9 @@ export const ROUTES: readonly { path: string; priority: string; changefreq: stri
   { path: '/germering/', priority: '0.8', changefreq: 'monthly' },
   { path: '/ueber-uns/', priority: '0.7', changefreq: 'monthly' },
   { path: '/kontakt/', priority: '0.8', changefreq: 'monthly' },
+  ...(recruitmentEnabled
+    ? [{ path: '/karriere/', priority: '0.5', changefreq: 'monthly' }]
+    : []),
   { path: '/impressum/', priority: '0.2', changefreq: 'yearly' },
   { path: '/datenschutz/', priority: '0.2', changefreq: 'yearly' },
 ];

@@ -73,11 +73,17 @@ for (const p of pages) {
 
 // Positive assertions
 const home = text(readFileSync('dist/index.html', 'utf8'));
+// What the redesigned homepage must still say. The co-owner biography and the
+// old trust badges moved to /ueber-uns/ on purpose.
 const must = [
   '089 54637889', 'Fürstenrieder Str. 137', 'Otto-Wagner-Str. 10',
-  'Marija Jelačić Bjelovuk', 'Duško Bjelovuk', 'Inhabergeführt',
-  'Damit das Leben lebenswert bleibt',
+  'Marija Jelačić Bjelovuk', 'Zuhause bleiben', 'Pflege gemeinsam klären',
+  'Was brauchen Sie gerade?', 'KI-generiertes Symbolbild',
 ];
+// And what must live on the about page instead.
+const aboutMust = ['Duško Bjelovuk', 'Marija Jelačić Bjelovuk'];
+const about = text(readFileSync('dist/ueber-uns/index.html', 'utf8'));
+for (const m of aboutMust) if (!about.includes(m)) out.push(`ueber-uns missing: "${m}"`);
 for (const m of must) if (!home.includes(m)) out.push(`homepage missing required content: "${m}"`);
 
 // Verhinderungspflege page must state SGB XI § 39

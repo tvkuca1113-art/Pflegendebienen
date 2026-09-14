@@ -30,7 +30,7 @@ const crumbs = [
   <PageHeader
     eyebrow="Einsatzgebiet"
     title="Ambulante Pflege in Germering und im Umland"
-    intro="Von Germering aus versorgen wir den westlichen Landkreis: Puchheim, Eichenau, Gilching sowie Gräfelfing und Planegg gehören zum veröffentlichten Einsatzgebiet."
+    intro="Von Germering aus versorgen wir den westlichen Landkreis: Puchheim, Eichenau, Gilching sowie Gräfelfing und Planegg."
     crumbs={crumbs}
   />
 
@@ -40,11 +40,10 @@ const crumbs = [
         <section aria-labelledby="orte">
           <h2 id="orte">Diese Orte sind als Einsatzgebiet genannt</h2>
           <p class="loc__intro">
-            Die folgenden Orte im Umland stehen auf unserer Website als Einsatzgebiet. Ob und wann
-            ein Einsatz möglich ist, hängt vom Bedarf und von unseren aktuellen Möglichkeiten ab und
-            wird persönlich geklärt.
+            In diesen Orten sind wir regelmäßig unterwegs. Ob zu Ihrem Wunschtermin ein Einsatz
+            möglich ist, klären wir persönlich.
           </p>
-          <ul class="tag-list loc__tags">
+          <ul class="chips loc__tags">
             {SERVICE_AREA.surroundingPlaces.map((d) => <li>{d}</li>)}
           </ul>
           <p class="loc__note">
@@ -67,8 +66,8 @@ const crumbs = [
                 {office.postalCode} {office.locality}
               </address>
               <p class="loc__office-note">
-                Bitte vereinbaren Sie einen Besuch vorher telefonisch. Feste Öffnungszeiten nennen
-                wir hier nicht, weil sie für diese Website nicht belegt sind.
+                Bitte vereinbaren Sie einen Besuch vorher telefonisch, damit jemand für Sie da
+                ist.
               </p>
             </div>
             <div class="loc__office-actions">
@@ -76,7 +75,7 @@ const crumbs = [
                 <Icon name="phone" size={19} />
                 {CONTACT.phoneDisplay}
               </a>
-              <a class="btn btn--secondary" href={office.directionsUrl} target="_blank" rel="noopener noreferrer">
+              <a class="btn btn--outline" href={office.directionsUrl} target="_blank" rel="noopener noreferrer">
                 <Icon name="route" size={18} />
                 Route planen
               </a>
@@ -102,7 +101,7 @@ const crumbs = [
             derselben Telefonnummer, und die Versorgung wird von demselben Team organisiert. Für Sie
             ändert sich also nur, welches Büro für ein persönliches Gespräch am nächsten liegt.
           </p>
-          <ul class="check-list loc__points">
+          <ul class="ticks loc__points">
             <li>Eine Telefonnummer für München-West und für Germering: {CONTACT.phoneDisplay}.</li>
             <li>Dasselbe Leistungsangebot – von der Grundpflege bis zur Verhinderungspflege.</li>
             <li>Gespräche vor Ort nach vorheriger telefonischer Absprache.</li>
@@ -138,13 +137,13 @@ const crumbs = [
   .loc__layout { display: grid; gap: clamp(2rem, 4vw, 3.5rem); align-items: start; }
   .loc__main { min-width: 0; }
   .loc__block { margin-top: clamp(2.5rem, 5vw, 3.5rem); }
-  .loc__intro { max-width: 68ch; color: var(--ink-soft); }
+  .loc__intro { max-width: 68ch; color: var(--ink-body); }
   .loc__tags { margin-bottom: 1.5rem; }
   .loc__note {
     max-width: 68ch;
     padding-left: 1.1rem;
     border-left: 3px solid var(--brand);
-    color: var(--ink-soft);
+    color: var(--ink-body);
     font-size: var(--step--1);
   }
   .loc__points { max-width: 68ch; }
@@ -154,24 +153,24 @@ const crumbs = [
     gap: 1.5rem;
     padding: clamp(1.3rem, 3vw, 1.9rem);
     background: var(--surface);
-    border: 1px solid var(--stone);
+    border: 1px solid var(--hairline);
     border-radius: var(--radius-lg);
   }
   .loc__office-name { display: flex; align-items: center; gap: 0.55rem; font-size: var(--step-1); margin-bottom: 0.5em; }
-  .loc__office-name svg { color: var(--brand-2); }
+  .loc__office-name svg { color: var(--brand); }
   .loc__address { font-style: normal; line-height: 1.6; margin-bottom: 1em; }
-  .loc__office-note { margin: 0; color: var(--ink-soft); font-size: var(--step--1); max-width: 52ch; }
+  .loc__office-note { margin: 0; color: var(--ink-body); font-size: var(--step--1); max-width: 52ch; }
   .loc__office-actions { display: flex; flex-wrap: wrap; gap: 0.7rem; align-content: start; }
 
   .loc__hq {
     margin-top: 1.25rem;
     padding: clamp(1.1rem, 2.5vw, 1.5rem);
-    background: var(--brand-wash);
-    border: 1px solid var(--brand-wash-2);
+    background: var(--sage);
+    border: 1px solid var(--brand-edge);
     border-radius: var(--radius);
   }
-  .loc__hq-title { font-size: var(--step-0); margin-bottom: 0.5em; color: var(--brand-deep); }
-  .loc__hq p { margin: 0; font-size: var(--step--1); color: var(--ink-soft); max-width: 64ch; }
+  .loc__hq-title { font-size: var(--step-0); margin-bottom: 0.5em; color: var(--brand-ink); }
+  .loc__hq p { margin: 0; font-size: var(--step--1); color: var(--ink-body); max-width: 64ch; }
 
   @media (min-width: 700px) {
     .loc__office { grid-template-columns: minmax(0, 1fr) auto; }

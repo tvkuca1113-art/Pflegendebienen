@@ -10,18 +10,18 @@ const { title = 'Passende Seiten', links } = Astro.props;
   <h2 id="related-title" class="related__title">{title}</h2>
   <ul class="related__list">
     {links.map((l) => (
-      <li><a href={l.href} class="arrow-link">{l.label}</a></li>
+      <li><a href={l.href} class="link-action">{l.label}</a></li>
     ))}
   </ul>
 </nav>
 
 <style>
-  .related { padding-top: 2rem; border-top: 1px solid var(--stone); }
+  .related { padding-top: 2rem; border-top: 1px solid var(--hairline); }
   .related__title {
     font-size: 0.8rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--ink-faint);
+    color: var(--olive);
     margin-bottom: 1rem;
   }
   .related__list {
@@ -33,5 +33,5 @@ const { title = 'Passende Seiten', links } = Astro.props;
     gap: 0.85rem 2rem;
   }
   .related__list li { margin: 0; }
-  .related__list .arrow-link { font-size: var(--step--1); }
+  .related__list .link-action { font-size: var(--step--1); }
 </style>

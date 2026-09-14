@@ -1,0 +1,55 @@
+---
+import Photo from './Photo.astro';
+import { OWNERS } from '../data/business';
+
+/** One compact, honest owner section. Biographies, the co-owner's role and
+    team photographs live on /ueber-uns/. */
+---
+
+<section class="owner section section--line" aria-labelledby="owner-title">
+  <div class="shell">
+    <h2 id="owner-title" class="owner__title">Persönlich ansprechbar.</h2>
+    <div class="owner__inner">
+      <Photo
+        src="marija-jelacic-bjelovuk.jpeg"
+        alt="Marija Jelačić Bjelovuk, Inhaberin und Pflegedienstleitung"
+        width={300}
+        height={300}
+        sizes="150px"
+        class="owner__portrait"
+      />
+      <div class="owner__text">
+        <p class="owner__name">{OWNERS.marija.name} · {OWNERS.marija.role}</p>
+        <p>
+          Marija Jelačić Bjelovuk leitet den Pflegedienst und bringt mehr als 20 Jahre Erfahrung in
+          der Pflege mit. Wer bei uns anruft, spricht mit Menschen aus dem Team, das später auch zu
+          Ihnen nach Hause kommt – und nicht mit einer Zentrale. Wenn etwas unklar ist oder sich
+          der Bedarf ändert, sagen Sie es uns einfach.
+        </p>
+        <a class="link-action" href="/ueber-uns/">Unser Team kennenlernen</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .owner__title { margin-bottom: 1.25rem; }
+  .owner__inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(1.25rem, 3vw, 2.25rem);
+    align-items: flex-start;
+  }
+  .owner__portrait {
+    flex: 0 0 auto;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .owner__text { flex: 1 1 22rem; }
+
+  .owner__name { margin-bottom: 0.7em; color: var(--olive); font-size: var(--step--1); font-weight: 700; }
+  .owner__text p { max-width: 52ch; }
+  .owner__text .link-action { margin-top: 0.75rem; }
+</style>

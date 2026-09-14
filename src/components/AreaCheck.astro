@@ -1,0 +1,118 @@
+---
+import { SERVICE_AREA, OFFICES, fullAddress } from '../data/business';
+import { AREA_NO_MATCH } from '../data/situations';
+
+/** A clear list plus a simple check. No postcode boundaries, no geolocation,
+    no claim about free capacity. */
+---
+
+<section class="area section section--line" id="einsatzgebiet" aria-labelledby="area-title">
+  <div class="shell area__inner">
+    <div>
+      <h2 id="area-title">Kommen Sie auch zu uns?</h2>
+      <p class="lead area__lead">
+        Wir sind in München-West und rund um Germering unterwegs. Unsere Touren sind so geplant,
+        dass die Wege kurz bleiben. Wählen Sie Ihren Ort – oder fragen Sie ihn einfach bei uns an.
+      </p>
+
+      <div class="area__field">
+        <label class="area__label" for="ort">Ihr Ort</label>
+        <select id="ort" class="area__select" data-area-select>
+          <option value="">Bitte wählen</option>
+          <optgroup label="München">
+            {SERVICE_AREA.munichDistricts.map((d) => <option value={d} data-match="1">{d}</option>)}
+          </optgroup>
+          <optgroup label="Umland">
+            {SERVICE_AREA.surroundingPlaces.map((d) => <option value={d} data-match="1">{d}</option>)}
+          </optgroup>
+          <option value="__other">Mein Ort ist nicht dabei</option>
+        </select>
+      </div>
+
+      <p class="area__ask">
+        Ihr Ort ist nicht dabei? Fragen Sie trotzdem an. Wir sagen Ihnen ehrlich, ob sich eine Tour
+        dorthin einrichten lässt.
+      </p>
+
+      <p class="area__result" data-area-result role="status" data-fallback={AREA_NO_MATCH}>
+        <span class="area__result-default">
+          Unsere Orte: {[...SERVICE_AREA.munichDistricts, ...SERVICE_AREA.surroundingPlaces].join(', ')}.
+        </span>
+      </p>
+    </div>
+
+    <ul class="area__offices">
+      {OFFICES.map((o) => (
+        <li>
+          <strong>{o.label}</strong>
+          <span>{fullAddress(o)}</span>
+          <a href={o.directionsUrl} target="_blank" rel="noopener noreferrer">Route planen</a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .area__inner { display: grid; gap: clamp(1.75rem, 4vw, 3rem); align-items: start; }
+  .area__lead { max-width: 40ch; margin-bottom: 1.5rem; }
+
+  .area__field { margin-bottom: 1rem; }
+  .area__label { display: block; margin-bottom: 0.4rem; font-weight: 700; color: var(--ink); }
+  .area__select {
+    width: 100%;
+    max-width: 22rem;
+    min-height: 52px;
+    padding: 0.6rem 0.85rem;
+    border: 2px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+  }
+
+  .area__ask { margin: 0 0 0.9rem; max-width: 46ch; font-size: var(--step--1); }
+  .area__result { margin: 0; max-width: 46ch; color: var(--ink-body); font-size: var(--step--1); }
+  .area__result[data-state='match'] { color: var(--ink); font-weight: 600; }
+  .area__result-default { color: var(--olive); }
+
+  .area__offices { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.85rem; }
+  .area__offices li {
+    display: grid;
+    gap: 0.2rem;
+    margin: 0;
+    padding: 1rem 1.15rem;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+  .area__offices strong { color: var(--ink); }
+  .area__offices span { color: var(--ink-body); font-size: var(--step--1); }
+  .area__offices a { min-height: 44px; display: inline-flex; align-items: center; font-size: var(--step--1); font-weight: 700; }
+
+  @media (min-width: 880px) {
+    .area__inner { grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.9fr); gap: 4rem; }
+  }
+</style>
+
+<script>
+  const select = document.querySelector<HTMLSelectElement>('[data-area-select]');
+  const result = document.querySelector<HTMLElement>('[data-area-result]');
+  if (select && result) {
+    const initial = result.innerHTML;
+    const noMatch = result.dataset.fallback ?? '';
+    select.addEventListener('change', () => {
+      const option = select.selectedOptions[0];
+      if (!select.value) {
+        result.innerHTML = initial;
+        result.removeAttribute('data-state');
+      } else if (option?.dataset.match === '1') {
+        result.textContent = `Wir sind auch in ${select.value} unterwegs. Ob ein Einsatz möglich ist, klären wir persönlich.`;
+        result.setAttribute('data-state', 'match');
+      } else {
+        result.textContent = noMatch;
+        result.setAttribute('data-state', 'other');
+      }
+    });
+  }
+</script>

@@ -3,31 +3,27 @@ export type FaqItem = { q: string; a: string };
 /** Homepage FAQ — mirrored 1:1 into FAQPage structured data. */
 export const FAQ: readonly FaqItem[] = [
   {
-    q: 'Kann ich mich melden, wenn noch kein Pflegegrad vorliegt?',
-    a: 'Ja. Sie können Ihre Situation zunächst mit uns besprechen. Welche Leistungen finanziert werden können, hängt vom konkreten Anspruch ab. Eine ärztlich verordnete Behandlungspflege folgt anderen Voraussetzungen als Leistungen der Pflegeversicherung.',
+    q: 'Kann ich auch ohne Pflegegrad anfragen?',
+    a: 'Ja. Melden Sie sich gern, auch wenn noch kein Pflegegrad vorliegt. Wir besprechen, welche Unterstützung sinnvoll wäre und was sich darüber finanzieren lässt. Ärztlich verordnete Behandlungspflege ist ohnehin nicht an einen Pflegegrad gebunden.',
   },
   {
     q: 'Wie schnell kann die Pflege beginnen?',
-    a: 'Das hängt von Ihrem Bedarf, Ihrem Wohnort und den verfügbaren Möglichkeiten ab. Bitte rufen Sie uns an, damit ein möglicher Beginn persönlich geklärt werden kann.',
+    a: 'Das hängt vom Bedarf, vom Wohnort und von unseren aktuellen Möglichkeiten ab. Rufen Sie uns an, dann sagen wir Ihnen ehrlich, was wir anbieten können. Einen festen Termin können wir über die Website nicht zusagen.',
   },
   {
-    q: 'Was ist der Unterschied zwischen Grundpflege und Behandlungspflege?',
-    a: 'Grundpflege unterstützt bei alltäglichen Verrichtungen wie Körperpflege, Ernährung und Bewegung. Behandlungspflege umfasst medizinische Maßnahmen wie Medikamentengabe oder Wundversorgung und richtet sich nach den entsprechenden ärztlichen Vorgaben.',
-  },
-  {
-    q: 'Helfen Sie auch im Haushalt?',
-    a: 'Ja. Haushaltsführung und Einkaufen gehören zum veröffentlichten Angebot. Welche Unterstützung im Einzelfall möglich ist, wird gemeinsam besprochen.',
-  },
-  {
-    q: 'Wer hilft, wenn Angehörige vorübergehend ausfallen?',
-    a: 'Unter bestimmten Voraussetzungen kann Verhinderungspflege genutzt werden. Wir besprechen mit Ihnen, ob unser Angebot zu Ihrer Situation passt. Die Leistungsansprüche klären Sie mit Ihrer Pflegekasse.',
+    q: 'Welche Kosten können für uns entstehen?',
+    a: 'Pflegekasse und Krankenkasse übernehmen unterschiedliche Leistungen, jeweils unter bestimmten Voraussetzungen. Was darüber hinausgeht, ist privat zu tragen. Wir gehen den geplanten Umfang mit Ihnen durch und sagen, was Sie mit Ihrer Kasse klären sollten.',
   },
   {
     q: 'Kommen immer dieselben Pflegekräfte?',
-    a: 'Bitte sprechen Sie Ihre Wünsche zur Betreuung direkt mit uns ab. Eine feste Person oder eine bestimmte Besetzung lässt sich über die Website nicht verbindlich zusagen.',
+    a: 'Vertraute Gesichter sind vielen Menschen wichtig, und wir nehmen Ihre Wünsche dazu ernst. Wie sich das im Einsatzplan umsetzen lässt, besprechen wir persönlich. Eine feste Zusage dazu über die Website wäre unseriös.',
   },
   {
-    q: 'Welche Informationen helfen beim ersten Gespräch?',
-    a: 'Hilfreich sind Ihr Wohnort, die gewünschte Unterstützung und der gewünschte Beginn. Falls vorhanden, können Sie auch Ihren Pflegegrad und eine ärztliche Verordnung ansprechen. Sie müssen nicht alle Antworten schon parat haben.',
+    q: 'Was brauchen Sie für das erste Gespräch?',
+    a: 'Zunächst nur Ihre Schilderung: Wohnort, was im Alltag schwierig ist und ab wann Unterstützung gewünscht wird. Falls vorhanden, helfen Angaben zum Pflegegrad oder zu einer ärztlichen Verordnung. Sie müssen nichts vorbereiten.',
+  },
+  {
+    q: 'Was, wenn mein Angehöriger Hilfe noch nicht annehmen möchte?',
+    a: 'Das ist häufig und verständlich. Oft hilft ein kleiner Anfang bei etwas Konkretem statt eines großen Pflegeplans. Entscheidend bleibt die Zustimmung der betroffenen Person – sprechen Sie uns an, wir überlegen gemeinsam.',
   },
 ];

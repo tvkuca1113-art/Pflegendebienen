@@ -30,11 +30,11 @@ const { crumbs } = Astro.props;
     margin: 0;
     padding: 0;
     font-size: 0.9rem;
-    color: var(--ink-faint);
+    color: var(--olive);
   }
   .breadcrumbs li { margin: 0; display: flex; align-items: center; gap: 0.55rem; }
   .breadcrumbs li + li::before { content: '/'; color: #b7a98f; }
-  .breadcrumbs a { color: var(--ink-soft); text-decoration: none; }
-  .breadcrumbs a:hover { color: var(--brand-deep); text-decoration: underline; }
+  .breadcrumbs a { color: var(--ink-body); text-decoration: none; }
+  .breadcrumbs a:hover { color: var(--brand-ink); text-decoration: underline; }
   .breadcrumbs [aria-current='page'] { color: var(--ink); font-weight: 600; }
 </style>

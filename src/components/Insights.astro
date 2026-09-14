@@ -18,7 +18,7 @@ import { SOCIAL } from '../data/business';
           Link zur Quelle.
         </p>
       </div>
-      <a class="arrow-link insights__profile" href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer">
+      <a class="link-action insights__profile" href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer">
         Profil auf Instagram
       </a>
     </div>
@@ -70,11 +70,11 @@ import { SOCIAL } from '../data/business';
     display: flex;
     flex-direction: column;
     background: var(--surface);
-    border: 1px solid var(--stone);
+    border: 1px solid var(--hairline);
     border-radius: var(--radius-lg);
     overflow: hidden;
   }
-  .insight__media { background: var(--stone-2); }
+  .insight__media { background: var(--sage); }
   .insight__image { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
 
   .insight__body { padding: clamp(1.15rem, 2.4vw, 1.6rem); display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
@@ -83,10 +83,10 @@ import { SOCIAL } from '../data/business';
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--brand-deep);
+    color: var(--brand-ink);
   }
   .insight__title { margin: 0; font-size: var(--step-1); }
-  .insight__text { margin: 0; color: var(--ink-soft); font-size: var(--step--1); flex: 1; }
+  .insight__text { margin: 0; color: var(--ink-body); font-size: var(--step--1); flex: 1; }
   .insight__link {
     display: inline-flex;
     align-items: center;

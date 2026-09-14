@@ -1,21 +1,19 @@
 ---
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
-import ServiceEntries from '../components/ServiceEntries.astro';
-import Guide from '../components/Guide.astro';
-import Steps from '../components/Steps.astro';
-import People from '../components/People.astro';
-import FundingTeaser from '../components/FundingTeaser.astro';
-import AreaSection from '../components/AreaSection.astro';
-import Insights from '../components/Insights.astro';
+import SituationSelector from '../components/SituationSelector.astro';
+import CostsAndSteps from '../components/CostsAndSteps.astro';
+import AreaCheck from '../components/AreaCheck.astro';
+import OwnerStrip from '../components/OwnerStrip.astro';
 import Faq from '../components/Faq.astro';
 import ContactCta from '../components/ContactCta.astro';
+import Recruitment from '../components/Recruitment.astro';
 import { FAQ } from '../data/faq';
 import { faqGraph, serviceGraph } from '../lib/schema';
 
-const title = 'Pflegedienst München-West & Germering | Pflegende Bienen';
+const title = 'Ambulanter Pflegedienst München-West & Germering | Pflegende Bienen';
 const description =
-  'Ambulante Pflege, Behandlungspflege und Alltagshilfe in München-West und Germering. Lernen Sie die Pflegenden Bienen kennen und besprechen Sie Ihren Bedarf.';
+  'Pflege, Behandlungspflege und Alltagshilfe zu Hause in München-West und Germering. Sagen Sie uns, was gebraucht wird – wir klären den nächsten Schritt mit Ihnen.';
 ---
 
 <Base
@@ -26,13 +24,15 @@ const description =
   schema={[faqGraph([...FAQ]), ...serviceGraph()]}
 >
   <Hero />
-  <ServiceEntries />
-  <Guide />
-  <Steps />
-  <People />
-  <FundingTeaser />
-  <AreaSection />
-  <Insights />
-  <Faq items={FAQ} />
+  <SituationSelector />
+  <CostsAndSteps />
+  <AreaCheck />
+  <OwnerStrip />
+  <Faq
+    items={FAQ}
+    title="Häufige Fragen"
+    intro="Das hören wir am Telefon am häufigsten. Wenn Ihre Frage hier nicht dabei ist, rufen Sie uns einfach an – wir beantworten sie gern persönlich."
+  />
   <ContactCta />
+  <Recruitment />
 </Base>
