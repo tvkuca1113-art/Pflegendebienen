@@ -17,6 +17,7 @@ Selbstdarstellung des Betriebs.
 |---|---|
 | Überschrift brach in fünf kurze Zeilen | Drei volle Sinnzeilen, H1 auf 58 px begrenzt |
 | Großes Team-Gruppenfoto vor den Entscheidungen | Ruhiges Alltagsbild im Hero, Team erst nach Kosten und Einsatzgebiet |
+| Hero-Foto als abgerundete Kachel neben dem Text | Foto randlos über die halbe erste Bildschirmseite, Text auf ruhiger Fläche daneben |
 | Leistungskarten **und** Situationsauswahl mit doppeltem Inhalt | Eine Situationsauswahl direkt unter dem Hero; die Kartensektion entfällt |
 | Auswahl mit langer Einleitung, leerem Antwortfeld und Vorbehalten | Sechs kompakte Schaltflächen, kurze Antwort (47–55 Wörter) |
 | Kosten erst nach der Inhaber-Vorstellung | Kosten, Ablauf und Einsatzgebiet vor dem Team |
@@ -75,6 +76,25 @@ Alle Werte wurden mit der WCAG-Formel berechnet, nicht geschätzt.
 Eine Familie: **Source Sans 3 Variable**, selbst gehostet, latin-Subset vorgeladen.
 Fließtext 18 px, H1 36 px mobil bis 58 px auf dem Desktop, Zeilenlänge rund 62 Zeichen.
 Inhaltsbreite 1240 px, Außenabstand 20 px auf dem Handy, Kopfzeile 77 px mobil.
+
+### Hero
+
+Redaktioneller Split statt der üblichen Karte: Die Fotografie läuft ab 900 px randlos
+über ihre Bildschirmhälfte, vom unteren Rand der Kopfzeile bis zum Ende des Hero. Der
+Text steht daneben auf ruhiger Papierfläche, die zur linken Bildschirmkante ausläuft;
+seine Ausrichtung folgt weiterhin dem Raster der übrigen Seite.
+
+**Kein Text liegt über der Fotografie.** Eine Überlagerung hätte einen Schleier über die
+Gesichter gelegt und den Kontrast gesenkt — bei der Zielgruppe der falsche Kompromiss.
+So bleibt der Text bei 14,20 : 1 und das Bild unangetastet. Die Höhe ist eine
+`min-height`, kein fester Wert, damit vergrößerter Text nichts abschneidet.
+
+Unter 900 px steht der Text zuerst, danach folgt das Foto als randloses Band über die
+volle Breite. In der ersten Ansicht bei 390 × 844 sind Überschrift, Text, Hauptaktion,
+Telefonnummer und 120 px des Fotos sichtbar.
+
+Die Bildunterschrift „KI-generiertes Symbolbild" sitzt als kleine Auszeichnung in der
+unteren Ecke des Fotos, auf deckendem dunklem Grund.
 
 ### Logo
 
@@ -200,12 +220,13 @@ Lokaler Server, **ohne Netzwerk- oder CPU-Drosselung**. Keine Feldwerte, kein Li
 
 | Seite | LCP Desktop | LCP Mobil | CLS | Übertragung |
 |---|---|---|---|---|
-| `/` | 184 ms | 136 ms | 0 | 145 KB |
-| `/leistungen/` | 136 ms | 92 ms | 0 | 42–122 KB |
-| `/kosten-finanzierung/` | 132 ms | 112 ms | 0 | 42 KB |
-| `/ueber-uns/` | 708 ms | 132 ms | 0 | 284–412 KB |
+| `/` | 220 ms | 140 ms | 0 | 171 KB |
+| `/leistungen/` | 136 ms | 104 ms | 0 | 42–122 KB |
+| `/kosten-finanzierung/` | 148 ms | 112 ms | 0 | 42 KB |
+| `/ueber-uns/` | 704 ms | 640 ms | 0 | 284–412 KB |
 
-Die Startseite ist von 227 KB auf 145 KB gefallen. Das Hero-Bild lädt `eager` mit
+Die Startseite ist von 227 KB auf 171 KB gefallen; das randlose Hero-Bild braucht eine
+größere Auflösung als die frühere Kachel, bleibt aber unter dem Ausgangswert. Das Hero-Bild lädt `eager` mit
 `fetchpriority="high"` und festen Maßen; alle übrigen Bilder sind `lazy`. CLS ist 0.
 `/ueber-uns/` ist mit 24 Porträts die schwerste Seite – das ist der richtige Ort dafür.
 

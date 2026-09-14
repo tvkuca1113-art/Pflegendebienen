@@ -2,10 +2,17 @@
 import Photo from './Photo.astro';
 import Icon from './Icon.astro';
 import { CONTACT } from '../data/business';
+
+/**
+ * Editorial split hero: the photograph runs edge to edge on its own half and
+ * the text sits on solid warm paper that bleeds to the opposite edge. No
+ * floating card, no scrim over faces, and no text on top of the photograph —
+ * legibility for tired readers stays at full contrast.
+ */
 ---
 
 <section class="hero" aria-labelledby="hero-title">
-  <div class="shell hero__inner">
+  <div class="hero__grid">
     <div class="hero__text">
       <span class="eyebrow">Ambulante Pflege · München-West &amp; Germering</span>
       <h1 id="hero-title">Zuhause bleiben.<br />Pflege gemeinsam klären.</h1>
@@ -30,16 +37,16 @@ import { CONTACT } from '../data/business';
       <p class="hero__note">Sie müssen noch nicht wissen, welche Leistung die richtige ist.</p>
     </div>
 
-    <figure class="hero__figure">
+    <figure class="hero__media">
       <Photo
         src="gespraech-zuhause.jpg"
         alt="Eine ältere Frau sitzt lächelnd im Wohnzimmer und spricht mit einer jüngeren Frau"
-        width={880}
-        height={587}
-        sizes="(min-width: 1000px) 56vw, 100vw"
+        width={1100}
+        height={900}
+        sizes="(min-width: 900px) 55vw, 100vw"
         priority={true}
         class="hero__image"
-        position="58% 34%"
+        position="62% 38%"
       />
       <figcaption class="hero__caption">KI-generiertes Symbolbild</figcaption>
     </figure>
@@ -49,15 +56,17 @@ import { CONTACT } from '../data/business';
 <style>
   .hero { background: var(--paper); border-bottom: 1px solid var(--hairline); }
 
-  .hero__inner {
-    display: grid;
-    gap: clamp(1.5rem, 4vw, 3.5rem);
-    padding-block: clamp(1.5rem, 4vw, 3.75rem) clamp(2.25rem, 5vw, 4.25rem);
-    align-items: center;
+  .hero__grid { display: grid; }
+
+  /* Text keeps the page's left alignment even though its panel bleeds to the
+     viewport edge. */
+  .hero__text {
+    padding-block: clamp(1.75rem, 4vw, 3.5rem) clamp(2rem, 4vw, 3.5rem);
+    padding-inline: var(--gutter);
   }
 
   .hero h1 { margin-bottom: 0.4em; }
-  .hero__lead { max-width: 34ch; margin-bottom: 1.5em; }
+  .hero__lead { max-width: 38ch; margin-bottom: 1.5em; }
 
   .hero__actions {
     display: flex;
@@ -99,33 +108,44 @@ import { CONTACT } from '../data/business';
     font-size: var(--step--1);
   }
 
-  .hero__figure { margin: 0; }
-  .hero__image {
-    width: 100%;
-    aspect-ratio: 3 / 2;
-    object-fit: cover;
-    border-radius: var(--radius-lg);
-  }
+  /* --- Photograph: edge to edge, no card, no rounded box ----------------- */
+  .hero__media { position: relative; margin: 0; background: var(--sage); }
+  .hero__image { width: 100%; height: 100%; object-fit: cover; }
+
   .hero__caption {
-    margin-top: 0.5rem;
-    color: var(--olive);
-    font-size: 0.8125rem;
+    position: absolute;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    background: rgba(34, 40, 33, 0.86);
+    color: #ffffff;
+    font-size: 0.75rem;
+    letter-spacing: 0.01em;
   }
 
-  /* Text and the main action come before the photograph on small screens. */
-  @media (max-width: 767px) {
-    .hero__figure { order: 2; }
+  /* Mobile: text first, then the photograph as a full-bleed band. */
+  @media (max-width: 899px) {
     .hero__image { aspect-ratio: 16 / 10; }
   }
 
-  @media (min-width: 768px) {
-    /* Asymmetric 5/7 composition. The text side carries the extra width so the
-       headline reads in full phrases instead of breaking into short stubs. */
-    .hero__inner { grid-template-columns: 7fr 5fr; gap: clamp(1.5rem, 3vw, 2.75rem); }
-    .hero__lead { max-width: 40ch; }
-  }
-  @media (min-width: 1100px) {
-    .hero__inner { grid-template-columns: 6.4fr 5.6fr; gap: 3.5rem; }
-    .hero__image { aspect-ratio: 5 / 4; }
+  @media (min-width: 900px) {
+    .hero__grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+      align-items: stretch;
+      /* Tall enough to carry the photograph, never a fixed height that could
+         clip enlarged text. */
+      min-height: clamp(30rem, 68vh, 38rem);
+    }
+    .hero__text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      /* Aligns the copy with the rest of the page while the panel bleeds left. */
+      padding-inline-start: max(var(--gutter), calc((100vw - var(--shell)) / 2 + var(--gutter)));
+      padding-inline-end: clamp(2rem, 4vw, 3.5rem);
+      padding-block: clamp(2.5rem, 5vw, 4rem);
+    }
+    .hero__caption { right: 1rem; bottom: 1rem; }
   }
 </style>
