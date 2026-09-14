@@ -9,15 +9,17 @@
     "build": "npm run prebuild && astro build",
     "preview": "astro preview",
     "check": "astro check",
+    "test": "node --experimental-strip-types --test tests/callback.test.mjs",
+    "verify": "npm run check && npm run test && npm run verify:html && npm run verify:content",
     "verify:html": "node scripts/verify-html.mjs",
     "verify:content": "node scripts/verify-content.mjs",
     "verify:interaction": "node scripts/verify-interaction.mjs",
     "verify:screenshots": "node scripts/verify-screenshots.mjs",
-    "measure:performance": "node scripts/measure-performance.mjs",
-    "verify": "npm run check && npm run verify:html && npm run verify:content"
+    "measure:performance": "node scripts/measure-performance.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
+    "@fontsource-variable/manrope": "^5.3.0",
     "@fontsource-variable/source-sans-3": "^5.3.0",
     "astro": "^7.3.2",
     "sharp": "^0.35.4",

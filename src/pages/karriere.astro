@@ -1,97 +1,292 @@
 ---
 import Base from '../layouts/Base.astro';
-import PageHeader from '../components/PageHeader.astro';
 import Photo from '../components/Photo.astro';
 import Icon from '../components/Icon.astro';
-import { OWNERS, CONTACT } from '../data/business';
+import SocialLinks from '../components/SocialLinks.astro';
+import CallbackForm from '../components/CallbackForm.astro';
+import Faq from '../components/Faq.astro';
+import { OWNERS, CONTACT, SERVICE_AREA } from '../data/business';
+import { CAREER_AREAS, CAREER_FACTS, CAREER_TOPICS, CAREER_STEPS, CAREER_FAQ } from '../data/careers';
 import { recruitmentEnabled } from '../config/site.mjs';
 
-/* No vacancies are published, so this is an expression-of-interest page:
-   no positions, salaries, benefits, hiring urgency or JobPosting markup.
-   Candidate contact stays separate from the care enquiry line. */
 if (!recruitmentEnabled) return Astro.redirect('/kontakt/', 301);
 
 const crumbs = [
   { name: 'Startseite', path: '/' },
   { name: 'Arbeiten bei uns', path: '/karriere/' },
 ];
-
-const mailHref =
-  `mailto:${OWNERS.dusko.email}?subject=${encodeURIComponent('Interesse an einer Mitarbeit')}`;
 ---
 
 <Base
-  title="Arbeiten bei uns | Pflegende Bienen"
-  description="Interesse an einer Mitarbeit bei den Pflegenden Bienen in München-West und Germering? Lernen Sie unseren Pflegedienst kennen und melden Sie sich bei uns."
+  title="Arbeiten bei den Pflegenden Bienen | München-West & Germering"
+  description="Du möchtest Menschen zu Hause unterstützen? Lerne unseren ambulanten Pflegedienst in München-West und Germering kennen und erzähl uns, welche Aufgabe du suchst."
   path="/karriere/"
   crumbs={crumbs}
+  contactVariant="job"
 >
-  <PageHeader
-    eyebrow="Arbeiten bei uns"
-    title="Sie möchten bei den Pflegenden Bienen arbeiten?"
-    intro="Lernen Sie unseren Pflegedienst kennen und nehmen Sie Kontakt zu uns auf. Wir freuen uns über Initiativbewerbungen."
-    crumbs={crumbs}
-  />
-
-  <div class="section">
-    <div class="shell career">
-      <div class="career__main">
-        <h2>Was Sie über uns wissen sollten</h2>
-        <ul class="ticks">
-          <li>Ein inhabergeführter ambulanter Pflegedienst mit Büros in München und Germering.</li>
-          <li>Ein Team, das Grundpflege, Behandlungspflege und Alltagshilfe zu Hause leistet.</li>
-          <li>Touren in München-West, Germering und ausgewählten Orten im Umland.</li>
-        </ul>
-
-        <h2>So nehmen Sie Kontakt auf</h2>
-        <p>
-          Eine bestimmte Stelle schreiben wir hier nicht aus. Schreiben Sie uns gern, welche
-          Tätigkeit Sie suchen und ab wann Sie könnten – wir melden uns und besprechen, ob es
-          gerade passt.
+  {/* A — opening with a real team photograph */}
+  <section class="jobhero">
+    <div class="shell jobhero__inner">
+      <div class="jobhero__text">
+        <span class="eyebrow">Arbeiten bei den Pflegenden Bienen</span>
+        <h1>Dein Können zählt.<br class="jobhero__break" /> Bei den Pflegenden Bienen.</h1>
+        <p class="lead">
+          Du möchtest Menschen zu Hause unterstützen? Lerne unseren Pflegedienst in München-West und
+          Germering kennen und erzähl uns, welche Aufgabe du suchst.
         </p>
-        <div class="btn-row career__actions">
-          <a class="btn" href={mailHref}>
-            <Icon name="mail" size={19} />
-            Interesse per E-Mail melden
-          </a>
-          <a class="btn btn--outline" href={OWNERS.dusko.mobileHref}>
-            <Icon name="phone" size={19} />
-            {OWNERS.dusko.mobileDisplay}
-          </a>
+        <div class="btn-row jobhero__actions">
+          <a class="btn" href="#interesse">Interesse senden</a>
+          <a class="btn btn--outline" href="#einblicke">Einblicke ansehen</a>
         </div>
-        <p class="career__note">
-          Diese Kontakte sind für Bewerbungen. Fragen zur Pflege besprechen Sie bitte über die
-          Bürorufnummer <a href={CONTACT.phoneHref}>{CONTACT.phoneDisplay}</a>.
-        </p>
       </div>
 
-      <figure class="career__figure">
+      <figure class="jobhero__figure">
         <Photo
-          src="team-alltag-facebook.jpg"
-          alt="Teammitglieder der Pflegenden Bienen in gelben Poloshirts im Büro"
-          width={520}
-          height={694}
-          sizes="(min-width: 900px) 34vw, 100vw"
-          class="career__image"
+          src="team-gruppe-facebook.jpg"
+          alt="Das Team der Pflegenden Bienen bei einem gemeinsamen Treffen im Freien"
+          width={960}
+          height={560}
+          sizes="(min-width: 900px) 52vw, 100vw"
+          priority={true}
+          class="jobhero__image"
+          position="50% 55%"
         />
-        <figcaption>Teammitglieder der Pflegenden Bienen.</figcaption>
       </figure>
     </div>
-  </div>
+  </section>
+
+  {/* B — a concise, factual view of the work */}
+  <section class="section section--line" aria-labelledby="fakten">
+    <div class="shell">
+      <h2 id="fakten">Wie wir arbeiten</h2>
+      <ul class="facts">
+        {CAREER_FACTS.map((f) => (
+          <li class="facts__item">
+            <h3>{f.title}</h3>
+            <p>{f.text}</p>
+          </li>
+        ))}
+      </ul>
+      <p class="measure facts__lead">
+        Ein Tag bei uns heißt: feste Tour, bekannte Gesichter, und zwischendurch ein kurzer Draht
+        ins Büro, wenn etwas unklar ist. Wir fahren zu Menschen, die zu Hause bleiben möchten – und
+        entscheiden gemeinsam, wie viel Unterstützung das braucht.
+      </p>
+      <p class="facts__area">
+        <strong>Unsere Touren:</strong>{' '}
+        {[...SERVICE_AREA.munichDistricts, ...SERVICE_AREA.surroundingPlaces].join(' · ')}
+      </p>
+    </div>
+  </section>
+
+  {/* C — areas of interest, explicitly not vacancies */}
+  <section class="section section--line" aria-labelledby="bereiche">
+    <div class="shell">
+      <h2 id="bereiche">Welcher Bereich passt zu dir?</h2>
+      <p class="measure">
+        Aktuell schreiben wir keine festen Stellen aus. Sag uns, welcher Bereich dich interessiert –
+        die genauen Aufgaben und Voraussetzungen klären wir dann im Gespräch.
+      </p>
+      <ul class="areas">
+        {CAREER_AREAS.map((a) => (
+          <li class="areas__item">
+            <h3>{a.title}</h3>
+            <p>{a.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {/* D — small curated photo story with visible social links */}
+  <section class="section section--line" id="einblicke" aria-labelledby="einblicke-title">
+    <div class="shell">
+      <div class="story__head">
+        <div>
+          <h2 id="einblicke-title">Einblicke in unser Miteinander</h2>
+          <p class="measure">
+            Zwischen den Touren bleibt Zeit füreinander. Mehr davon zeigen wir auf unseren Profilen.
+          </p>
+        </div>
+        <SocialLinks variant="buttons" />
+      </div>
+
+      <div class="story">
+        <figure class="story__main">
+          <Photo
+            src="team-garten-facebook.jpg"
+            alt="Das Team bei einem gemeinsamen Nachmittag im Garten, aufgenommen als Selfie"
+            width={860}
+            height={645}
+            sizes="(min-width: 900px) 58vw, 100vw"
+            class="story__image"
+            position="50% 45%"
+          />
+          <figcaption>Ein gemeinsamer Nachmittag des Teams im Garten.</figcaption>
+        </figure>
+        <figure class="story__side">
+          <Photo
+            src="team-alltag-facebook.jpg"
+            alt="Teammitglieder in gelben Poloshirts bei einer kleinen Feier im Büro"
+            width={520}
+            height={694}
+            sizes="(min-width: 900px) 28vw, 100vw"
+            class="story__image story__image--tall"
+            position="50% 30%"
+          />
+          <figcaption>Ein Geburtstag im Büro – in unseren gelben Poloshirts.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  {/* E — what the conversation covers */}
+  <section class="section section--line" aria-labelledby="gespraech">
+    <div class="shell topics">
+      <div>
+        <h2 id="gespraech">Worüber wir im Gespräch reden</h2>
+        <p>
+          Was für dich passt, entscheidet sich im Gespräch – nicht auf einer Website. Diese Punkte
+          klären wir gemeinsam:
+        </p>
+        <ul class="ticks">
+          {CAREER_TOPICS.map((t) => <li>{t}</li>)}
+        </ul>
+      </div>
+
+      {/* F — the process */}
+      <div class="topics__steps">
+        <h3>So läuft es ab</h3>
+        <ol class="steps steps--vertical">
+          {CAREER_STEPS.map((s, i) => (
+            <li class="steps__item">
+              <span class="steps__num" aria-hidden="true">{i + 1}</span>
+              <span><strong>{s.title}.</strong> {s.text}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  {/* G — application form, separate recipient from care enquiries */}
+  <section class="section on-dark" id="interesse" aria-labelledby="interesse-title">
+    <div class="shell jobform">
+      <div class="jobform__intro">
+        <h2 id="interesse-title">Erzähl uns kurz von dir</h2>
+        <p class="lead">Ein paar Zeilen genügen. Einen Lebenslauf brauchst du jetzt noch nicht.</p>
+        <ul class="jobform__direct">
+          <li>
+            <Icon name="mail" size={18} />
+            <a href={`mailto:${OWNERS.dusko.email}`}>{OWNERS.dusko.email}</a>
+          </li>
+          <li>
+            <Icon name="phone" size={18} />
+            <a href={OWNERS.dusko.mobileHref}>{OWNERS.dusko.mobileDisplay}</a>
+          </li>
+        </ul>
+        <p class="jobform__note">
+          Diese Kontakte sind für Bewerbungen. Fragen zur Pflege besprichst du am besten unter{' '}
+          <a href={CONTACT.phoneHref}>{CONTACT.phoneDisplay}</a>.
+        </p>
+      </div>
+      <div class="jobform__form">
+        <CallbackForm kind="job" id="bewerbung" />
+      </div>
+    </div>
+  </section>
+
+  {/* H — four honest FAQs */}
+  <Faq items={CAREER_FAQ} title="Häufige Fragen zur Bewerbung" id="karriere-faq" />
 </Base>
 
 <style>
-  .career { display: grid; gap: clamp(2rem, 4vw, 3.5rem); align-items: start; }
-  .career__main h2 { margin-top: 2rem; font-size: var(--step-2); }
-  .career__main h2:first-child { margin-top: 0; }
-  .career__actions { margin-top: 1.5rem; }
-  .career__note { margin-top: 1.25rem; color: var(--olive); font-size: var(--step--1); }
+  /* A */
+  .jobhero { background: var(--paper); padding-block: clamp(1.5rem, 4vw, 3rem); }
+  .jobhero__inner { display: grid; gap: clamp(1.5rem, 4vw, 3rem); align-items: center; }
+  .jobhero__break { display: none; }
+  /* Sized so both sentences each keep their own line. */
+  .jobhero h1 { font-size: clamp(1.875rem, 1.635rem + 0.96vw, 2.5rem); }
+  .jobhero__text .lead { max-width: 40ch; }
+  .jobhero__actions { margin-top: 1.75rem; }
+  @media (max-width: 599px) {
+    /* Equal-width actions read as a pair; two different widths read as a mistake. */
+    .jobhero__actions { gap: 0.6rem; }
+    .jobhero__actions .btn { flex: 1 1 100%; justify-content: center; }
+  }
+  .jobhero__figure { margin: 0; }
+  .jobhero__image {
+    width: 100%;
+    /* Framed on the row of people, not on the pavement above and below them. */
+    aspect-ratio: 12 / 7;
+    object-fit: cover;
+    border-radius: 24px 24px 24px 0;
+    box-shadow: var(--shadow-photo);
+  }
 
-  .career__figure { margin: 0; }
-  .career__image { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: var(--radius-lg); }
-  .career__figure figcaption { margin-top: 0.6rem; color: var(--olive); font-size: 0.8125rem; }
+  /* B */
+  .facts__lead { margin-top: 1rem; }
+  .facts { list-style: none; margin: 1.5rem 0 1.5rem; padding: 0; display: grid; gap: 1rem; }
+  .facts__item {
+    margin: 0;
+    padding: clamp(1.1rem, 2.4vw, 1.5rem);
+    border-radius: var(--radius);
+    background: var(--sage);
+  }
+  .facts__item h3 { font-size: var(--step-1); margin-bottom: 0.3em; }
+  .facts__item p { margin: 0; font-size: var(--step--1); }
+  .facts__area { max-width: none; color: var(--olive); font-size: var(--step--1); }
+
+  /* C */
+  .areas { list-style: none; margin: 1.75rem 0 0; padding: 0; display: grid; gap: 1rem; }
+  .areas__item {
+    margin: 0;
+    padding: clamp(1.1rem, 2.4vw, 1.6rem);
+    border: 2px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+  .areas__item h3 { font-size: var(--step-1); margin-bottom: 0.35em; color: var(--brand-ink); }
+  .areas__item p { margin: 0; font-size: var(--step--1); }
+
+  /* D */
+  .story__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1.25rem 2rem;
+    margin-bottom: 1.75rem;
+  }
+  .story { display: grid; gap: 1.25rem; }
+  .story figure { margin: 0; }
+  .story__image { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius-lg); }
+  .story__image--tall { aspect-ratio: 3 / 4; }
+  .story figcaption { margin-top: 0.6rem; color: var(--olive); font-size: 0.875rem; }
+
+  /* E + F */
+  .topics { display: grid; gap: clamp(1.75rem, 4vw, 3rem); align-items: start; }
+  .topics__steps h3 { font-size: var(--step-1); margin-bottom: 1rem; }
+  .steps--vertical { grid-template-columns: minmax(0, 1fr) !important; gap: 1rem; }
+  .steps--vertical .steps__item { align-items: flex-start; }
+  .steps--vertical .steps__item strong { color: var(--ink); }
+
+  /* G */
+  .jobform { display: grid; gap: clamp(1.75rem, 4vw, 3rem); align-items: start; }
+  .jobform__direct { list-style: none; margin: 1.5rem 0 1rem; padding: 0; display: grid; gap: 0.5rem; }
+  .jobform__direct li { display: flex; align-items: center; gap: 0.55rem; margin: 0; }
+  .jobform__direct svg { color: var(--brand); flex: 0 0 auto; }
+  .jobform__direct a { color: #f4f2ea; font-weight: 700; word-break: break-word; }
+  .jobform__note { margin: 0; color: #c9cbbf; font-size: var(--step--1); }
 
   @media (min-width: 900px) {
-    .career { grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr); gap: 4rem; }
+    .jobhero__break { display: inline; }
+    .facts, .areas { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @media (min-width: 1000px) {
+    .jobhero__inner { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); }
+    .story { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); align-items: start; }
+    .topics { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 4rem; }
+    .jobform { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 4rem; }
   }
 </style>

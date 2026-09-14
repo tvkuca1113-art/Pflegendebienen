@@ -3,6 +3,7 @@ import { MAIN_NAV, SECONDARY_NAV, SERVICE_NAV } from '../data/navigation';
 import { CONTACT, BRAND } from '../data/business';
 import { recruitmentEnabled } from '../config/site.mjs';
 import Icon from './Icon.astro';
+import SocialLinks from './SocialLinks.astro';
 
 interface Props { path: string }
 const { path } = Astro.props;
@@ -40,10 +41,13 @@ const isActive = (href: string) =>
       </ul>
     </nav>
 
-    <a class="header-phone" href={CONTACT.phoneHref}>
-      <Icon name="phone" size={18} />
-      <span>{CONTACT.phoneDisplay}</span>
-    </a>
+    <div class="header-side">
+      <SocialLinks class="header-social" />
+      <a class="header-phone" href={CONTACT.phoneHref}>
+        <Icon name="phone" size={18} />
+        <span>{CONTACT.phoneDisplay}</span>
+      </a>
+    </div>
 
     <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="mobile-nav">
       <span class="nav-toggle__bars" aria-hidden="true"><span></span><span></span><span></span></span>
@@ -69,6 +73,8 @@ const isActive = (href: string) =>
         <Icon name="phone" size={19} />
         {CONTACT.phoneDisplay} anrufen
       </a>
+      <p class="mobile-nav__label mobile-nav__label--social">Folgen Sie uns</p>
+      <SocialLinks variant="inline" class="mobile-nav__social" />
     </nav>
   </div>
 </header>
@@ -78,8 +84,10 @@ const isActive = (href: string) =>
     position: sticky;
     top: 0;
     z-index: 100;
-    background: color-mix(in srgb, var(--paper) 94%, transparent);
-    backdrop-filter: blur(8px);
+    /* Opaque enough that headings never ghost through behind the logo;
+       the blur is a fallback for browsers without color-mix. */
+    background: color-mix(in srgb, var(--paper) 99%, transparent);
+    backdrop-filter: blur(10px) saturate(1.1);
     border-bottom: 1px solid var(--hairline);
   }
 
@@ -117,6 +125,9 @@ const isActive = (href: string) =>
   .nav__list--secondary { margin-top: 0.1rem; }
   .nav__link--quiet { color: var(--olive); font-size: 0.9375rem; font-weight: 600; }
   .nav__link--quiet:hover { color: var(--ink); }
+
+  .header-side { display: none; align-items: center; gap: 0.75rem; }
+  .header-social { margin-inline-end: 0.15rem; }
 
   .header-phone {
     display: none;
@@ -194,13 +205,16 @@ const isActive = (href: string) =>
   }
   .mobile-nav__sub--spaced { padding-top: 0.5rem; border-top: 1px solid var(--hairline); }
   .mobile-nav__call { width: 100%; }
+  .mobile-nav__label--social { margin-top: 1.25rem; }
+  .mobile-nav__social { padding-block: 0.25rem; }
 
-  @media (min-width: 1000px) {
-    :root { --header-h: 88px; }
-    .site-header__inner { min-height: 88px; gap: 1.5rem; }
+  @media (min-width: 1080px) {
+    :root { --header-h: 84px; }
+    .site-header__inner { min-height: 84px; gap: 1.25rem; }
     .nav { display: block; }
     .nav-toggle { display: none; }
     .mobile-nav { display: none !important; }
+    .header-side { display: flex; }
     .header-phone { display: inline-flex; }
     .brand__logo { width: 128px; }
   }
@@ -225,7 +239,7 @@ const isActive = (href: string) =>
         (toggle as HTMLButtonElement).focus();
       }
     });
-    window.matchMedia('(min-width: 1000px)').addEventListener('change', (e) => {
+    window.matchMedia('(min-width: 1080px)').addEventListener('change', (e) => {
       if (e.matches) close();
     });
   }

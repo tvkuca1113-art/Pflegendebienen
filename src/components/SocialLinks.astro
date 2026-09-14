@@ -1,0 +1,70 @@
+---
+import Icon from './Icon.astro';
+import { SOCIAL } from '../data/business';
+
+/**
+ * The business profiles, linked explicitly. No embedded feed, no tracking
+ * script and no invented post metrics — just two ordinary links that open in
+ * a new tab with a spoken-out accessible name.
+ */
+interface Props {
+  variant?: 'icons' | 'buttons' | 'inline';
+  class?: string;
+}
+const { variant = 'icons', class: cls = '' } = Astro.props;
+
+const PROFILES = [
+  { name: 'Facebook', href: SOCIAL.facebook, icon: 'facebook' as const },
+  { name: 'Instagram', href: SOCIAL.instagram, icon: 'instagram' as const },
+];
+---
+
+<ul class={`social social--${variant} ${cls}`}>
+  {PROFILES.map((p) => (
+    <li>
+      <a
+        href={p.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`${p.name} von Pflegende Bienen – öffnet in neuem Tab`}
+      >
+        <Icon name={p.icon} size={variant === 'icons' ? 22 : 20} />
+        <span class={variant === 'icons' ? 'visually-hidden' : 'social__label'}>{p.name}</span>
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .social { display: flex; gap: 0.4rem; list-style: none; margin: 0; padding: 0; }
+  .social li { margin: 0; }
+  .social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: var(--radius);
+    color: var(--ink);
+    text-decoration: none;
+    transition: background-color 0.15s var(--ease), color 0.15s var(--ease);
+  }
+  .social a:hover { background: var(--brand-soft); color: var(--brand-ink); }
+
+  .social--buttons { gap: 0.6rem; flex-wrap: wrap; }
+  .social--buttons a {
+    padding: 0.5rem 1.1rem;
+    border: 2px solid var(--line);
+    font-weight: 700;
+  }
+  .social--buttons a:hover { border-color: var(--brand); background: var(--brand-soft); }
+
+  .social--inline { gap: 1.25rem; flex-wrap: wrap; }
+  .social--inline a { justify-content: flex-start; font-weight: 600; }
+  .social--inline a:hover { background: transparent; text-decoration: underline; }
+
+  .on-dark .social a { color: #f4f2ea; }
+  .on-dark .social a:hover { background: rgba(255, 255, 255, 0.1); color: var(--brand); }
+  .on-dark .social--buttons a { border-color: rgba(255, 255, 255, 0.35); }
+</style>

@@ -5,9 +5,13 @@
  * Depth belongs on the linked service page. Nothing here promises admission,
  * a start date, capacity, an entitlement or a medical assessment.
  */
+export type SituationIcon =
+  | 'hospital' | 'wash' | 'meds' | 'home' | 'relief' | 'compass';
+
 export type Situation = {
   id: string;
   label: string;
+  icon: SituationIcon;
   /** Headline of the answer panel. */
   answerTitle: string;
   answer: string;
@@ -20,8 +24,9 @@ export type Situation = {
 export const SITUATIONS: readonly Situation[] = [
   {
     id: 'krankenhaus',
+    icon: 'hospital',
     label: 'Nach dem Krankenhaus',
-    answerTitle: 'Früh klären, was zu Hause gebraucht wird',
+    answerTitle: 'Wir organisieren die Versorgung nach der Entlassung',
     answer:
       'Die Entlassung steht bevor? Klären Sie möglichst früh, welche Unterstützung zu Hause benötigt wird.',
     bullets: [
@@ -34,6 +39,7 @@ export const SITUATIONS: readonly Situation[] = [
   },
   {
     id: 'koerperpflege',
+    icon: 'wash',
     label: 'Waschen & Anziehen',
     answerTitle: 'Unterstützung, die Selbstständigkeit erhält',
     answer:
@@ -47,8 +53,9 @@ export const SITUATIONS: readonly Situation[] = [
   },
   {
     id: 'medikamente',
+    icon: 'meds',
     label: 'Medikamente & Verbände',
-    answerTitle: 'Ärztlich verordnete Pflege zu Hause',
+    answerTitle: 'Ärztlich verordnete Pflege übernehmen wir zu Hause',
     answer:
       'Medikamentengabe, Wundversorgung oder Kompressionsversorgung können als häusliche Krankenpflege infrage kommen.',
     bullets: [
@@ -60,8 +67,9 @@ export const SITUATIONS: readonly Situation[] = [
   },
   {
     id: 'haushalt',
+    icon: 'home',
     label: 'Haushalt & Begleitung',
-    answerTitle: 'Hilfe im Alltag und auf Wegen',
+    answerTitle: 'Wir halten den Alltag am Laufen',
     answer:
       'Wir unterstützen beim Einkaufen, im Haushalt und begleiten bei Wegen und Terminen im Alltag.',
     bullets: [
@@ -73,8 +81,9 @@ export const SITUATIONS: readonly Situation[] = [
   },
   {
     id: 'entlastung',
+    icon: 'relief',
     label: 'Entlastung für Angehörige',
-    answerTitle: 'Sie brauchen Entlastung, wenn Sie selbst pflegen?',
+    answerTitle: 'Sie bekommen verlässlich Zeit für sich',
     answer:
       'Wenn Sie zeitweise ausfallen oder eine Pause brauchen, kann Verhinderungspflege infrage kommen – je nach den Voraussetzungen im Einzelfall.',
     bullets: [
@@ -86,8 +95,9 @@ export const SITUATIONS: readonly Situation[] = [
   },
   {
     id: 'orientierung',
+    icon: 'compass',
     label: 'Ich brauche Orientierung',
-    answerTitle: 'Sie müssen den richtigen Fachbegriff nicht kennen',
+    answerTitle: 'Wir sortieren das gemeinsam – ohne Fachbegriffe',
     answer:
       'Erzählen Sie uns einfach, was im Alltag schwieriger geworden ist und was sich die betroffene Person wünscht.',
     bullets: [

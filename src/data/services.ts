@@ -28,6 +28,8 @@ export type Service = {
   highlights: string[];
   /** Optional illustrative photograph shown once, in its own context. */
   photo?: { src: string; alt: string; caption: string };
+  /** Benefit-led opening line, above the fold on the service page. */
+  lede: string;
   intro: string;
   whatItMeans: { heading: string; paragraphs: string[] };
   /** Concrete items published in the company's own offer. */
@@ -41,6 +43,7 @@ export type Service = {
 export const SERVICES: readonly Service[] = [
   {
     slug: 'grundpflege',
+    lede: 'Waschen, Anziehen, Aufstehen: Wir helfen genau dort, wo es allein nicht mehr sicher geht – und lassen alles andere weiter selbst machen.',
     path: '/leistungen/grundpflege/',
     navLabel: 'Grundpflege',
     cardTitle: 'Körperpflege & Alltag',
@@ -100,6 +103,7 @@ export const SERVICES: readonly Service[] = [
   },
   {
     slug: 'behandlungspflege',
+    lede: 'Wundversorgung, Medikamente, Kompression: Was ärztlich verordnet ist, führen wir fachgerecht bei Ihnen zu Hause durch.',
     path: '/leistungen/behandlungspflege/',
     navLabel: 'Behandlungspflege',
     cardTitle: 'Ärztlich verordnete Pflege',
@@ -118,7 +122,7 @@ export const SERVICES: readonly Service[] = [
       heading: 'Was Behandlungspflege bedeutet',
       paragraphs: [
         'Behandlungspflege umfasst medizinische Maßnahmen, die zu Hause durchgeführt werden können, statt dafür eine Einrichtung aufzusuchen. Grundlage ist jeweils eine ärztliche Verordnung; zusätzlich können Genehmigungsvoraussetzungen der Krankenkasse gelten.',
-        'Welche Maßnahme in Ihrem Fall verordnet wird, entscheidet die behandelnde Ärztin oder der behandelnde Arzt. Wir geben keine Behandlungsempfehlungen über die Website und besprechen die Umsetzung persönlich.',
+        'Welche Maßnahme verordnet wird, entscheidet die behandelnde Arztpraxis. Wir führen sie fachgerecht zu Hause durch und stimmen den Ablauf mit Ihnen und der Praxis ab.',
       ],
     },
     scope: {
@@ -179,6 +183,7 @@ export const SERVICES: readonly Service[] = [
       alt: 'Ein älterer Mann räumt am Küchentisch gemeinsam mit einer Helferin Einkäufe aus',
       caption: 'KI-generiertes Symbolbild',
     },
+    lede: 'Einkaufen, Wäsche, Post, ein Gang zum Arzt: Wir übernehmen, was im Alltag liegen bleibt – und bringen Zeit für ein Gespräch mit.',
     intro:
       'Nicht jede Unterstützung ist pflegerisch. Oft geht es darum, dass der Haushalt weiterläuft, Wege erledigt werden und jemand Zeit mitbringt.',
     whatItMeans: {
@@ -228,6 +233,7 @@ export const SERVICES: readonly Service[] = [
   },
   {
     slug: 'verhinderungspflege',
+    lede: 'Wenn Sie als pflegende Angehörige eine Pause brauchen, übernehmen wir die Versorgung für diese Zeit – geplant oder kurzfristig.',
     path: '/leistungen/verhinderungspflege/',
     navLabel: 'Verhinderungspflege',
     cardTitle: 'Entlastung für Angehörige',
@@ -298,11 +304,11 @@ export const ADDITIONAL_OFFERS = {
   items: [
     {
       title: 'Palliative Begleitung',
-      text: 'Die Begleitung in der letzten Lebensphase ist auf der bestehenden Website als Angebot genannt. Was in Ihrer Situation möglich und sinnvoll ist, besprechen wir persönlich. Eine spezialisierte ambulante Palliativversorgung (SAPV) oder eine durchgehende Rund-um-die-Uhr-Betreuung ist damit nicht gemeint.',
+      text: 'Wir begleiten Menschen auch in der letzten Lebensphase zu Hause und stimmen den Umfang eng mit Ihnen und den behandelnden Ärztinnen und Ärzten ab. Eine spezialisierte ambulante Palliativversorgung (SAPV) und eine durchgehende Rund-um-die-Uhr-Betreuung gehören nicht dazu.',
     },
     {
       title: 'Mobile Physiotherapie, Fußpflege und Friseur',
-      text: 'Diese Themen werden auf der bestehenden Website im Zusammenhang mit einer bestehenden Versorgung genannt. Sie gehören nicht als eigenständige Leistungen zu unserem Angebot. Ob und wie sich etwas organisieren lässt, sprechen Sie am besten direkt mit dem Team ab.',
+      text: 'Diese Leistungen erbringen wir nicht selbst. Wenn Sie bereits von uns versorgt werden, helfen wir Ihnen aber gern dabei, Termine zu koordinieren – sprechen Sie uns einfach an.',
     },
   ],
 } as const;

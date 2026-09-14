@@ -4,185 +4,202 @@ import Icon from './Icon.astro';
 import { CONTACT } from '../data/business';
 
 /**
- * Mobile-first sizing based on what a phone actually shows. An iPhone 13
- * exposes 390 × 664 CSS px once the Safari toolbars are visible — not the
- * 844 px of the device's layout viewport. The hero is therefore capped with
- * `svh` (smallest viewport height) and deliberately ends before the fold, so
- * the next section peeks through instead of the photograph being sliced by
- * the browser chrome.
+ * One photographic scene, not two rectangles side by side. On desktop the
+ * paper panel is set *into* the left edge of the photograph, which continues
+ * above, below and behind it; a window-like rounded corner is the recurring
+ * detail. The panel sits over the quiet left third of the picture, so no face
+ * or hand is covered and the text keeps full contrast on solid paper.
  *
- * Desktop keeps the editorial split: photograph edge to edge on its half,
- * text on solid paper. No text over the photograph — contrast stays at 14:1.
+ * Height is content-driven. Mobile sizing is measured against `svh`, because
+ * an iPhone 13 shows 390 × 664 CSS px once the Safari toolbars appear — not
+ * the 844 of its layout viewport.
  */
 ---
 
 <section class="hero" aria-labelledby="hero-title">
-  <div class="hero__grid">
-    <div class="hero__text">
-      <span class="eyebrow">Ambulante Pflege · München-West &amp; Germering</span>
-      <h1 id="hero-title">Zuhause bleiben.<br />Pflege gemeinsam klären.</h1>
+  <div class="hero__scene">
+    <div class="hero__canvas">
+      <Photo
+        src="gespraech-zuhause.jpg"
+        alt="Eine ältere Frau sitzt lächelnd in ihrem Wohnzimmer und spricht mit einer jüngeren Frau"
+        width={1400}
+        height={1000}
+        sizes="(min-width: 900px) 72vw, 100vw"
+        priority={true}
+        class="hero__image"
+        position="66% 34%"
+      />
+      <p class="hero__credit">KI-generiertes Symbolbild</p>
+    </div>
+
+    <div class="hero__panel">
+      <span class="eyebrow">Ambulante Pflege in München-West &amp; Germering</span>
+      <h1 id="hero-title">Zuhause gut versorgt.<br class="hero__break" /> Als Familie entlastet.</h1>
       <p class="lead hero__lead">
-        Sie suchen Unterstützung für sich oder einen Angehörigen? Wir helfen bei der Pflege und im
-        Alltag – und besprechen mit Ihnen, was jetzt gebraucht wird.
+        Wir unterstützen bei der Pflege und im Alltag. Gemeinsam finden wir heraus, welche Hilfe zu
+        Ihrer Situation passt.
       </p>
 
       <div class="hero__actions">
         <a class="btn" href="#kontakt" data-hero-cta>Pflege anfragen</a>
-        <a class="link-action" href="#hilfe">Welche Hilfe passt?</a>
+        <a class="btn btn--outline" href="#hilfe">Passende Hilfe finden</a>
       </div>
 
       <p class="hero__phone">
-        Lieber direkt sprechen?
         <a href={CONTACT.phoneHref}>
-          <Icon name="phone" size={18} />
+          <Icon name="phone" size={19} />
           {CONTACT.phoneDisplay}
         </a>
+        <span>Rufen Sie uns an, wenn es schneller gehen soll.</span>
       </p>
     </div>
-
-    <figure class="hero__media">
-      <Photo
-        src="gespraech-zuhause.jpg"
-        alt="Eine ältere Frau sitzt lächelnd im Wohnzimmer und spricht mit einer jüngeren Frau"
-        width={1100}
-        height={900}
-        sizes="(min-width: 900px) 55vw, 100vw"
-        priority={true}
-        class="hero__image"
-        position="58% 32%"
-      />
-      <figcaption class="hero__caption">KI-generiertes Symbolbild</figcaption>
-    </figure>
   </div>
 
-  <p class="hero__note">Sie müssen noch nicht wissen, welche Leistung die richtige ist.</p>
+  <p class="hero__note">
+    <Icon name="check" size={18} />
+    Sie müssen noch nicht wissen, welche Unterstützung die richtige ist.
+  </p>
 </section>
 
 <style>
-  .hero { background: var(--paper); border-bottom: 1px solid var(--hairline); }
+  .hero { background: var(--paper); }
 
-  .hero__grid { display: grid; }
+  .hero__scene { position: relative; }
 
-  .hero__text { padding-inline: var(--gutter); }
+  .hero__canvas { position: relative; overflow: hidden; background: var(--sage); }
+  .hero__image { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .hero__credit {
+    position: absolute;
+    right: 0.6rem;
+    bottom: 0.6rem;
+    margin: 0;
+    padding: 0.25rem 0.55rem;
+    border-radius: 4px;
+    background: rgba(39, 40, 32, 0.86);
+    color: #ffffff;
+    font-size: 0.75rem;
+  }
+
+  .hero__panel { background: var(--paper); }
 
   .hero h1 { margin-bottom: 0.35em; }
-  .hero__lead { max-width: 38ch; margin-bottom: 1.25em; }
+  .hero__break { display: none; }
+  .hero__lead { max-width: 34ch; margin-bottom: 1.35em; }
 
-  .hero__actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.7rem 1.4rem;
-    margin-bottom: 0.9rem;
-  }
+  .hero__actions { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-bottom: 1rem; }
+  .hero__actions .btn { flex: 1 1 auto; }
 
   .hero__phone {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    gap: 0.45rem;
+    align-items: baseline;
+    gap: 0.25rem 0.7rem;
     margin: 0;
-    color: var(--olive);
-    font-size: var(--step--1);
   }
   .hero__phone a {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.45rem;
     min-height: 44px;
     color: var(--ink);
-    font-size: var(--step-0);
+    font-size: var(--step-1);
     font-weight: 700;
     text-decoration: none;
     border-bottom: 2px solid var(--brand);
   }
   .hero__phone a:hover { color: var(--brand-ink); }
   .hero__phone svg { color: var(--brand-ink); }
+  .hero__phone span { color: var(--olive); font-size: var(--step--1); }
 
   .hero__note {
-    max-width: 42ch;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
     margin: 0;
-    padding-left: 0.85rem;
-    border-left: 3px solid var(--brand);
+    padding: 1rem var(--gutter) 1.4rem;
+    max-width: none;
     color: var(--olive);
     font-size: var(--step--1);
   }
-
-  .hero__media { position: relative; margin: 0; overflow: hidden; background: var(--sage); min-height: 0; }
-  .hero__image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-
-  .hero__caption {
-    position: absolute;
-    right: 0.65rem;
-    bottom: 0.65rem;
-    padding: 0.25rem 0.55rem;
-    border-radius: 4px;
-    background: rgba(34, 40, 33, 0.86);
-    color: #ffffff;
-    font-size: 0.75rem;
-  }
+  .hero__note svg { flex: 0 0 auto; color: var(--brand); margin-top: 0.15em; }
 
   /* ---------------------------------------------------------------- mobile */
   @media (max-width: 899px) {
-    /* Every pixel here buys height for the photograph, so the hero resolves
-       with the next band visible instead of the image being cut mid-strip. */
-    .hero .eyebrow { margin-bottom: 0.55rem; }
-    .hero h1 { margin-bottom: 0.3em; }
-    .hero__lead { font-size: 1.0625rem; line-height: 1.45; margin-bottom: 1rem; }
-    .hero__actions { gap: 0.5rem 1.1rem; margin-bottom: 0.55rem; }
+    .hero__scene { display: grid; grid-template-rows: auto minmax(8.5rem, 1fr); }
+    .hero__panel { order: -1; padding: 1rem var(--gutter) 1.15rem; }
+    .hero__canvas { align-self: stretch; }
+    .hero__canvas .hero__image { position: absolute; inset: 0; }
+    .hero__canvas { border-radius: 18px 18px 0 0; }
 
-    .hero__grid {
-      grid-template-rows: auto minmax(8rem, 1fr);
-      /* Measured against the *smallest* viewport, so the Safari toolbars never
-         slice the photograph. 2.5rem is left over on purpose: the note below
-         peeks in and signals that the page continues. Content may grow past
-         this — enlarged text must never be clipped. */
-      min-height: calc(100svh - var(--header-h) - 2.5rem);
-    }
-    .hero__text { padding-block: 0.9rem 0.9rem; }
-    /* The photograph takes whatever height is left: a real band on a tall
-       phone, still present on a small one. */
-    .hero__media { align-self: stretch; }
-    .hero__note { margin-inline: var(--gutter); padding-block: 1.1rem 1.4rem; }
+    /* Measured against the smallest viewport so the browser toolbars never cut
+       the photograph, and short of full height so the next band peeks in. */
+    .hero__scene { min-height: calc(100svh - var(--header-h) - 3.25rem); }
+
+    .hero .eyebrow { margin-bottom: 0.5rem; }
+    .hero h1 { margin-bottom: 0.3em; }
+    .hero__lead { font-size: 1.0625rem; line-height: 1.45; margin-bottom: 1rem; max-width: none; }
+    .hero__actions { gap: 0.55rem; margin-bottom: 0.75rem; }
+    .hero__actions .btn { flex: 1 1 10rem; }
+    .hero__phone { gap: 0.15rem 0.6rem; }
+    .hero__phone span { flex-basis: 100%; }
   }
 
-  /* Very small phones (320–380 px): trade a little type size for a
-     photograph that is actually present. */
   @media (max-width: 380px) {
-    .hero h1 { font-size: 1.625rem; }
     .hero .eyebrow { font-size: 0.75rem; letter-spacing: 0.08em; }
-    .hero__lead { font-size: 1rem; margin-bottom: 0.85rem; }
-    .hero__text { padding-block: 0.75rem; }
+    .hero__lead { font-size: 1rem; }
   }
 
   /* --------------------------------------------------------------- desktop */
   @media (min-width: 900px) {
-    .hero {
+    .hero { padding-block: clamp(1.5rem, 3vw, 2.75rem) 0; }
+
+    .hero__scene {
+      width: 100%;
+      max-width: var(--shell);
+      margin-inline: auto;
+      padding-inline: var(--gutter);
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
-      grid-template-areas: 'text media' 'note media';
-      grid-template-rows: 1fr auto;
-      min-height: clamp(30rem, 68svh, 38rem);
+      /* The panel occupies the first track and the photograph spans both, so
+         the picture continues behind and around the text. */
+      grid-template-columns: minmax(24rem, 38rem) minmax(0, 1fr);
+      grid-template-rows: auto;
+      align-items: center;
     }
-    /* Lets the text and the photograph join the section's own grid. */
-    .hero__grid { display: contents; }
-    .hero__text { grid-area: text; }
-    .hero__media { grid-area: media; }
-    .hero__note { grid-area: note; }
-    .hero__text {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      /* Keeps the copy on the page grid while the panel bleeds to the edge. */
-      padding-inline-start: max(var(--gutter), calc((100vw - var(--shell)) / 2 + var(--gutter)));
-      padding-inline-end: clamp(2rem, 4vw, 3.5rem);
-      padding-block: clamp(2.5rem, 5vw, 3.5rem) 0;
+
+    .hero__canvas {
+      grid-area: 1 / 1 / 2 / 3;
+      /* Window-like frame: one generous rounded corner, the rest square. */
+      border-radius: 28px 28px 28px 0;
+      box-shadow: var(--shadow-photo);
+      /* Taller than the panel on purpose: the picture has to breathe above and
+         below the text, otherwise the two read as separate rectangles again. */
+      min-height: clamp(30rem, 50vw, 40rem);
     }
+    .hero__canvas .hero__image { position: absolute; inset: 0; }
+
+    .hero__panel {
+      grid-area: 1 / 1 / 2 / 2;
+      position: relative;
+      z-index: 1;
+      /* Set into the photograph's left edge rather than beside it. */
+      margin-inline-start: clamp(-1rem, -2vw, -2.25rem);
+      margin-block: clamp(2rem, 4vw, 3.5rem);
+      padding: clamp(1.75rem, 2.6vw, 2.5rem);
+      border-radius: 22px 22px 22px 0;
+      box-shadow: var(--shadow-panel);
+    }
+
+    .hero__break { display: inline; }
+
     .hero__note {
-      margin-inline-start: max(var(--gutter), calc((100vw - var(--shell)) / 2 + var(--gutter)));
-      margin-inline-end: clamp(2rem, 4vw, 3.5rem);
-      margin-block: 0 clamp(2.5rem, 5vw, 3.5rem);
+      max-width: var(--shell);
+      margin-inline: auto;
+      padding-block: 1.25rem 0;
     }
-    .hero__caption { right: 1rem; bottom: 1rem; }
+  }
+
+  @media (min-width: 1200px) {
+    .hero__scene { grid-template-columns: minmax(26rem, 40rem) minmax(0, 1fr); }
   }
 </style>

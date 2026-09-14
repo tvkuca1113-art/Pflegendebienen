@@ -50,7 +50,7 @@ export const PILLARS: readonly FundingPillar[] = [
       'Ärztlich verordnete häusliche Krankenpflege kann unter bestimmten Voraussetzungen übernommen werden.',
     detail: [
       'Die Krankenkasse ist für medizinisch veranlasste Leistungen zuständig. Häusliche Krankenpflege – zum Beispiel Wundversorgung oder Medikamentengabe – beruht auf einer ärztlichen Verordnung.',
-      'Die Kasse entscheidet über die Genehmigung im Einzelfall. Eine Kostenübernahme lässt sich über die Website nicht zusagen.',
+      'Über die Genehmigung entscheidet die Kasse im Einzelfall. Wir sagen Ihnen, welche Unterlagen erfahrungsgemäß gebraucht werden.',
     ],
   },
   {
@@ -59,7 +59,7 @@ export const PILLARS: readonly FundingPillar[] = [
       'Welche Kosten privat zu tragen sind, muss für den vereinbarten Leistungsumfang geklärt werden.',
     detail: [
       'Nicht jede gewünschte Unterstützung wird vollständig von einer Kasse getragen. Was darüber hinausgeht, ist privat zu tragen.',
-      'Wir besprechen mit Ihnen, welcher Leistungsumfang sinnvoll erscheint und welche Positionen Sie mit Ihrer Kasse klären sollten. Feste Preise nennen wir über die Website nicht.',
+      'Wir besprechen mit Ihnen, welcher Leistungsumfang sinnvoll erscheint und welche Positionen Sie mit Ihrer Kasse klären sollten. Den Eigenanteil rechnen wir vor der Vereinbarung gemeinsam durch.',
     ],
   },
 ];
@@ -80,7 +80,7 @@ export const FIGURES: readonly FundingFigure[] = [
     title: 'Entlastungsbetrag, monatlich',
     body: 'Anspruchsberechtigte Menschen mit einem Pflegegrad, die zu Hause leben, können monatlich bis zu 131 Euro für erstattungsfähige Leistungen einsetzen. Das gilt auch bei Pflegegrad 1.',
     caveat:
-      'Es handelt sich nicht um eine allgemeine Geldleistung und nicht um eine Zusage, dass jede auf dieser Website beschriebene Leistung erstattungsfähig ist.',
+      'Es ist kein frei verfügbarer Geldbetrag: Er wird für erstattungsfähige Leistungen eingesetzt und mit der Pflegekasse abgerechnet.',
     source: SOURCES.entlastungsbetrag,
     secondSource: SOURCES.entlastungsbetragBmg,
   },

@@ -39,6 +39,10 @@ import { AREA_NO_MATCH } from '../data/situations';
           Unsere Orte: {[...SERVICE_AREA.munichDistricts, ...SERVICE_AREA.surroundingPlaces].join(', ')}.
         </span>
       </p>
+
+      <p class="area__cta" data-area-cta hidden>
+        <a class="btn" href="#kontakt" data-area-link>Pflege anfragen</a>
+      </p>
     </div>
 
     <ul class="area__offices">
@@ -74,6 +78,8 @@ import { AREA_NO_MATCH } from '../data/situations';
   .area__ask { margin: 0 0 0.9rem; max-width: 46ch; font-size: var(--step--1); }
   .area__result { margin: 0; max-width: 46ch; color: var(--ink-body); font-size: var(--step--1); }
   .area__result[data-state='match'] { color: var(--ink); font-weight: 600; }
+  .area__cta { margin: 1.1rem 0 0; }
+  .area__cta[hidden] { display: none; }
   .area__result-default { color: var(--olive); }
 
   .area__offices { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.85rem; }
@@ -98,20 +104,46 @@ import { AREA_NO_MATCH } from '../data/situations';
 <script>
   const select = document.querySelector<HTMLSelectElement>('[data-area-select]');
   const result = document.querySelector<HTMLElement>('[data-area-result]');
+  const cta = document.querySelector<HTMLElement>('[data-area-cta]');
+  const ctaLink = document.querySelector<HTMLAnchorElement>('[data-area-link]');
+
   if (select && result) {
     const initial = result.innerHTML;
     const noMatch = result.dataset.fallback ?? '';
+
+    /** Carries the chosen place into the callback form, so nobody types it twice. */
+    const prefill = (place: string) => {
+      const field = document.querySelector<HTMLInputElement>('[data-place]');
+      if (field) field.value = place;
+    };
+
     select.addEventListener('change', () => {
       const option = select.selectedOptions[0];
-      if (!select.value) {
+      const place = select.value;
+
+      if (!place) {
         result.innerHTML = initial;
         result.removeAttribute('data-state');
-      } else if (option?.dataset.match === '1') {
-        result.textContent = `Wir sind auch in ${select.value} unterwegs. Ob ein Einsatz möglich ist, klären wir persönlich.`;
+        if (cta) cta.hidden = true;
+        return;
+      }
+
+      if (option?.dataset.match === '1') {
+        result.textContent = `Wir sind auch in ${place} unterwegs. Ob ein Einsatz möglich ist, klären wir persönlich.`;
         result.setAttribute('data-state', 'match');
+        prefill(place);
+        if (cta && ctaLink) {
+          ctaLink.textContent = `Pflege in ${place} anfragen`;
+          cta.hidden = false;
+        }
       } else {
         result.textContent = noMatch;
         result.setAttribute('data-state', 'other');
+        prefill('');
+        if (cta && ctaLink) {
+          ctaLink.textContent = 'Ort anfragen';
+          cta.hidden = false;
+        }
       }
     });
   }

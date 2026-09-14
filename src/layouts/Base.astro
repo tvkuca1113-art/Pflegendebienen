@@ -1,8 +1,10 @@
 ---
 import '@fontsource-variable/source-sans-3';
+import '@fontsource-variable/manrope';
 import '../styles/global.css';
 // Preloaded so the headline does not wait on CSS discovery.
 import sansLatin from '@fontsource-variable/source-sans-3/files/source-sans-3-latin-wght-normal.woff2?url';
+import displayLatin from '@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import MobileContactBar from '../components/MobileContactBar.astro';
@@ -27,9 +29,12 @@ interface Props {
   schema?: unknown[];
   ogImage?: string;
   bodyClass?: string;
+  /** 'job' swaps the sticky mobile bar to the recruitment channel. */
+  contactVariant?: 'care' | 'job';
 }
 
-const { title, description, path, crumbs = [], schema = [], ogImage, bodyClass = '' } = Astro.props;
+const { title, description, path, crumbs = [], schema = [], ogImage, bodyClass = '',
+  contactVariant = 'care' } = Astro.props;
 
 const canonical = new URL(path, SITE.origin + '/').toString();
 const socialImage = new URL(ogImage ?? '/social-preview.jpg', SITE.origin + '/').toString();
@@ -56,8 +61,9 @@ const graph = buildGraph([
     {IS_DEMO && <meta name="robots" content="noindex, nofollow" />}
 
     <link rel="preload" href={sansLatin} as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href={displayLatin} as="font" type="font/woff2" crossorigin="anonymous" />
 
-    <meta name="theme-color" content="#faf8f3" />
+    <meta name="theme-color" content="#fff9ef" />
     <link rel="icon" href="/favicon.png" type="image/png" sizes="64x64" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
@@ -86,7 +92,7 @@ const graph = buildGraph([
       <slot />
     </main>
     <Footer />
-    <MobileContactBar />
+    <MobileContactBar variant={contactVariant} />
 
     <script>
       // Gentle section reveals. The page is fully usable before this runs and

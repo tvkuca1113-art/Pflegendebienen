@@ -51,7 +51,9 @@ for (const p of pages) {
   let sIdx = t.indexOf('SAPV');
   while (sIdx > -1) {
     const win = t.slice(Math.max(0, sIdx - 200), sIdx + 200);
-    if (!/nicht gemeint|nicht an|keine? /i.test(win)) out.push(`${p}: SAPV mentioned without disclaimer :: ${win}`);
+    // An explicit negation must sit next to the term in either phrasing we use.
+    const disclaimed = /nicht gemeint|nicht an|keine? |geh(ö|oe)ren nicht dazu|(bieten|erbringen|leisten) wir nicht/i.test(win);
+    if (!disclaimed) out.push(`${p}: SAPV mentioned without disclaimer :: ${win}`);
     sIdx = t.indexOf('SAPV', sIdx + 1);
   }
 
@@ -77,14 +79,35 @@ const home = text(readFileSync('dist/index.html', 'utf8'));
 // old trust badges moved to /ueber-uns/ on purpose.
 const must = [
   '089 54637889', 'Fürstenrieder Str. 137', 'Otto-Wagner-Str. 10',
-  'Marija Jelačić Bjelovuk', 'Zuhause bleiben', 'Pflege gemeinsam klären',
-  'Was brauchen Sie gerade?', 'KI-generiertes Symbolbild',
+  'Marija Jelačić Bjelovuk',
+  'Zuhause gut versorgt.',            // hero promise
+  'Was brauchen Sie gerade?',         // situation selector
+  'Was zahlt die Kasse',              // costs section
+  'Kommen Sie auch zu uns?',          // service area check
+  'KI-generiertes Symbolbild',        // AI illustration disclosure
 ];
 // And what must live on the about page instead.
 const aboutMust = ['Duško Bjelovuk', 'Marija Jelačić Bjelovuk'];
 const about = text(readFileSync('dist/ueber-uns/index.html', 'utf8'));
 for (const m of aboutMust) if (!about.includes(m)) out.push(`ueber-uns missing: "${m}"`);
 for (const m of must) if (!home.includes(m)) out.push(`homepage missing required content: "${m}"`);
+
+// Costs must be explained before the owners are introduced (brief: costs before owners).
+const iCosts = home.indexOf('Was zahlt die Kasse');
+const iOwners = home.indexOf('Persönlich ansprechbar');
+if (iCosts < 0 || iOwners < 0 || iCosts > iOwners)
+  out.push('homepage: the costs section must come before the owner introduction');
+
+// Social profiles must be reachable from every page, in the markup itself.
+const SOCIAL = [
+  ['facebook.com/', 'Facebook link'],
+  ['instagram.com/', 'Instagram link'],
+];
+for (const p of pages) {
+  const raw = readFileSync(p, 'utf8');
+  for (const [needle, why] of SOCIAL)
+    if (!raw.includes(needle)) out.push(`${p}: missing ${why}`);
+}
 
 // Verhinderungspflege page must state SGB XI § 39
 const vp = text(readFileSync('dist/leistungen/verhinderungspflege/index.html', 'utf8'));

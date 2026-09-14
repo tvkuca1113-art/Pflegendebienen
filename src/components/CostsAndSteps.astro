@@ -7,23 +7,18 @@
 const PILLARS = [
   {
     title: 'Pflegekasse',
-    text: 'Bei anerkanntem Pflegegrad können Leistungen für Pflege, Betreuung und Entlastung infrage kommen (SGB XI). Dazu gehört auch die Verhinderungspflege, wenn Sie als Angehörige einmal ausfallen. Fragen Sie Ihre Pflegekasse, welcher Betrag Ihnen monatlich zusteht und wofür er verwendet werden darf.',
+    text: 'Zahlt bei anerkanntem Pflegegrad – für Pflege, Betreuung und Entlastung (SGB XI).',
   },
   {
     title: 'Krankenkasse',
-    text: 'Ärztlich verordnete häusliche Krankenpflege – etwa Wundversorgung, Medikamentengabe oder Kompressionsversorgung – läuft über die Krankenkasse (SGB V). Sie ist nicht an einen Pflegegrad gebunden. Die Verordnung stellt die Arztpraxis aus; die Kasse entscheidet dann über die Genehmigung.',
+    text: 'Zahlt ärztlich verordnete Behandlungspflege, etwa Wundversorgung (SGB V). Ohne Pflegegrad möglich.',
   },
   {
     title: 'Ihr Eigenanteil',
-    text: 'Was über die bewilligten Leistungen hinausgeht, tragen Sie selbst. Wie hoch dieser Anteil ausfällt, hängt vom vereinbarten Umfang ab. Wir gehen ihn mit Ihnen durch, bevor etwas vereinbart wird – damit am Ende keine Rechnung überrascht.',
+    text: 'Was darüber hinausgeht, zahlen Sie selbst. Wir rechnen es vorher gemeinsam durch.',
   },
 ];
 
-const PREPARE = [
-  'Ihren Wohnort und die gewünschten Zeiten.',
-  'Was im Alltag schwerfällt – und was noch gut allein geht.',
-  'Falls vorhanden: Pflegegrad, ärztliche Verordnung oder Entlassbrief.',
-];
 
 const STEPS = [
   'Sie erzählen, was gebraucht wird.',
@@ -37,8 +32,8 @@ const STEPS = [
     <div class="costs__head">
       <h2 id="costs-title">Was zahlt die Kasse – und was bleibt für Sie?</h2>
       <p class="lead">
-        Das hängt von der benötigten Hilfe, Ihrem Pflegegrad und einer möglichen Verordnung ab. Auch
-        ein Eigenanteil kann entstehen.
+        Das hängt von der Hilfe, Ihrem Pflegegrad und einer möglichen Verordnung ab. Drei Töpfe
+        kommen infrage:
       </p>
     </div>
 
@@ -50,11 +45,6 @@ const STEPS = [
         </div>
       ))}
     </dl>
-
-    <p class="costs__note">
-      Feste Preise nennen wir hier nicht: Was eine Versorgung kostet, hängt vom vereinbarten Umfang
-      ab. Wir rechnen es gemeinsam mit Ihnen durch, bevor Sie sich entscheiden.
-    </p>
 
     <p class="costs__link">
       <a class="link-action" href="/kosten-finanzierung/">Kosten und Finanzierung im Detail</a>
@@ -69,15 +59,6 @@ const STEPS = [
       ))}
     </ol>
 
-    <div class="prep">
-      <h3 class="prep__title">Das hilft beim ersten Telefonat</h3>
-      <p class="prep__lead">
-        Sie müssen nichts vorbereiten. Wenn Sie diese Dinge zur Hand haben, geht es aber schneller:
-      </p>
-      <ul class="ticks prep__list">
-        {PREPARE.map((item) => <li>{item}</li>)}
-      </ul>
-    </div>
   </div>
 </section>
 
@@ -120,16 +101,6 @@ const STEPS = [
     font-weight: 700;
   }
 
-  .prep {
-    margin-top: clamp(2rem, 4vw, 3rem);
-    padding: clamp(1.25rem, 3vw, 1.75rem);
-    border-left: 3px solid var(--brand);
-    background: var(--surface);
-    border-radius: 0 var(--radius) var(--radius) 0;
-  }
-  .prep__title { margin-bottom: 0.4em; font-size: var(--step-1); }
-  .prep__lead { margin-bottom: 0.9em; font-size: var(--step--1); }
-  .prep__list { margin-bottom: 0; font-size: var(--step--1); }
 
   @media (min-width: 760px) {
     .costs__list { grid-template-columns: repeat(3, minmax(0, 1fr)); }

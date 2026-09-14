@@ -5,26 +5,28 @@
    ========================================================================== */
 
 :root {
-  /* Brand — sampled from the original logo, do not guess */
-  --brand: #f89b1c;
-  --brand-soft: #fdefd8;
-  --brand-edge: #f5d8a6;
-  --brand-ink: #7a4104;        /* accessible orange-brown for text links, 7.65:1 */
+  /* Honey identity. #F4A11B is the interface honey; the logo file itself keeps
+     its own sampled #F89B1C and is never recoloured. */
+  --brand: #f4a11b;
+  --brand-soft: #fbeac8;       /* soft honey, ink on it 12.55:1 */
+  --brand-edge: #f0d5a4;
+  --brand-ink: #96500a;        /* honey-leaning link colour, 5.81:1 on paper */
 
   /* Surfaces */
-  --paper: #faf8f3;            /* warm white */
+  --paper: #fff9ef;            /* warm paper */
   --surface: #ffffff;
-  --sage: #e8ede3;             /* pale sage */
-  --night: #313a2c;            /* the one dark section */
+  --sage: #e8eee3;             /* supporting/selected surfaces only */
+  --night: #272820;            /* warm dark ink, also the dark section */
 
   /* Ink */
-  --ink: #222821;              /* charcoal, 14.2:1 on paper */
-  --ink-body: #4a5245;         /* body copy, 7.66:1 on paper */
-  --olive: #626c57;            /* muted labels, 5.2:1 on paper */
+  --ink: #272820;              /* 14.21:1 on paper */
+  --ink-body: #3a3c33;         /* body copy */
+  --olive: #56594f;            /* muted text, 6.82:1 on paper */
 
   /* Lines */
-  --line: #7c8672;             /* interactive borders, 3.59:1 on paper */
-  --hairline: #e2e5db;         /* decorative dividers only */
+  --line: #8a8c7e;             /* interactive borders, 3.27:1 on paper */
+  --line-warm: #b8873a;        /* honey-toned border for selected controls */
+  --hairline: #ece5d8;         /* decorative dividers only */
 
   /* Type — 18px body, H1 36-42 mobile / 58-68 desktop */
   --step--1: 0.9444rem;                                    /* 17px */
@@ -32,8 +34,8 @@
   --step-1: clamp(1.25rem, 1.18rem + 0.32vw, 1.4375rem);   /* 20 → 23 */
   --step-2: clamp(1.4375rem, 1.31rem + 0.6vw, 1.75rem);    /* 23 → 28 */
   --step-3: clamp(1.75rem, 1.52rem + 1.1vw, 2.375rem);     /* 28 → 38 */
-  --step-4: clamp(2rem, 1.6rem + 1.9vw, 3rem);             /* 32 → 48 */
-  --step-5: clamp(1.75rem, 1.22rem + 2.6vw, 3.625rem);     /* 28 → 58 */
+  --step-4: clamp(1.875rem, 1.55rem + 1.6vw, 2.75rem);     /* 30 → 44 */
+  --step-5: clamp(2rem, 1.63rem + 1.65vw, 3rem);           /* 32 → 48, both measured at 2 lines */
 
   /* Rhythm */
   --shell: 1240px;
@@ -46,6 +48,10 @@
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --font: 'Source Sans 3 Variable', 'Source Sans 3', system-ui, -apple-system,
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Manrope Variable', 'Manrope', var(--font);
+
+  --shadow-photo: 0 18px 48px -28px rgba(39, 40, 32, 0.45);
+  --shadow-panel: 0 2px 4px rgba(39, 40, 32, 0.04), 0 18px 40px -30px rgba(39, 40, 32, 0.35);
 
   /* Sticky header height — anchors and focus scrolling depend on it */
   --header-h: 76px;
@@ -76,6 +82,7 @@ body {
 h1, h2, h3, h4 {
   margin: 0 0 0.5em;
   color: var(--ink);
+  font-family: var(--font-display);
   font-weight: 700;
   line-height: 1.15;
   letter-spacing: -0.015em;
@@ -290,8 +297,30 @@ html.js .reveal.is-visible { opacity: 1; transform: none; }
   }
 }
 
+/* --- Print ------------------------------------------------------------- */
+.gespraechsnotiz { display: none; }
+
 @media print {
   .site-header, .site-footer, .contact-bar, .skip-link { display: none !important; }
-  body { background: #fff; padding-bottom: 0; }
+  body { background: #fff; padding-bottom: 0; color: #000; }
   html.js .reveal { opacity: 1; transform: none; }
+  a[href^='http']::after { content: ' (' attr(href) ')'; font-size: 0.8em; word-break: break-all; }
+  a[href^='#']::after, a[href^='tel']::after, a[href^='mailto']::after { content: ''; }
+
+  /* The printed conversation note replaces the page entirely. */
+  html.is-printing-note body > *:not(.gespraechsnotiz) { display: none !important; }
+  html.is-printing-note .gespraechsnotiz {
+    display: block !important;
+    margin: 0;
+    font-family: var(--font);
+    color: #000;
+  }
+  .gn__h1 { font-size: 20pt; margin: 0 0 0.3em; }
+  .gn__meta { margin: 0 0 1.6em; font-size: 11pt; color: #444; }
+  .gn__h2 { font-size: 13pt; margin: 1.4em 0 0.35em; }
+  .gn__text { margin: 0 0 0.5em; font-size: 11pt; max-width: none; }
+  .gn__steps { margin: 0; padding-left: 1.2em; font-size: 11pt; }
+  .gn__steps li { margin-bottom: 0.4em; }
+  .gn__lines { margin-top: 0.6em; }
+  .gn__lines div { border-bottom: 1px solid #999; height: 2.1em; }
 }

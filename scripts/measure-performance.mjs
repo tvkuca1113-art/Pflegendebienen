@@ -1,7 +1,7 @@
 import { chromium } from 'playwright';
-const EXE = '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
+const EXE = process.env.CHROME_PATH || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
 const BASE = 'http://127.0.0.1:4321';
-const routes = ['/', '/leistungen/', '/kosten-finanzierung/', '/ueber-uns/'];
+const routes = ['/', '/leistungen/', '/kosten-finanzierung/', '/karriere/', '/ueber-uns/'];
 const b = await chromium.launch({ executablePath: EXE });
 
 for (const profile of [

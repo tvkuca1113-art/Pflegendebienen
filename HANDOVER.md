@@ -10,20 +10,24 @@ den Weg in den Produktivbetrieb.
 
 ## 1. Was dieser Redesign geändert hat
 
-Die Startseite ist jetzt um die Entscheidung der Besucherin herum gebaut, nicht um die
+Die Startseite ist um die Entscheidung der Besucherin herum gebaut, nicht um die
 Selbstdarstellung des Betriebs.
 
 | Vorher | Jetzt |
 |---|---|
-| Überschrift brach in fünf kurze Zeilen | Drei volle Sinnzeilen, H1 auf 58 px begrenzt |
+| Überschrift brach in fünf kurze Zeilen | Zwei volle Sinnzeilen: „Zuhause gut versorgt. Als Familie entlastet." |
 | Großes Team-Gruppenfoto vor den Entscheidungen | Ruhiges Alltagsbild im Hero, Team erst nach Kosten und Einsatzgebiet |
-| Hero-Foto als abgerundete Kachel neben dem Text | Foto randlos über die halbe erste Bildschirmseite, Text auf ruhiger Fläche daneben |
+| Hero-Foto als abgerundete Kachel neben dem Text | **Eine** Szene: die Fotografie trägt den ganzen Bereich, das Textfeld liegt darin |
+| Auf dem Telefon schnitt die Adressleiste von Safari das Foto an | Hero rechnet mit `svh` und echten Gerätehöhen; das Foto bleibt ganz |
 | Leistungskarten **und** Situationsauswahl mit doppeltem Inhalt | Eine Situationsauswahl direkt unter dem Hero; die Kartensektion entfällt |
-| Auswahl mit langer Einleitung, leerem Antwortfeld und Vorbehalten | Sechs kompakte Schaltflächen, kurze Antwort (47–55 Wörter) |
+| Auswahl mit langer Einleitung, leerem Antwortfeld und Vorbehalten | Sechs kompakte Schaltflächen, kurze Antwort (51–59 Wörter), Gesprächsnotiz zum Drucken |
 | Kosten erst nach der Inhaber-Vorstellung | Kosten, Ablauf und Einsatzgebiet vor dem Team |
+| Facebook und Instagram nur im Fuß | Sichtbar in der Kopfzeile jeder Seite, im Fuß und bei den Einblicken |
+| Kontaktformular ohne echten Weg nach draußen | Ein Formular, zwei ehrliche Modi (`server` / `draft`), getrennte Empfänger für Pflege und Bewerbung |
+| Karriereseite als kurzer Teaser | Vollständige Seite mit acht Abschnitten, „du"-Ansprache und eigenem Bewerbungsformular |
 | Wiederholte weiße Karten, Creme-Flächen, orange Buttons | Wechsel aus offenen Flächen, Salbei-Blöcken, einem dunklen Abschnitt |
-| Sichtbare Hinweise auf fehlenden Formularempfänger und unbelegte Angaben | Entfernt; diese Punkte stehen nur noch hier |
-| Zwei Schriftfamilien inkl. großer brauner Serif | Eine humanistische Sans (Source Sans 3) |
+| Sichtbare Hinweise auf fehlenden Formularempfänger und unbelegte Angaben | Entfernt; diese Punkte stehen nur noch hier und in OWNER-QUESTIONS.md |
+| Zwei Schriftfamilien inkl. großer brauner Serif | Source Sans 3 für den Text, Manrope für Überschriften |
 
 ### Neue Startseiten-Reihenfolge
 
@@ -33,19 +37,21 @@ Selbstdarstellung des Betriebs.
    Checkliste fürs erste Telefonat
 4. „Kommen Sie auch zu uns?" — Ortsprüfung und die beiden Besucherbüros
 5. „Persönlich ansprechbar." — eine kompakte Vorstellung von Marija Jelačić Bjelovuk
-6. Häufige Fragen — sechs Antworten
-7. „Lassen Sie uns Ihren nächsten Schritt klären." — Telefon, E-Mail, WhatsApp
-8. „Sie möchten bei den Pflegenden Bienen arbeiten?" — abschaltbar
+6. „Einblicke aus unserem Team" — drei eigene Beiträge mit Datum und Quelle
+7. Häufige Fragen — sechs Antworten
+8. „Lassen Sie uns Ihren nächsten Schritt klären." — Telefon, E-Mail, WhatsApp, Rückrufformular
+9. „Dein Können zählt." — Karriereabschnitt, abschaltbar
 
-Sichtbarer Textumfang der Startseite im Grundzustand: **663 Wörter** (Ziel 650–850,
-ohne Navigation, Fußzeile und eingeklappte Antworten).
+Sichtbarer Textumfang der Startseite im Grundzustand: **602 Wörter** (Ziel 500–700,
+ohne Navigation, Fußzeile und eingeklappte Antworten). Karriereseite: **475 Wörter**.
 
 ### Navigation
 
 Hauptnavigation: **Hilfe finden · Kosten · Einsatzgebiet · Kontakt**.
-Zweite Reihe: **Über uns · Arbeiten bei uns**. Alle Leistungsseiten bleiben über
-„Hilfe finden", das Mobilmenü, die Fußzeile und interne Links erreichbar; keine URL
-wurde geändert, keine Weiterleitung ist nötig.
+Zweite Reihe: **Über uns · Arbeiten bei uns**. Daneben Facebook, Instagram und die
+Rufnummer. Alle Leistungsseiten bleiben über „Hilfe finden", das Mobilmenü, die
+Fußzeile und interne Links erreichbar; keine URL wurde geändert, keine Weiterleitung
+ist nötig.
 
 ---
 
@@ -161,32 +167,44 @@ Verbände · Haushalt & Begleitung · Entlastung für Angehörige · Ich brauche
 
 ### Was heute funktioniert
 
-Telefon, WhatsApp (neutrale Nachricht, nichts aus der Auswahl vorbefüllt) und ein
-E-Mail-Entwurf. Die Schaltfläche heißt **„Rückruf per E-Mail anfragen"** – sie ist
-nirgends als abgesendetes Webformular bezeichnet, und es gibt keinen vorgetäuschten
-Erfolgszustand.
+Telefon, WhatsApp (neutrale Nachricht, nichts aus der Auswahl vorbefüllt), die
+geprüfte E-Mail-Adresse und ein Rückrufformular. Kein Weg behauptet mehr, als er tut.
 
-### Rückrufformular — bewusst nicht ausgeliefert
+### Rückrufformular — ein Formular, zwei ehrliche Modi
 
-Ein Formular wurde **nicht** in die Oberfläche aufgenommen, weil kein autorisiertes
-Empfangsziel konfiguriert ist. Damit es später ergänzt werden kann, fehlt genau das:
+Das Formular ist gebaut und ausgeliefert. Welchen Weg es nimmt, entscheidet
+`PUBLIC_CALLBACK_MODE`:
 
-1. Ein Empfangsziel (Formulardienst, E-Mail-API oder eigener Endpunkt) samt
-   Auftragsverarbeitungsvertrag.
-2. Zugangsdaten als Umgebungsvariablen der Produktivumgebung, nicht im Repository.
-3. Serverseitiger Endpunkt mit Validierung, Rate-Limiting, Spam- und
-   Doppelsende-Schutz sowie echten Erfolgs- und Fehlerzuständen.
-4. Felder: Name und Telefon verpflichtend, Ort optional. Keine Diagnosen, keine
-   Gesundheitsfragen, keine Pflichtangabe einer E-Mail-Adresse.
+| Modus | Verhalten | Beschriftung |
+|---|---|---|
+| `draft` (Standard) | Öffnet einen fertig ausgefüllten E-Mail-Entwurf im Programm der Besucherin. Es wird **nichts** versendet und **nichts** gespeichert. | „Ihre E-Mail wurde vorbereitet …" |
+| `server` | Sendet an `/api/rueckruf`; Erfolg wird erst gemeldet, wenn der Versanddienst die Nachricht angenommen hat (HTTP 202). | „Danke. Ihre Rückrufbitte ist bei uns angekommen." |
 
-Bis dahin bleibt der ehrliche Weg: anrufen, schreiben oder WhatsApp.
+Beide Modi nutzen dieselbe Validierung (`src/lib/callback.ts`) im Browser, auf dem
+Server und im Test. Der Serververtrag liegt fertig in
+`src/server/rueckruf.endpoint.ts` — bewusst **außerhalb** von `src/pages`, damit der
+statische Build nicht bricht: nur POST, nur JSON, 8 KiB Obergrenze, Honeypot,
+Rate-Limit (5 Anfragen je 10 Minuten und IP), 10-Minuten-Sperre gegen
+Doppelsendungen, getrennte Empfänger `CALLBACK_TO_CARE` und `CALLBACK_TO_JOBS`.
+
+Zum Aktivieren fehlen nur noch Empfangsziel, Auftragsverarbeitungsvertrag und die
+Umgebungsvariablen. Die vollständige Tabelle und die drei Schritte stehen in
+OWNER-QUESTIONS.md, Punkt 3.
+
+Erhoben werden Name, Telefon und Ort — verpflichtend sind nur Name und Telefon
+(bei der Bewerbung Name, Erreichbarkeit und Bereich). Keine Diagnosen, keine
+Pflegedokumente, keine Versichertennummern. Pflege- und Bewerbungsanfragen laufen
+nie in denselben Posteingang.
 
 ### Mobile Kontaktleiste
 
-Erscheint erst, wenn die Hauptaktion im Hero aus dem Bild gescrollt ist, und
-verschwindet wieder, sobald der Kontaktbereich sichtbar ist oder ein Eingabefeld den
-Fokus hat. Der Platz am Seitenende wird nur reserviert, solange die Leiste da ist;
-`env(safe-area-inset-bottom)` ist berücksichtigt. Beim Drucken wird sie ausgeblendet.
+Erscheint erst, wenn die Hauptaktion der Seite aus dem Bild gescrollt ist, und
+verschwindet wieder, sobald der Kontaktbereich, eine geöffnete Situationsantwort oder
+ein anderer gleichwertiger Weg sichtbar ist oder ein Eingabefeld den Fokus hat. Auf
+`/karriere/` führt die zweite Schaltfläche zur Bewerbung statt zu WhatsApp, damit
+Pflege- und Bewerbungswege getrennt bleiben. Der Platz am Seitenende wird nur
+reserviert, solange die Leiste da ist; `env(safe-area-inset-bottom)` ist
+berücksichtigt. Beim Drucken wird sie ausgeblendet.
 
 ### Messung (noch nicht eingerichtet)
 
@@ -219,37 +237,67 @@ Preise, Auszeichnungen oder Qualifikationen · keine Social-CDN-Links · keine e
 Kapazitäts-, Preis- oder Reaktionszusagen · Verhinderungspflege durchgehend unter
 SGB XI · Sitzadresse nirgends als Besucherbüro.
 
-### Interaktion und Barrierefreiheit (`npm run verify:interaction`) — 38 Prüfungen, 0 Fehler
+### Interaktion und Barrierefreiheit (`npm run verify:interaction`) — 62 Prüfungen, 0 Fehler
 
 | Prüfung | Ergebnis |
 |---|---|
-| Alle sechs Auswahlmöglichkeiten öffnen genau eine Antwort | bestanden, 47–55 Wörter je Antwort |
-| Erste Ansicht auf echtem iPhone-13-Profil (390 × 664) | bestanden: Überschrift, Text, Aktion, Telefon und 128 px Foto |
-| Überschrift auf dem Telefon höchstens zwei Zeilen | bestanden |
-| Fotografie wird vom Seitenumbruch nicht zerschnitten | bestanden |
-| Jeder Antwort-Link liefert HTTP 200 | bestanden |
+| Alle sechs Auswahlmöglichkeiten öffnen genau eine Antwort | bestanden, 51–59 Wörter je Antwort |
+| Antwort erscheint am Desktop im Seitenfeld und ersetzt den Hinweis | bestanden |
+| Gesprächsnotiz drucken: füllt den Druckblock, druckt, räumt wieder auf | bestanden |
 | Erneuter Klick schließt; Zurücksetzen gibt den Fokus zurück | bestanden |
 | Tastatur: Fokus landet im Antwortfeld, frei von der 107-px-Kopfzeile | bestanden |
+| Auf dem Telefon öffnet die Antwort unter der eigenen Kachel, volle Breite | bestanden, 350 px |
+| Jeder Antwort-Link liefert HTTP 200 | bestanden |
 | Ortsprüfung: Treffer nennt den Ort, Nicht-Treffer verweist auf Rückfrage | bestanden |
+| Ortswahl füllt das Anfrageformular vor | bestanden, „Pflege in Germering anfragen" |
+| Formular leer abgeschickt: drei Feldfehler, Fokus im ersten Feld | bestanden |
+| Ungültiges Absenden behauptet nie einen Versand | bestanden |
+| Gültiges Absenden im Entwurfsmodus öffnet den vorbereiteten E-Mail-Entwurf | bestanden |
+| Statustext erklärt den Entwurf ehrlich, ohne „gesendet" | bestanden |
+| Pflege- und Bewerbungsformular haben verschiedene Empfänger | bestanden |
+| Facebook und Instagram: vier Verweise in der Kopfzeile, zwei im Fuß | bestanden |
+| Jeder Profil-Link: neuer Tab, `rel="noopener"`, eigene Beschriftung | bestanden |
+| Karriereseite: H1 zwei Zeilen, sechs Abschnitte, Bewerbungsformular mit vier Bereichen | bestanden |
+| Karriereseite 475 sichtbare Wörter, „du"-Ansprache | im Ziel 350–600 |
+| Karriere-Kontaktleiste bleibt vom ersten Bildschirm weg und führt zur Bewerbung, nicht zu WhatsApp-Pflege | bestanden |
+| Beide Aktionen im Karriere-Kopf gleich breit auf dem Telefon | bestanden, je 350 px |
 | Navigation primär und sekundär wie gebrieft | bestanden |
-| Karriereabschnitt sichtbar, `/karriere/` erreichbar | bestanden |
-| `tel:`, WhatsApp ohne vorbefüllte Auswahl, E-Mail als Rückrufanfrage | bestanden |
+| `tel:`, WhatsApp ohne vorbefüllte Auswahl, E-Mail auf die geprüfte Adresse | bestanden |
 | Logo: Originaldatei, Seitenverhältnis erhalten | bestanden |
-| Startseite 663 sichtbare Wörter | im Ziel 650–850 |
-| Erste Ansicht 390 × 844: Überschrift, Text, Aktion und 126 px Foto | bestanden |
+| Startseite 602 sichtbare Wörter | im Ziel 500–700 |
+| Erste Ansicht auf echtem iPhone-13-Profil (390 × 664) | bestanden: Überschrift, Text, beide Aktionen, Telefon und 136 px Foto |
+| Überschrift auf dem Telefon höchstens zwei Zeilen | bestanden |
+| Fotografie wird vom Seitenumbruch nicht zerschnitten | bestanden |
 | Mobile Kopfzeile 77 px | im Ziel 72–80 |
-| Kontaktleiste: erst nach dem Hero, weg beim Kontaktbereich und bei Fokus im Feld | bestanden |
+| Kontaktleiste: erst nach dem Hero, weg beim Kontaktbereich, bei offener Antwort und bei Fokus im Feld | bestanden |
 | Mobilmenü öffnet, enthält „Arbeiten bei uns", schließt mit Escape | bestanden |
-| Auswahl bei 390 px zweispaltig | bestanden |
+| Auswahl bei 390 px einspaltig, Desktop-Seitenfeld nicht gerendert | bestanden |
+| Alle 60 sichtbaren Bedienelemente ≥ 24 px (WCAG 2.2, 2.5.8) | bestanden |
+| Kontakt-, Social- und Formularaktionen ≥ 44 px hoch | bestanden |
+| Skip-Link erster Tabstopp und sichtbar | bestanden |
+| Alle 15 internen Links liefern 200 | bestanden |
 | 200 % Textzoom: kein horizontaler Überlauf, Hero wächst mit | bestanden |
 | `prefers-reduced-motion`: alles sofort sichtbar | bestanden |
 | Ohne JavaScript: alle sechs Antworten und alle FAQ-Antworten lesbar | bestanden |
-| Skip-Link erster Tabstopp und sichtbar | bestanden |
-| Alle 15 internen Links liefern 200 | bestanden |
 
-Alle 16 Seiten wurden gegen **vier echte Geräteprofile** geprüft (Desktop 1440,
-iPad Mini, iPhone 13, iPhone SE): kein horizontaler Überlauf, keine JavaScript-,
-Konsolen- oder HTTP-Fehler.
+**Breitenlauf über zehn Seiten je Breite** (`/`, `/karriere/`, `/leistungen/`,
+`/leistungen/behandlungspflege/`, `/kosten-finanzierung/`, `/kontakt/`, `/ueber-uns/`,
+`/germering/`, `/muenchen-west/`, `/pflegeberatung/`):
+
+| Breite | Ergebnis |
+|---|---|
+| 360 px | 10 Seiten, keine JS-Fehler, kein horizontaler Überlauf |
+| 390 px | 10 Seiten, keine JS-Fehler, kein horizontaler Überlauf |
+| 430 px | 10 Seiten, keine JS-Fehler, kein horizontaler Überlauf |
+| 768 px | 10 Seiten, keine JS-Fehler, kein horizontaler Überlauf |
+| 1024 px | 10 Seiten, keine JS-Fehler, kein horizontaler Überlauf |
+| 1440 px | 10 Seiten, keine JS-Fehler, kein horizontaler Überlauf |
+
+Zusätzlich wurden alle 16 Seiten in drei Ansichten (Desktop 1440, Tablet 768,
+Telefon 390) sowie die Startseite und die Karriereseite auf fünf echten
+Gerätehöhen (iPhone 13 390 × 664, iPhone SE 375 × 553, Pixel 7 412 × 732,
+iPad 768 × 954, Desktop 1440 × 820) aufgenommen: `npm run verify:screenshots`
+meldete **NO ISSUES DETECTED**.
 
 **Quellen zur mobilen Hero-Gestaltung**
 
@@ -260,21 +308,28 @@ Konsolen- oder HTTP-Fehler.
 - [Above the Fold Design Guide — „falsche Unterkante" und Scroll-Hinweis](https://madebyevoke.com/blog/above-the-fold-design-guide)
 - [NN/g: UX Design for Seniors](https://www.nngroup.com/reports/senior-citizens-on-the-web/)
 
+### Rückruf-Validierung (`npm run test`) — 8 Tests, 0 Fehler
+
+Dieselbe Validierung läuft im Browser, auf dem Server und im Test (`src/lib/callback.ts`).
+Geprüft: Pflichtfelder, Telefonnummern- und E-Mail-Form, Kanalwahl, Bereichsliste
+der Bewerbung, Längenbegrenzung und der stabile Fingerabdruck für die
+Doppelsendungssperre.
+
 ### Gemessene Performance (`npm run measure:performance`)
 
 Lokaler Server, **ohne Netzwerk- oder CPU-Drosselung**. Keine Feldwerte, kein Lighthouse.
 
-| Seite | LCP Desktop | LCP Mobil | CLS | Übertragung |
+| Seite | LCP Desktop | LCP Mobil | CLS | Übertragung Desktop / Mobil |
 |---|---|---|---|---|
-| `/` | 220 ms | 140 ms | 0 | 171 KB |
-| `/leistungen/` | 136 ms | 104 ms | 0 | 42–122 KB |
-| `/kosten-finanzierung/` | 148 ms | 112 ms | 0 | 42 KB |
-| `/ueber-uns/` | 704 ms | 640 ms | 0 | 284–412 KB |
+| `/` | 272 ms | 188 ms | 0 | 217 KB / 217 KB |
+| `/leistungen/` | 172 ms | 124 ms | 0 | 153 KB / 73 KB |
+| `/kosten-finanzierung/` | 196 ms | 148 ms | 0 | 73 KB / 73 KB |
+| `/karriere/` | 200 ms | 140 ms | 0 | 428 KB / 244 KB |
+| `/ueber-uns/` | 760 ms | 656 ms | 0 | 457 KB / 329 KB |
 
-Die Startseite ist von 227 KB auf 171 KB gefallen; das randlose Hero-Bild braucht eine
-größere Auflösung als die frühere Kachel, bleibt aber unter dem Ausgangswert. Das Hero-Bild lädt `eager` mit
-`fetchpriority="high"` und festen Maßen; alle übrigen Bilder sind `lazy`. CLS ist 0.
-`/ueber-uns/` ist mit 24 Porträts die schwerste Seite – das ist der richtige Ort dafür.
+Das Hero-Bild lädt `eager` mit `fetchpriority="high"` und festen Maßen; alle übrigen
+Bilder sind `lazy`. CLS ist auf allen gemessenen Seiten 0. `/ueber-uns/` ist mit
+24 Porträts die schwerste Seite – das ist der richtige Ort dafür.
 
 ### Was nicht geprüft wurde
 
@@ -345,14 +400,15 @@ npm install
 npm run dev          # Entwicklungsserver
 npm run build        # Bilder-Derivate + statischer Build nach dist/
 npm run preview      # dist/ lokal ausliefern
-npm run verify       # astro check + HTML- + Inhaltsprüfung
+npm run test         # Rückruf-Validierung, 8 Tests
+npm run verify       # astro check + Tests + HTML- + Inhaltsprüfung
 ```
 
 Mit laufendem `npm run preview` auf Port 4321:
 
 ```bash
-npm run verify:interaction    # 38 Interaktions- und Barrierefreiheitsprüfungen
-npm run verify:screenshots    # Screenshots aller Seiten bei 1440/768/390 px
+npm run verify:interaction    # 62 Interaktions- und Barrierefreiheitsprüfungen
+npm run verify:screenshots    # alle Seiten bei 1440/768/390 px + fünf echte Gerätehöhen
 npm run measure:performance   # LCP/CLS/Übertragung lokal messen
 ```
 
@@ -363,6 +419,7 @@ npm run measure:performance   # LCP/CLS/Übertragung lokal messen
 | `PUBLIC_SITE_MODE` | `demo` | `production` entfernt `noindex` und alle Vorschau-Hinweise |
 | `PUBLIC_SITE_ORIGIN` | `https://demo.pflegendebienen.de` | Canonical, Sitemap, Open Graph, JSON-LD-IDs |
 | `PUBLIC_RECRUITMENT` | an | `false` entfernt Karriereabschnitt, Menüeinträge und Route |
+| `PUBLIC_CALLBACK_MODE` | `draft` | `server` schickt das Formular an `/api/rueckruf` statt einen E-Mail-Entwurf zu öffnen |
 
 ### Vorschau auf Vercel
 

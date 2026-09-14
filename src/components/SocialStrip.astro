@@ -1,0 +1,81 @@
+---
+import Photo from './Photo.astro';
+import SocialLinks from './SocialLinks.astro';
+import { INSIGHTS } from '../data/insights';
+
+/**
+ * Three curated photographs the business published itself, plus explicit
+ * profile buttons. Local files, no embedded feed, no tracking script and no
+ * invented post metrics.
+ */
+---
+
+<section class="strip section--tight" aria-labelledby="strip-title">
+  <div class="shell">
+    <div class="strip__head">
+      <div>
+        <h2 id="strip-title" class="strip__title">Einblicke aus unserem Team</h2>
+        <p class="strip__text">
+          Fortbildungen, gemeinsame Pausen, kleine Feiern – wir zeigen unseren Alltag auf Facebook
+          und Instagram.
+        </p>
+      </div>
+      <SocialLinks variant="buttons" class="strip__social" />
+    </div>
+
+    <ul class="strip__grid">
+      {INSIGHTS.map((post) => (
+        <li class="strip__item">
+          <Photo
+            src={post.image}
+            alt={post.alt}
+            width={520}
+            height={390}
+            sizes="(min-width: 900px) 30vw, 90vw"
+            class="strip__image"
+          />
+          <p class="strip__caption">
+            <time datetime={post.dateISO}>{post.dateDisplay}</time>
+            <span>{post.title}</span>
+          </p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .strip { background: var(--paper); border-top: 1px solid var(--hairline); }
+  .strip__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1.25rem 2rem;
+    margin-bottom: 1.5rem;
+  }
+  .strip__title { font-size: var(--step-2); margin-bottom: 0.3em; }
+  .strip__text { margin: 0; max-width: 46ch; font-size: var(--step--1); }
+
+  .strip__grid { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; }
+  .strip__item { margin: 0; }
+  .strip__image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+  }
+  .strip__caption {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.15rem 0.6rem;
+    margin: 0.55rem 0 0;
+    font-size: 0.875rem;
+  }
+  .strip__caption time { color: var(--olive); font-weight: 700; }
+  .strip__caption span { color: var(--ink-body); }
+
+  @media (min-width: 720px) {
+    .strip__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+</style>

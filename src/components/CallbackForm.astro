@@ -1,0 +1,336 @@
+---
+import Icon from './Icon.astro';
+import { CONTACT } from '../data/business';
+import { TIME_OPTIONS, JOB_AREAS, JOB_CHANNELS } from '../lib/callback';
+import { callbackMode } from '../config/site.mjs';
+
+/**
+ * One form, two honest delivery modes (see src/config/site.mjs):
+ *  - server: posts to /api/rueckruf, success only after the server confirms.
+ *  - draft:  opens a prepared e-mail in the visitor's own programme. The
+ *            button says exactly that; nothing ever claims it was sent.
+ */
+interface Props {
+  kind?: 'care' | 'job';
+  id?: string;
+  compact?: boolean;
+}
+const { kind = 'care', id = 'rueckruf', compact = false } = Astro.props;
+const isJob = kind === 'job';
+const recipient = isJob ? 'd.bjelovuk@pflegendebienen.de' : CONTACT.email;
+const submitLabel =
+  callbackMode === 'server'
+    ? isJob ? 'Interesse senden' : 'Rückruf anfragen'
+    : isJob ? 'Interesse per E-Mail senden' : 'Rückruf per E-Mail anfragen';
+---
+
+<form
+  class={`cbf${compact ? ' cbf--compact' : ''}`}
+  id={id}
+  data-callback-form
+  data-kind={kind}
+  data-mode={callbackMode}
+  data-recipient={recipient}
+  novalidate
+>
+  <div class="cbf__grid">
+    <div class="cbf__field">
+      <label for={`${id}-name`}>Name</label>
+      <input id={`${id}-name`} name="name" type="text" autocomplete="name"
+             enterkeyhint="next" required aria-describedby={`${id}-name-err`} />
+      <p class="cbf__err" id={`${id}-name-err`} data-err="name" hidden></p>
+    </div>
+
+    {isJob ? (
+      <>
+        <div class="cbf__field">
+          <label for={`${id}-channel`}>Wie dürfen wir dich erreichen?</label>
+          <select id={`${id}-channel`} name="channel" data-channel aria-describedby={`${id}-channel-err`}>
+            {JOB_CHANNELS.map((c) => <option value={c}>{c}</option>)}
+          </select>
+          <p class="cbf__err" id={`${id}-channel-err`} data-err="channel" hidden></p>
+        </div>
+        <div class="cbf__field">
+          <label for={`${id}-phone`} data-contact-label>Telefonnummer</label>
+          <input id={`${id}-phone`} name="phone" type="tel" inputmode="tel"
+                 autocomplete="tel" data-contact-input
+                 placeholder="z. B. 0176 1234567" required aria-describedby={`${id}-phone-err`} />
+          <p class="cbf__err" id={`${id}-phone-err`} data-err="phone" hidden></p>
+        </div>
+        <div class="cbf__field">
+          <label for={`${id}-area`}>Bereich</label>
+          <select id={`${id}-area`} name="area" aria-describedby={`${id}-area-err`}>
+            {JOB_AREAS.map((a) => <option value={a}>{a}</option>)}
+          </select>
+          <p class="cbf__err" id={`${id}-area-err`} data-err="area" hidden></p>
+        </div>
+        <div class="cbf__field">
+          <label for={`${id}-start`}>Ab wann? <span class="cbf__opt">optional</span></label>
+          <input id={`${id}-start`} name="start" type="text" placeholder="z. B. ab Oktober" />
+        </div>
+        <div class="cbf__field cbf__field--wide">
+          <label for={`${id}-message`}>Kurze Nachricht <span class="cbf__opt">optional</span></label>
+          <textarea id={`${id}-message`} name="message" rows="3"
+                    placeholder="Was machst du gerade, was suchst du?"
+                    aria-describedby={`${id}-message-err`}></textarea>
+          <p class="cbf__err" id={`${id}-message-err`} data-err="message" hidden></p>
+        </div>
+      </>
+    ) : (
+      <>
+        <div class="cbf__field">
+          <label for={`${id}-phone`}>Telefonnummer</label>
+          <input id={`${id}-phone`} name="phone" type="tel" inputmode="tel"
+                 autocomplete="tel" placeholder="z. B. 089 54637889"
+                 required aria-describedby={`${id}-phone-err`} />
+          <p class="cbf__err" id={`${id}-phone-err`} data-err="phone" hidden></p>
+        </div>
+        <div class="cbf__field">
+          <label for={`${id}-place`}>Ort oder Stadtteil</label>
+          <input id={`${id}-place`} name="place" type="text" autocomplete="address-level2"
+                 data-place placeholder="z. B. Laim" required aria-describedby={`${id}-place-err`} />
+          <p class="cbf__err" id={`${id}-place-err`} data-err="place" hidden></p>
+        </div>
+        <div class="cbf__field">
+          <label for={`${id}-time`}>Wann erreichen wir Sie gut? <span class="cbf__opt">optional</span></label>
+          <select id={`${id}-time`} name="time" aria-describedby={`${id}-time-err`}>
+            <option value="">Keine Angabe</option>
+            {TIME_OPTIONS.map((t) => <option value={t}>{t}</option>)}
+          </select>
+          <p class="cbf__err" id={`${id}-time-err`} data-err="time" hidden></p>
+        </div>
+      </>
+    )}
+
+    {/* Not shown to people; bots fill it in. */}
+    <div class="cbf__trap" aria-hidden="true">
+      <label for={`${id}-company`}>Firma</label>
+      <input id={`${id}-company`} name="company" type="text" tabindex="-1" autocomplete="off" />
+    </div>
+  </div>
+
+  <div class="cbf__foot">
+    <button type="submit" class="btn cbf__submit">
+      <Icon name={callbackMode === 'server' ? 'phone' : 'mail'} size={19} />
+      <span data-submit-label>{submitLabel}</span>
+    </button>
+    <p class="cbf__privacy">
+      {callbackMode === 'server'
+        ? 'Wir nutzen Ihre Angaben nur, um Sie zurückzurufen.'
+        : 'Die Schaltfläche öffnet eine vorbereitete E-Mail in Ihrem Programm. Gesendet wird erst, wenn Sie dort selbst auf Senden tippen.'}
+      {' '}
+      <a href="/datenschutz/">Datenschutz</a>
+    </p>
+  </div>
+
+  <p class="cbf__status" data-status role="status" hidden></p>
+</form>
+
+<style>
+  .cbf { max-width: 44rem; }
+  .cbf__grid { display: grid; gap: 0.9rem; }
+  .cbf__field { display: grid; gap: 0.3rem; min-width: 0; }
+  .cbf__field--wide { grid-column: 1 / -1; }
+
+  .cbf__field label { font-weight: 700; color: var(--ink); font-size: var(--step--1); }
+  .cbf__opt { font-weight: 500; color: var(--olive); }
+
+  .cbf input,
+  .cbf select,
+  .cbf textarea {
+    width: 100%;
+    min-height: 52px;
+    padding: 0.65rem 0.85rem;
+    border: 2px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    font-size: var(--step-0);
+  }
+  .cbf textarea { min-height: 6rem; resize: vertical; }
+  .cbf input::placeholder, .cbf textarea::placeholder { color: #7b7d70; }
+  .cbf input:focus-visible, .cbf select:focus-visible, .cbf textarea:focus-visible {
+    border-color: var(--ink);
+  }
+  .cbf [aria-invalid='true'] { border-color: #9a2b12; background: #fff6f4; }
+
+  .cbf__err { margin: 0; color: #8f2a12; font-size: var(--step--1); font-weight: 600; }
+  .cbf__err[hidden] { display: none; }
+
+  .cbf__trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+  .cbf__foot { display: grid; gap: 0.75rem; margin-top: 1.15rem; }
+  .cbf__submit { justify-self: start; }
+  .cbf__privacy { margin: 0; color: var(--olive); font-size: 0.9rem; max-width: 52ch; }
+
+  .cbf__status {
+    margin: 1rem 0 0;
+    padding: 0.9rem 1.1rem;
+    border-radius: var(--radius);
+    border-left: 4px solid var(--brand);
+    background: var(--brand-soft);
+    color: var(--ink);
+    font-size: var(--step--1);
+  }
+  .cbf__status[hidden] { display: none; }
+  .cbf__status[data-state='error'] { border-left-color: #9a2b12; background: #fff1ee; }
+
+  .on-dark .cbf__field label { color: #fffdf8; }
+  .on-dark .cbf__opt, .on-dark .cbf__privacy { color: #c9cbbf; }
+  .on-dark .cbf__privacy a { color: var(--brand); }
+  .on-dark .cbf input, .on-dark .cbf select, .on-dark .cbf textarea {
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fffdf8;
+  }
+  .on-dark .cbf input::placeholder, .on-dark .cbf textarea::placeholder { color: #a9ab9f; }
+  .on-dark .cbf__err { color: #ffb4a2; }
+  .on-dark .cbf__status { background: rgba(255, 255, 255, 0.08); color: #f4f2ea; }
+
+  @media (min-width: 620px) {
+    .cbf__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .cbf--compact .cbf__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+</style>
+
+<script>
+  import { validateCallback, hasErrors } from '../lib/callback';
+
+  document.querySelectorAll<HTMLFormElement>('[data-callback-form]').forEach((form) => {
+    const kind = (form.dataset.kind === 'job' ? 'job' : 'care') as 'job' | 'care';
+    const mode = form.dataset.mode;
+    const status = form.querySelector<HTMLElement>('[data-status]');
+    const submit = form.querySelector<HTMLButtonElement>('.cbf__submit');
+    const submitLabel = form.querySelector<HTMLElement>('[data-submit-label]')?.textContent ?? '';
+
+    // Careers: the contact field follows the chosen channel.
+    const channel = form.querySelector<HTMLSelectElement>('[data-channel]');
+    const contactInput = form.querySelector<HTMLInputElement>('[data-contact-input]');
+    const contactLabel = form.querySelector<HTMLElement>('[data-contact-label]');
+    const syncChannel = () => {
+      if (!channel || !contactInput || !contactLabel) return;
+      const mail = channel.value === 'E-Mail';
+      contactLabel.textContent = mail ? 'E-Mail-Adresse' : 'Telefonnummer';
+      contactInput.type = mail ? 'email' : 'tel';
+      contactInput.inputMode = mail ? 'email' : 'tel';
+      contactInput.autocomplete = mail ? 'email' : 'tel';
+      contactInput.placeholder = mail ? 'z. B. name@example.de' : 'z. B. 0176 1234567';
+    };
+    channel?.addEventListener('change', syncChannel);
+    syncChannel();
+
+    const read = () => Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
+
+    const clearErrors = () => {
+      form.querySelectorAll<HTMLElement>('[data-err]').forEach((el) => {
+        el.hidden = true;
+        el.textContent = '';
+      });
+      form.querySelectorAll('[aria-invalid]').forEach((el) => el.removeAttribute('aria-invalid'));
+    };
+
+    const showErrors = (errors: Record<string, string>) => {
+      clearErrors();
+      let first: HTMLElement | null = null;
+      for (const [field, message] of Object.entries(errors)) {
+        const el = form.querySelector<HTMLElement>(`[data-err="${field}"]`);
+        const input = form.querySelector<HTMLElement>(`[name="${field}"]`);
+        if (el) { el.textContent = message; el.hidden = false; }
+        if (input) { input.setAttribute('aria-invalid', 'true'); first ??= input; }
+      }
+      first?.focus();
+    };
+
+    const setStatus = (text: string, state: 'ok' | 'error' | null) => {
+      if (!status) return;
+      status.textContent = text;
+      if (state) status.setAttribute('data-state', state);
+      else status.removeAttribute('data-state');
+      status.hidden = !text;
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const data = read();
+      const errors = validateCallback(data, kind);
+      if (hasErrors(errors)) {
+        setStatus('Bitte prüfen Sie die markierten Felder.', 'error');
+        showErrors(errors as Record<string, string>);
+        return;
+      }
+      clearErrors();
+
+      if (mode !== 'server') {
+        // Honest path: open a prepared draft. Nothing is sent from here, and
+        // nothing claims otherwise.
+        const to = form.dataset.recipient ?? '';
+        const subject = kind === 'job' ? 'Interesse an einer Mitarbeit' : 'Bitte um Rückruf';
+        const body =
+          kind === 'job'
+            ? [`Name: ${data.name}`, `Erreichbar über: ${data.channel} – ${data.phone}`,
+               `Bereich: ${data.area}`, `Ab wann: ${data.start || '–'}`, '',
+               data.message || ''].join('\n')
+            : [`Name: ${data.name}`, `Telefon: ${data.phone}`, `Ort: ${data.place}`,
+               `Gut erreichbar: ${data.time || 'keine Angabe'}`, '',
+               'Bitte rufen Sie mich zurück.'].join('\n');
+        // A synthetic link click rather than a location assignment: if no mail
+        // programme is registered, the visitor keeps the page they are on
+        // instead of being left on a navigation that never resolves.
+        const opener = document.createElement('a');
+        opener.href =
+          `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        opener.rel = 'noopener';
+        opener.hidden = true;
+        document.body.appendChild(opener);
+        opener.click();
+        opener.remove();
+        setStatus(
+          'Ihre E-Mail wurde vorbereitet und in Ihrem E-Mail-Programm geöffnet. '
+          + 'Bitte schicken Sie sie dort ab – oder rufen Sie uns einfach an.',
+          null,
+        );
+        return;
+      }
+
+      if (submit) { submit.disabled = true; submit.setAttribute('aria-busy', 'true'); }
+      setStatus('Ihre Anfrage wird übermittelt …', null);
+      try {
+        const res = await fetch('/api/rueckruf', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...data, kind }),
+        });
+        if (res.status === 202) {
+          form.querySelectorAll('input, select, textarea').forEach((el) => {
+            if ((el as HTMLInputElement).type !== 'hidden') (el as HTMLInputElement).value = '';
+          });
+          setStatus('Danke. Ihre Rückrufbitte ist bei uns angekommen. Wir melden uns.', 'ok');
+        } else if (res.status === 422) {
+          const body = await res.json();
+          showErrors(body.errors ?? {});
+          setStatus('Bitte prüfen Sie die markierten Felder.', 'error');
+        } else if (res.status === 409) {
+          setStatus('Diese Anfrage haben wir schon erhalten. Wir melden uns.', null);
+        } else if (res.status === 429) {
+          setStatus('Es kamen gerade viele Anfragen. Bitte rufen Sie uns direkt an: '
+            + '089 54637889.', 'error');
+        } else {
+          // Values are deliberately kept so nothing has to be typed twice.
+          setStatus('Die Übermittlung hat nicht geklappt. Bitte rufen Sie uns an '
+            + '(089 54637889) oder schreiben Sie an info@pflegendebienen.de.', 'error');
+        }
+      } catch {
+        setStatus('Keine Verbindung. Bitte rufen Sie uns an (089 54637889) '
+          + 'oder schreiben Sie an info@pflegendebienen.de.', 'error');
+      } finally {
+        if (submit) {
+          submit.disabled = false;
+          submit.removeAttribute('aria-busy');
+          const span = submit.querySelector('[data-submit-label]');
+          if (span) span.textContent = submitLabel;
+        }
+      }
+    });
+  });
+</script>

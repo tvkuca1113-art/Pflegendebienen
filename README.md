@@ -19,9 +19,10 @@ npm run preview  # dist/ lokal ausliefern
 ## Prüfungen
 
 ```bash
-npm run verify               # astro check + HTML- und Inhaltsprüfung
-npm run verify:interaction   # 38 Prüfungen, braucht einen laufenden preview auf Port 4321
-npm run verify:screenshots   # Screenshots nach screenshots/ (Desktop + Mobil)
+npm run test                 # Rückruf-Validierung, 8 Tests
+npm run verify               # astro check + Tests + HTML- und Inhaltsprüfung
+npm run verify:interaction   # 62 Prüfungen, braucht einen laufenden preview auf Port 4321
+npm run verify:screenshots   # Screenshots nach screenshots/ (Desktop, Tablet, Telefon + Gerätehöhen)
 npm run measure:performance  # LCP/CLS lokal messen
 ```
 
@@ -32,6 +33,8 @@ npm run measure:performance  # LCP/CLS lokal messen
 | `src/data/` | Sämtliche Inhalte und geprüften Geschäftsdaten |
 | `src/config/site.mjs` | Betriebsmodus (`demo`/`production`) und Origin |
 | `src/lib/schema.ts` | Strukturierte Daten (JSON-LD) |
+| `src/lib/callback.ts` | Rückruf-Validierung, geteilt von Browser, Server und Test |
+| `src/server/rueckruf.endpoint.ts` | Fertiger Serververtrag, absichtlich außerhalb von `src/pages` |
 | `src/components/` | Wiederverwendbare Bausteine |
 | `src/pages/` | Routen inklusive `sitemap.xml` und `robots.txt` |
 | `src/assets/selected/` | Echte Fotos des Unternehmens |
@@ -39,6 +42,9 @@ npm run measure:performance  # LCP/CLS lokal messen
 | `src/assets/team/` | Team-Porträts für die Über-uns-Seite |
 | `public/logo-original.png` | Originallogo, bytegleich, nicht verändern |
 | `docs/` | Rechercheunterlagen und Bildquellen |
+| `tests/` | Unit-Tests (`node --test`) |
+| `ASSET-PROVENANCE.md` | Herkunft, Maße und Bildausschnitt jedes Bildes |
+| `OWNER-QUESTIONS.md` | Was die Inhaber vor der Veröffentlichung klären müssen |
 
 Texte werden in `src/data/` gepflegt, nicht in den Komponenten.
 
@@ -49,6 +55,7 @@ Texte werden in `src/data/` gepflegt, nicht in den Komponenten.
 | `PUBLIC_SITE_MODE` | `demo` | `production` entfernt `noindex` und die Vorschau-Hinweise |
 | `PUBLIC_SITE_ORIGIN` | `https://demo.pflegendebienen.de` | Canonical, Sitemap, Open Graph |
 | `PUBLIC_RECRUITMENT` | an | `false` entfernt Karriereabschnitt, Menüeinträge und `/karriere/` |
+| `PUBLIC_CALLBACK_MODE` | `draft` | `server` schickt das Rückrufformular an `/api/rueckruf`; siehe OWNER-QUESTIONS.md, Punkt 3 |
 
 ## Grundregeln für dieses Projekt
 

@@ -4,76 +4,110 @@ import { CONTACT } from '../data/business';
 import Icon from './Icon.astro';
 
 /**
- * The main useful interaction. No account, no contact details and no
- * Pflegegrad question are needed to see an answer; nothing is stored,
- * put in the URL or sent anywhere. Without JavaScript all six answers are
- * simply visible with their ordinary service links.
+ * The signature feature. Desktop puts the six choices in a compact left
+ * column next to a substantial answer panel; the panel is never an empty
+ * rectangle, because the unselected state carries a short introduction and a
+ * direct contact option. Mobile uses a real accordion so the chosen situation
+ * stays directly above its own answer.
+ *
+ * This is an orientation tool, not a medical assessment or a capacity check.
+ * Nothing is stored, transmitted, put in the URL or kept in local storage.
  */
 ---
 
 <section class="sit section" id="hilfe" aria-labelledby="sit-title">
   <div class="shell">
     <div class="sit__head">
+      <span class="eyebrow">Passende Hilfe finden</span>
       <h2 id="sit-title">Was brauchen Sie gerade?</h2>
-      <p class="lead">
-        Wählen Sie Ihre Situation. Sie sehen direkt, was als Nächstes hilfreich ist – ohne Anmeldung
-        und ohne Angaben zu Ihrer Person.
-      </p>
+      <p class="lead">Wählen Sie Ihre Situation – Sie sehen sofort, was als Nächstes hilft.</p>
     </div>
 
-    <div class="sit__grid">
-      {SITUATIONS.map((s) => (
-        <button
-          type="button"
-          class="sit__choice"
-          data-sit-choice={s.id}
-          aria-expanded="false"
-          aria-controls={`sit-answer-${s.id}`}
-        >
-          <span>{s.label}</span>
-          <span class="sit__arrow" aria-hidden="true"></span>
-        </button>
-      ))}
-    </div>
+    <div class="sit__layout">
+      <!-- Choices. On mobile each button is the accordion header for the answer
+           that follows it directly. -->
+      <ul class="sit__choices" role="list">
+        {SITUATIONS.map((s) => (
+          <li class="sit__item">
+            <button
+              type="button"
+              class="sit__choice"
+              data-sit-choice={s.id}
+              aria-expanded="false"
+              aria-controls={`sit-answer-${s.id}`}
+            >
+              <span class="sit__choice-icon" aria-hidden="true"><Icon name={s.icon} size={22} /></span>
+              <span class="sit__choice-label">{s.label}</span>
+              <span class="sit__choice-mark" aria-hidden="true"></span>
+            </button>
 
-    <p class="sit__hint" data-sit-hint hidden>
-      Kein Konto, keine Daten – Ihre Auswahl bleibt auf diesem Gerät.
-    </p>
+            <!-- Mobile position of the answer: directly under its own choice. -->
+            <div class="sit__mobile-slot" data-sit-slot={s.id}></div>
+          </li>
+        ))}
+      </ul>
 
-    <div class="sit__answers" data-sit-answers>
-      {SITUATIONS.map((s) => (
-        <article
-          class="sit__answer"
-          id={`sit-answer-${s.id}`}
-          data-sit-answer={s.id}
-          aria-labelledby={`sit-h-${s.id}`}
-          tabindex="-1"
-        >
-          <p class="sit__answer-kicker">Ihr nächster Schritt</p>
-          <h3 id={`sit-h-${s.id}`} class="sit__answer-title">{s.answerTitle}</h3>
-          <p class="sit__answer-text">{s.answer}</p>
-          <ul class="ticks sit__bullets">
-            {s.bullets.map((b) => <li>{b}</li>)}
+      <div class="sit__panel" data-sit-panel>
+        <div class="sit__intro" data-sit-intro>
+          <h3 class="sit__intro-title">Noch unsicher, was passt?</h3>
+          <p>
+            Die meisten Familien rufen an, ohne den richtigen Fachbegriff zu kennen. Das genügt
+            völlig – wir hören zu und ordnen die Situation gemeinsam ein.
+          </p>
+          <ul class="ticks sit__intro-list">
+            <li>Sie schildern, was im Alltag schwerfällt.</li>
+            <li>Wir sagen, welche Unterstützung infrage kommt.</li>
+            <li>Sie entscheiden in Ruhe, wie es weitergeht.</li>
           </ul>
-          <div class="sit__answer-actions">
-            <a class="btn btn--sm" href={CONTACT.phoneHref}>
-              <Icon name="phone" size={17} />
+          <div class="sit__intro-actions">
+            <a class="btn" href={CONTACT.phoneHref}>
+              <Icon name="phone" size={19} />
               {CONTACT.phoneDisplay}
             </a>
-            <a class="link-action" href={s.link.href}>{s.link.label}</a>
-            {s.altLink && <a class="link-action" href={s.altLink.href}>{s.altLink.label}</a>}
+            <a class="btn btn--outline" href="#kontakt">Rückruf anfragen</a>
           </div>
-          <p class="sit__answer-foot">
-            <button type="button" class="sit__note-btn" data-sit-print={s.id}>
-              Für das Gespräch merken
-            </button>
-            <button type="button" class="sit__reset" data-sit-reset>Auswahl zurücksetzen</button>
-          </p>
-        </article>
-      ))}
+        </div>
+
+        {SITUATIONS.map((s) => (
+          <article
+            class="sit__answer"
+            id={`sit-answer-${s.id}`}
+            data-sit-answer={s.id}
+            aria-labelledby={`sit-h-${s.id}`}
+            role="region"
+            tabindex="-1"
+          >
+            <p class="sit__kicker">Ihr nächster Schritt</p>
+            <h3 id={`sit-h-${s.id}`} class="sit__answer-title">{s.answerTitle}</h3>
+            <p class="sit__answer-text">{s.answer}</p>
+            <ul class="ticks sit__bullets">
+              {s.bullets.map((bul) => <li>{bul}</li>)}
+            </ul>
+            <div class="sit__answer-actions" data-contact-equivalent>
+              <a class="btn btn--sm" href={CONTACT.phoneHref}>
+                <Icon name="phone" size={17} />
+                {CONTACT.phoneDisplay}
+              </a>
+              <a class="btn btn--outline btn--sm" href="#kontakt">Rückruf anfragen</a>
+              <a class="link-action" href={s.link.href}>{s.link.label}</a>
+              {s.altLink && <a class="link-action" href={s.altLink.href}>{s.altLink.label}</a>}
+            </div>
+            <div class="sit__answer-foot">
+              <button type="button" class="sit__print" data-sit-print={s.id}>
+                <Icon name="print" size={17} />
+                Gesprächsnotiz drucken
+              </button>
+              <button type="button" class="sit__reset" data-sit-reset>Auswahl zurücksetzen</button>
+            </div>
+          </article>
+        ))}
+      </div>
     </div>
   </div>
 </section>
+
+{/* Filled from the selected answer and printed. Not visible on screen. */}
+<div class="gespraechsnotiz" id="gespraechsnotiz" aria-hidden="true" hidden></div>
 
 <style>
   .sit { background: var(--surface); border-block: 1px solid var(--hairline); }
@@ -81,15 +115,17 @@ import Icon from './Icon.astro';
   .sit__head h2 { max-width: 18ch; }
   .sit__head .lead { max-width: 46ch; }
 
-  .sit__grid { display: grid; gap: 0.75rem; margin-bottom: 1.25rem; }
+  .sit__layout { display: grid; gap: 1rem; }
+  .sit__choices { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; align-content: start; }
+  .sit__item { margin: 0; }
 
   .sit__choice {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
+    gap: 0.8rem;
+    width: 100%;
     min-height: 60px;
-    padding: 0.85rem 1.1rem;
+    padding: 0.8rem 1rem;
     border: 2px solid var(--line);
     border-radius: var(--radius);
     background: var(--surface);
@@ -99,43 +135,60 @@ import Icon from './Icon.astro';
     font-weight: 700;
     text-align: left;
     cursor: pointer;
-    transition: background-color 0.15s var(--ease), border-color 0.15s var(--ease);
+    transition: background-color 0.15s var(--ease), border-color 0.15s var(--ease),
+      box-shadow 0.15s var(--ease);
   }
-  .sit__choice:hover { background: var(--sage); }
+  .sit__choice:hover { background: var(--brand-soft); border-color: var(--line-warm); }
 
-  .sit__arrow {
+  .sit__choice-icon {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: var(--brand-soft);
+    color: var(--brand-ink);
+    transition: background-color 0.15s var(--ease), color 0.15s var(--ease);
+  }
+  .sit__choice-label { flex: 1; }
+
+  .sit__choice-mark {
     flex: 0 0 auto;
     width: 9px;
     height: 9px;
     border-right: 2.5px solid var(--olive);
     border-bottom: 2.5px solid var(--olive);
-    transform: rotate(45deg) translate(-2px, -2px);
+    transform: rotate(-45deg);
     transition: transform 0.18s var(--ease);
   }
+
   .sit__choice[aria-expanded='true'] {
     background: var(--brand);
     border-color: var(--brand);
+    box-shadow: 0 6px 18px -10px rgba(184, 135, 58, 0.8);
   }
-  .sit__choice[aria-expanded='true'] .sit__arrow {
-    border-color: var(--ink);
-    transform: rotate(-135deg) translate(-3px, -3px);
-  }
+  .sit__choice[aria-expanded='true'] .sit__choice-icon { background: rgba(255, 255, 255, 0.65); }
+  .sit__choice[aria-expanded='true'] .sit__choice-mark { border-color: var(--ink); }
 
-  .sit__hint { margin: 0 0 1.5rem; color: var(--olive); font-size: var(--step--1); }
+  .sit__panel { min-width: 0; }
+  html.js .sit__answer[hidden], html.js .sit__intro[hidden] { display: none; }
 
-  .sit__answers { display: grid; gap: 1rem; }
-  html.js .sit__answer[hidden] { display: none; }
-
+  .sit__intro,
   .sit__answer {
-    max-width: 68ch;
-    padding: clamp(1.25rem, 3vw, 1.75rem);
-    border: 2px solid var(--brand);
+    padding: clamp(1.25rem, 3vw, 2rem);
     border-radius: var(--radius-lg);
     background: var(--paper);
+    border: 1px solid var(--hairline);
   }
+  .sit__answer { border: 2px solid var(--brand); background: var(--paper); }
   .sit__answer:focus-visible { outline-offset: 4px; }
 
-  .sit__answer-kicker {
+  .sit__intro-title { font-size: var(--step-2); margin-bottom: 0.4em; }
+  .sit__intro-list { margin-block: 1em 1.3em; font-size: var(--step--1); }
+  .sit__intro-actions { display: flex; flex-wrap: wrap; gap: 0.7rem; }
+
+  .sit__kicker {
     margin: 0 0 0.3rem;
     color: var(--olive);
     font-size: 0.8125rem;
@@ -143,27 +196,25 @@ import Icon from './Icon.astro';
     letter-spacing: 0.1em;
     text-transform: uppercase;
   }
-  .sit__answer-title { margin-bottom: 0.4em; font-size: var(--step-2); }
+  .sit__answer-title { font-size: var(--step-2); margin-bottom: 0.4em; }
   .sit__answer-text { margin-bottom: 1em; }
-  .sit__bullets { margin-bottom: 1.2em; font-size: var(--step--1); }
+  .sit__bullets { margin-bottom: 1.3em; font-size: var(--step--1); }
 
-  .sit__answer-actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.7rem 1.25rem;
-  }
+  .sit__answer-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.7rem 1.2rem; }
 
   .sit__answer-foot {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem 1.5rem;
-    margin: 1.25rem 0 0;
+    gap: 0.5rem 1.4rem;
+    margin-top: 1.3rem;
     padding-top: 1rem;
     border-top: 1px solid var(--hairline);
   }
-  .sit__note-btn,
+  .sit__print,
   .sit__reset {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
     min-height: 44px;
     padding: 0;
     border: 0;
@@ -179,60 +230,71 @@ import Icon from './Icon.astro';
   .sit__reset { color: var(--olive); font-weight: 600; }
   html:not(.js) .sit__answer-foot { display: none; }
 
-  /* rem-based on purpose: when the visitor enlarges text, these queries stop
-     matching and the choices fall back to a single readable column. */
-  @media (min-width: 22rem) {
-    .sit__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
-  @media (min-width: 61rem) {
-    .sit__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  /* Mobile: the answer is moved into the slot under its own choice. */
+  .sit__mobile-slot:empty { display: none; }
+  .sit__mobile-slot { padding-top: 0.6rem; }
+
+  @media (min-width: 900px) {
+    .sit__layout { grid-template-columns: minmax(17rem, 23rem) minmax(0, 1fr); gap: 1.75rem; }
+    .sit__mobile-slot { display: none; }
   }
 </style>
 
 <script>
   const choices = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-sit-choice]'));
   const answers = Array.from(document.querySelectorAll<HTMLElement>('[data-sit-answer]'));
-  const hint = document.querySelector<HTMLElement>('[data-sit-hint]');
+  const intro = document.querySelector<HTMLElement>('[data-sit-intro]');
+  const panel = document.querySelector<HTMLElement>('[data-sit-panel]');
+  const note = document.getElementById('gespraechsnotiz');
 
-  if (choices.length && answers.length) {
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (choices.length && answers.length && panel) {
+    const desktop = window.matchMedia('(min-width: 900px)');
     let current: string | null = null;
 
-    const render = (id: string | null, moveFocus: boolean) => {
+    /** Answers live in the panel on desktop and under their own choice on mobile. */
+    const place = () => {
+      answers.forEach((a) => {
+        const id = a.dataset.sitAnswer!;
+        const slot = document.querySelector<HTMLElement>(`[data-sit-slot="${id}"]`);
+        const target = desktop.matches ? panel : slot;
+        if (target && a.parentElement !== target) target.appendChild(a);
+      });
+      if (intro) intro.hidden = !desktop.matches || Boolean(current);
+    };
+
+    const render = (id: string | null, fromKeyboard: boolean) => {
       current = id;
       choices.forEach((c) => c.setAttribute('aria-expanded', String(c.dataset.sitChoice === id)));
       answers.forEach((a) => { a.hidden = a.dataset.sitAnswer !== id; });
-      if (hint) hint.hidden = Boolean(id);
-
+      if (intro) intro.hidden = !desktop.matches || Boolean(id);
       if (!id) return;
-      const panel = answers.find((a) => a.dataset.sitAnswer === id);
-      if (!panel) return;
 
-      if (moveFocus) {
-        // Keyboard: predictable focus, and the header must not cover it.
-        panel.focus({ preventScroll: true });
-      }
+      const open = answers.find((a) => a.dataset.sitAnswer === id);
+      if (!open) return;
+      if (fromKeyboard) open.focus({ preventScroll: true });
+
+      // Only scroll when the answer would actually be out of sight, and never
+      // leave it under the sticky header.
       const header = document.querySelector('.site-header');
       const offset = (header?.getBoundingClientRect().height ?? 0) + 16;
-      const box = panel.getBoundingClientRect();
-      const hiddenAbove = box.top < offset;
-      const hiddenBelow = box.bottom > window.innerHeight;
-      if (hiddenAbove || hiddenBelow) {
+      const box = open.getBoundingClientRect();
+      if (box.top < offset || box.bottom > window.innerHeight) {
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         window.scrollTo({
           top: window.scrollY + box.top - offset,
-          behavior: reduceMotion.matches ? 'auto' : 'smooth',
+          behavior: reduce ? 'auto' : 'smooth',
         });
       }
     };
 
-    // Progressive enhancement: collapse only once the script is running.
+    place();
     render(null, false);
+    desktop.addEventListener('change', () => { place(); render(current, false); });
 
     choices.forEach((choice) => {
       choice.addEventListener('click', (event) => {
         const id = choice.dataset.sitChoice ?? null;
-        const byKeyboard = (event as PointerEvent).detail === 0;
-        render(current === id ? null : id, byKeyboard);
+        render(current === id ? null : id, (event as PointerEvent).detail === 0);
       });
     });
 
@@ -244,44 +306,65 @@ import Icon from './Icon.astro';
       });
     });
 
-    // "Für das Gespräch merken": a local printable note rendered into a hidden
-    // iframe. Nothing is submitted, stored or put into the URL.
+    /* "Gesprächsnotiz drucken": fills a print-only block with the chosen
+       situation, its next steps and the contact details, then prints the page
+       through ordinary print styles. Nothing is stored or sent. */
     document.querySelectorAll<HTMLButtonElement>('[data-sit-print]').forEach((btn) => {
       btn.addEventListener('click', () => {
-        const panel = answers.find((a) => a.dataset.sitAnswer === btn.dataset.sitPrint);
-        if (!panel) return;
+        const answer = answers.find((a) => a.dataset.sitAnswer === btn.dataset.sitPrint);
+        const choice = choices.find((c) => c.dataset.sitChoice === btn.dataset.sitPrint);
+        if (!answer || !note) return;
 
-        const esc = (v: string | null | undefined) =>
-          (v ?? '').replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c]!);
-        const title = esc(panel.querySelector('h3')?.textContent);
-        const text = esc(panel.querySelector('.sit__answer-text')?.textContent);
-        const points = Array.from(panel.querySelectorAll('.sit__bullets li'))
-          .map((li) => `<li>${esc(li.textContent)}</li>`)
-          .join('');
+        const label = choice?.querySelector('.sit__choice-label')?.textContent?.trim() ?? '';
+        const title = answer.querySelector('h3')?.textContent?.trim() ?? '';
+        const text = answer.querySelector('.sit__answer-text')?.textContent?.trim() ?? '';
+        const steps = Array.from(answer.querySelectorAll('.sit__bullets li')).map(
+          (li) => li.textContent?.trim() ?? '',
+        );
 
-        const doc = `<!doctype html><html lang="de"><head><meta charset="utf-8">
-<title>Notizen für das Gespräch – Pflegende Bienen</title>
-<style>body{font:16px/1.6 system-ui,sans-serif;color:#222821;margin:2.5rem;max-width:44rem}
-h1{font-size:1.4rem;margin:0 0 .4rem}h2{font-size:1.05rem;margin:1.6rem 0 .4rem}
-.meta{color:#626c57;font-size:.9rem;margin-bottom:2rem}
-ul{padding-left:1.2rem}li{margin-bottom:.4rem}
-.lines div{border-bottom:1px solid #bbb;height:2rem}</style></head><body>
-<h1>Notizen für das Gespräch</h1>
-<p class="meta">Pflegende Bienen · 089 54637889 · info@pflegendebienen.de</p>
-<h2>${title}</h2><p>${text}</p><ul>${points}</ul>
-<h2>Eigene Notizen</h2><div class="lines"><div></div><div></div><div></div><div></div><div></div></div>
-</body></html>`;
-
-        const frame = document.createElement('iframe');
-        frame.setAttribute('aria-hidden', 'true');
-        frame.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0;';
-        frame.srcdoc = doc;
-        frame.addEventListener('load', () => {
-          frame.contentWindow?.focus();
-          frame.contentWindow?.print();
-          window.setTimeout(() => frame.remove(), 1000);
+        note.replaceChildren();
+        const add = (tag: string, cls: string, value: string) => {
+          const el = document.createElement(tag);
+          el.className = cls;
+          el.textContent = value;
+          note.appendChild(el);
+          return el;
+        };
+        add('h1', 'gn__h1', 'Gesprächsnotiz');
+        add('p', 'gn__meta', `Ihre Situation: ${label}`);
+        add('h2', 'gn__h2', title);
+        add('p', 'gn__text', text);
+        add('h2', 'gn__h2', 'Nächste Schritte');
+        const ol = document.createElement('ol');
+        ol.className = 'gn__steps';
+        steps.forEach((s) => {
+          const li = document.createElement('li');
+          li.textContent = s;
+          ol.appendChild(li);
         });
-        document.body.appendChild(frame);
+        note.appendChild(ol);
+        add('h2', 'gn__h2', 'Kontakt');
+        add('p', 'gn__text', 'Pflegende Bienen · 089 54637889 · info@pflegendebienen.de');
+        add('p', 'gn__text', 'Fürstenrieder Str. 137, 80686 München · Otto-Wagner-Str. 10, 82110 Germering');
+        add('h2', 'gn__h2', 'Eigene Notizen');
+        const lines = document.createElement('div');
+        lines.className = 'gn__lines';
+        for (let i = 0; i < 6; i += 1) lines.appendChild(document.createElement('div'));
+        note.appendChild(lines);
+
+        note.hidden = false;
+        document.documentElement.classList.add('is-printing-note');
+        const cleanup = () => {
+          document.documentElement.classList.remove('is-printing-note');
+          note.hidden = true;
+          // Empty it again: the note carries the visitor's chosen situation and
+          // its own heading, and neither should linger in the live document.
+          note.replaceChildren();
+          window.removeEventListener('afterprint', cleanup);
+        };
+        window.addEventListener('afterprint', cleanup);
+        window.print();
+        window.setTimeout(cleanup, 2000);
       });
     });
   }

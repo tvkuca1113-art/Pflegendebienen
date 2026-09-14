@@ -17,7 +17,7 @@ const viewports = [
 
 mkdirSync(OUT, { recursive: true });
 
-const browser = await chromium.launch({ executablePath: process.env.CHROME_PATH || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
+const browser = await chromium.launch({ executablePath: process.env.CHROME_PATH || process.env.CHROME_PATH || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
 const issues = [];
 
 for (const vp of viewports) {
@@ -69,5 +69,31 @@ for (const vp of viewports) {
   }
   await ctx.close();
 }
+/* First-screen captures at REAL device heights.
+   An iPhone 13 shows 390x664 CSS px once Safari's toolbars are up, not the
+   844 px of its layout viewport. These are the shots that show what a visitor
+   actually sees before scrolling. */
+const folds = [
+  { name: 'fold-iphone13', width: 390, height: 664, dsf: 3, mobile: true },
+  { name: 'fold-iphone-se', width: 375, height: 553, dsf: 2, mobile: true },
+  { name: 'fold-pixel7', width: 412, height: 732, dsf: 2.6, mobile: true },
+  { name: 'fold-ipad', width: 768, height: 954, dsf: 2, mobile: true },
+  { name: 'fold-desktop', width: 1440, height: 820, dsf: 1 },
+];
+for (const vp of folds) {
+  const ctx = await browser.newContext({
+    viewport: { width: vp.width, height: vp.height },
+    deviceScaleFactor: vp.dsf, isMobile: !!vp.mobile, hasTouch: !!vp.mobile, locale: 'de-DE',
+  });
+  const page = await ctx.newPage();
+  for (const route of ['/', '/karriere/']) {
+    await page.goto(BASE + route, { waitUntil: 'networkidle' });
+    await page.waitForTimeout(700);
+    const slug = route === '/' ? 'home' : route.replace(/\//g, '');
+    await page.screenshot({ path: path.join(OUT, `${slug}-${vp.name}.png`) });
+  }
+  await ctx.close();
+}
+
 await browser.close();
 console.log(issues.length ? issues.join('\n') : 'NO ISSUES DETECTED');

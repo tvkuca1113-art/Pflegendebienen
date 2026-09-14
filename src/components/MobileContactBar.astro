@@ -3,21 +3,35 @@ import { CONTACT } from '../data/business';
 import Icon from './Icon.astro';
 
 /**
- * Appears only after the hero action has scrolled out of view, and hides again
- * whenever the contact section or another equivalent action is on screen, when
- * a field is focused (soft keyboard) or when printing.
+ * Appears only after the page's primary action has scrolled out of view, and
+ * hides again whenever the matching enquiry section or another equivalent
+ * action is on screen, when a field is focused (soft keyboard) or when
+ * printing.
+ *
+ * variant="job" is for the recruitment page: it keeps the care channel out of
+ * a recruitment context and points at the application form instead.
  */
+interface Props { variant?: 'care' | 'job' }
+const { variant = 'care' } = Astro.props;
+const target = variant === 'job' ? '#interesse' : '#kontakt';
 ---
 
-<div class="contact-bar" data-contact-bar hidden>
+<div class="contact-bar" data-contact-bar data-contact-target={target} hidden>
   <a class="contact-bar__btn contact-bar__btn--call" href={CONTACT.phoneHref}>
     <Icon name="phone" size={20} />
     <span>Anrufen</span>
   </a>
-  <a class="contact-bar__btn" href={CONTACT.whatsappHref} target="_blank" rel="noopener noreferrer">
-    <Icon name="whatsapp" size={20} />
-    <span>Schreiben</span>
-  </a>
+  {variant === 'job' ? (
+    <a class="contact-bar__btn" href="#interesse">
+      <Icon name="mail" size={20} />
+      <span>Interesse senden</span>
+    </a>
+  ) : (
+    <a class="contact-bar__btn" href={CONTACT.whatsappHref} target="_blank" rel="noopener noreferrer">
+      <Icon name="whatsapp" size={20} />
+      <span>Schreiben</span>
+    </a>
+  )}
 </div>
 
 <style>
@@ -60,8 +74,14 @@ import Icon from './Icon.astro';
 
 <script>
   const bar = document.querySelector<HTMLElement>('[data-contact-bar]');
-  const heroCta = document.querySelector('[data-hero-cta]');
-  const contactSection = document.getElementById('kontakt');
+  // Inner pages have no hero CTA of their own, so fall back to the page header:
+  // without a sentinel the bar would sit over the first screen from the start.
+  const heroCta = document.querySelector('[data-hero-cta]')
+    ?? document.querySelector('.page-header__body')
+    ?? document.querySelector('main > * h1');
+  const contactSection = document.querySelector(
+    bar?.dataset.contactTarget ?? '#kontakt',
+  );
 
   if (bar && 'IntersectionObserver' in window) {
     let heroVisible = true;
@@ -83,9 +103,24 @@ import Icon from './Icon.astro';
     } else {
       heroVisible = false;
     }
-    if (contactSection) {
-      new IntersectionObserver(([e]) => { contactVisible = e.isIntersecting; apply(); },
-        { rootMargin: '0px 0px -20% 0px' }).observe(contactSection);
+    // The enquiry section and any other block that already offers the same
+    // action (an open situation answer, for instance) stand in for the bar.
+    const equivalents = [
+      ...(contactSection ? [contactSection] : []),
+      ...document.querySelectorAll('[data-contact-equivalent]'),
+    ];
+    if (equivalents.length) {
+      const onScreen = new Set<Element>();
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          // A hidden answer still reports an entry; only count what is drawn.
+          const shown = e.isIntersecting && e.target.getBoundingClientRect().height > 0;
+          shown ? onScreen.add(e.target) : onScreen.delete(e.target);
+        });
+        contactVisible = onScreen.size > 0;
+        apply();
+      }, { rootMargin: '0px 0px -20% 0px' });
+      equivalents.forEach((el) => io.observe(el));
     }
 
     // Never cover a focused control or an open soft keyboard.

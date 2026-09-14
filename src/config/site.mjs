@@ -27,3 +27,16 @@ export const IS_DEMO = SITE.mode !== 'production';
  * owner can remove all of it in one place.
  */
 export const recruitmentEnabled = env.PUBLIC_RECRUITMENT !== 'false';
+
+/**
+ * Callback delivery.
+ *
+ * 'server'  — the form posts to /api/rueckruf and shows success only after the
+ *             server confirms the delivery provider accepted the message.
+ * 'draft'   — no delivery is configured, so the same form opens a prepared
+ *             e-mail draft in the visitor's own programme. It is labelled as
+ *             such and never reports that anything was sent.
+ *
+ * See OWNER-QUESTIONS.md for the environment variables 'server' mode needs.
+ */
+export const callbackMode = env.PUBLIC_CALLBACK_MODE === 'server' ? 'server' : 'draft';
